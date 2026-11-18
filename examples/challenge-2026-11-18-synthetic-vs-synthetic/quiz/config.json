@@ -1,0 +1,19 @@
+{
+  "PerFamily": 10,
+  "Ceiling": 0.1,
+  "Frontier": [
+    {
+      "Family": "sat",
+      "Level": 4
+    },
+    {
+      "Family": "code",
+      "Level": 5
+    },
+    {
+      "Family": "plan",
+      "Level": 3
+    }
+  ],
+  "Kind": "quiz"
+}

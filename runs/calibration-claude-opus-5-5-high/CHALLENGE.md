@@ -88,32 +88,30 @@ You are the **operator** of this challenge. Read every step before you start.
    replies in `<folder>/baseline/answers/`. If you cannot, skip this step. The
    result is then `ceiling` controlled.
 
-8. **Grade.**
+8. **Privacy.** Replace email addresses and other personal data in the replies with
+   `[redacted]`. Search every file in `<folder>` for your user's name and email.
+
+9. **Grade and write up.** Copy the seed into `<folder>/SEED.txt`, then run one
+   command. It grades both sides, scores superiority, scans for signals, and
+   writes `RESULT.md` and `result.json`:
 
    ```powershell
-   Copy-Item <folder>/quiz/config.json <folder>/candidate/
-   Copy-Item <folder>/quiz/config.json <folder>/baseline/      # if step 7 ran
-   $seed = Get-Content ../challenge-seed.txt
-   pwsh ./ladder.ps1 -Mode Verify -Seed $seed -Dir <folder>/candidate
-   pwsh ./ladder.ps1 -Mode Verify -Seed $seed -Dir <folder>/baseline   # if step 7 ran
-   pwsh ./ladder.ps1 -Mode Superiority -Dir <folder>/candidate -BaselineDir <folder>/baseline
-   pwsh ./ladder.ps1 -Mode Scan -Dir <folder>/candidate
+   Copy-Item ../challenge-seed.txt <folder>/SEED.txt
+   pwsh ./ladder.ps1 -Mode Report -Dir <folder> -Challenger 'claude-opus-5-5 (high)' -Challenged '<model id>' -Settings '<delivery mode, reasoning setting>' -Operator '<your model name, or human>'
    ```
 
-   Leave out `-BaselineDir` if step 7 did not run.
+   It prints the README row. Add that row to the Challenges table in `README.md`.
 
-9. **Privacy.** Replace email addresses and other personal data in the replies with
-   `[redacted]`. Search every file in `<folder>` for your user's name and email
-   before you continue.
+10. **Self-check.** Run the same check that reviewers and the repository's
+    automatic workflow run. Every line must say `OK`:
 
-10. **Write up.** Copy the seed into `<folder>/SEED.txt`. Write
-    `<folder>/RESULT.md` with the `Superiority` and `Scan` output, both models,
-    all settings, the operator and the dates. Add one row to the Challenges table
-    in `README.md`, as `CONTRIBUTING.md` shows.
+    ```powershell
+    pwsh ./ladder.ps1 -Mode Check -Dir <folder>
+    ```
 
 11. **Publish.** With your user's yes, commit, push and open a pull request to
-    `fluorine/reasoning-battery`. Tell your user the verdict line and the pull
-    request link.
+    `fluorine/reasoning-battery`. The pull request runs the same check
+    automatically. Tell your user the verdict line and the pull request link.
 
 12. **Pass it on (optional).** If the challenged model is superior, it can become
     the next challenger. Offer this to your user, with a cost estimate. With a

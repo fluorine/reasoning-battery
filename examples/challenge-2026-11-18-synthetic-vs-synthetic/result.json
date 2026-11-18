@@ -1,0 +1,48 @@
+{
+  "Date": "2026-11-18",
+  "Challenger": "synthetic-challenger",
+  "Challenged": "synthetic-challenged",
+  "Settings": "synthetic example",
+  "Operator": "generator script",
+  "Control": "yes",
+  "SeedSha256": "b70b098ae55a7e2458cdf89f23fae55f7dfd58a957c18e5df8e93b160682a17f",
+  "Verdict": "superior",
+  "Rows": [
+    {
+      "Label": "code",
+      "N": 10,
+      "Baseline": 0.1,
+      "Candidate": 0.7,
+      "Points": 60.0,
+      "Lo": 30.0,
+      "Hi": 90.0
+    },
+    {
+      "Label": "plan",
+      "N": 10,
+      "Baseline": 0.0,
+      "Candidate": 0.8,
+      "Points": 80.0,
+      "Lo": 50.0,
+      "Hi": 100.0
+    },
+    {
+      "Label": "sat",
+      "N": 10,
+      "Baseline": 0.1,
+      "Candidate": 0.5,
+      "Points": 40.0,
+      "Lo": 10.0,
+      "Hi": 70.0
+    },
+    {
+      "Label": "OVERALL",
+      "N": 30,
+      "Baseline": 0.0667,
+      "Candidate": 0.6667,
+      "Points": 60.0,
+      "Lo": 43.3,
+      "Hi": 76.7
+    }
+  ]
+}

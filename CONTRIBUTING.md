@@ -42,19 +42,27 @@ every task here.
 
 ### 1. Check a published result
 
-You need only PowerShell 7. Follow "Verify a published result yourself" in the
-[README](README.md), steps 1–5. Then add a row to `VERIFICATIONS.md` in the
-result's folder (make the file if it does not exist):
+You need only PowerShell 7. One command checks a challenge folder or a calibration
+folder: the seed against its commitment, the prompts against the seed, every grade,
+the superiority numbers or the frontier, and the signal scan.
+
+```powershell
+pwsh ./ladder.ps1 -Mode Check -Dir runs/<folder> -Who '@your-handle'
+```
+
+It prints the row to add to `VERIFICATIONS.md` in that folder (make the file if it
+does not exist, with this header):
 
 ```markdown
 | Date | Who | Kind | Steps done | Outcome | Notes |
 |---|---|---|---|---|---|
-| 2026-12-02 | @your-handle | check | 1–5 | reproduced | Scan flagged 0 replies |
 ```
 
-- **Outcome:** `reproduced` when every number matches, `differs` when one does not.
-  For `differs`, also open an issue that quotes the command and both outputs.
+- **Outcome:** `reproduced` when every line says `OK`, `differs` when one says
+  `FAIL`. For `differs`, also open an issue that quotes the output.
 - Increase the **Checks** count of that row in the README table by one.
+- Try it first on `examples/challenge-2026-11-18-synthetic-vs-synthetic`, a worked
+  example with a public seed.
 
 ### 2. Replicate a result
 
@@ -228,8 +236,10 @@ Add one row to the right table in `README.md`. For a challenge:
 ## Pull request checklist
 
 - [ ] `COMMITMENT.md` was pushed before the first prompt was sent.
-- [ ] `CheckPrompts` reports 0 mismatches.
-- [ ] `Verify` reproduces every `results.csv`.
-- [ ] `Superiority` reproduces the numbers in `RESULT.md` and in the table row.
-- [ ] `Scan` output is in `RESULT.md`. Each flagged reply is explained.
+- [ ] `RESULT.md`, `result.json` and the table row come from `-Mode Report`.
+- [ ] `-Mode Check` says `OK` on every line. Each flagged reply is explained.
 - [ ] No personal data in any file.
+
+Every pull request that changes `runs/` or `examples/` runs `-Mode Check`
+automatically, with the checker from the base branch. The report is in the
+pull request's Checks tab, under the job summary.

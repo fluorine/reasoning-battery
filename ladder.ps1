@@ -4,23 +4,29 @@
 param(
     [Parameter(Mandatory)]
     [ValidateSet('Generate', 'Key', 'Verify', 'Compare',
-        'Calibrate', 'Quiz', 'Superiority', 'Scan', 'Bundle', 'Import', 'CheckPrompts')]
+        'Calibrate', 'Quiz', 'Superiority', 'Scan', 'Bundle', 'Import', 'CheckPrompts',
+        'Report', 'Check')]
     [string]$Mode,
     [string]$Seed,
     [Parameter(Mandatory)][string]$Dir,
     [string[]]$BaselineDir,
-    [ValidateSet('sat', 'mult', 'track', 'induct', 'deduce', 'code', 'plan')]
     [string[]]$Families = @('sat', 'mult', 'track', 'induct', 'deduce', 'code', 'plan'),
     [ValidateRange(2, 30)][int]$MaxLevel = 10,
     [ValidateRange(1, 50)][int]$PerLevel = 5,
     [string]$Frontier,
     [ValidateRange(0.0, 0.5)][double]$Ceiling = 0.10,
     [ValidateRange(1, 200)][int]$PerFamily = 15,
-    [string[]]$ReplyFile
+    [string[]]$ReplyFile,
+    [string]$Challenger,
+    [string]$Challenged,
+    [string]$Settings,
+    [string]$Operator,
+    [string]$Who = '@your-handle'
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$Self = $PSCommandPath
 
 if (-not ('LadderGen.Stats' -as [type])) {
     Add-Type -TypeDefinition (Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Families.cs') -Raw)
@@ -35,6 +41,10 @@ $Scale = @{
     code   = @{ Base = 3; Growth = 1.4; Unit = 'statements' }
     plan   = @{ Base = 4; Growth = 1.4; Unit = 'moves' }
 }
+# pwsh -File passes "a,b" as one string, not as an array.
+$Families = @($Families -split ',' | Where-Object { $_ })
+$unknown = @($Families | Where-Object { -not $Scale.ContainsKey($_) })
+if ($unknown) { throw "Unknown family: $($unknown -join ', '). Use: $($Scale.Keys -join ', ')." }
 $Tokens = [string[]]('A'..'L')
 $ModelNames = '(?i)\b(claude|opus|sonnet|haiku|fable|anthropic|gpt|chatgpt|openai|' +
     'gemini|google|deepmind|llama|meta|mistral|grok|xai|deepseek|qwen)\b'
@@ -296,6 +306,20 @@ function Get-Curves([string]$Path) {
     $curves
 }
 
+function Invoke-Self([string[]]$Arguments) {
+    $rest = @(if ($Arguments.Count -gt 1) { $Arguments[1..($Arguments.Count - 1)] })
+    $out = & pwsh -NoProfile -File $Self -Mode $Arguments[0] @rest *>&1 | Out-String
+    [pscustomobject]@{ Ok = $LASTEXITCODE -eq 0; Text = $out.TrimEnd() }
+}
+
+function Get-RunSeed([string]$Path) {
+    $file = Join-Path $Path 'SEED.txt'
+    if (-not (Test-Path -LiteralPath $file)) {
+        throw "No SEED.txt in $Path. The seed is not revealed yet."
+    }
+    (Get-Content -LiteralPath $file -Raw).Trim()
+}
+
 function Format-D50([double]$Value, [int]$Censor) {
     $mark = switch ($Censor) { -1 { '<' } 1 { '>' } default { '' } }
     '{0}{1:n1}' -f $mark, $Value
@@ -535,6 +559,17 @@ switch ($Mode) {
             $x.Label, $x.N, $x.Baseline, $x.Candidate, $x.Points, $x.Lo, $x.Hi, $beyond
         }
         $all = $result[-1]
+        $verdict = if ($all.Lo -gt 0) { 'superior' } else { 'not shown' }
+        [ordered]@{
+            Controlled = $controlled; Ceiling = $ceil; Verdict = $verdict
+            Rows = @($result | ForEach-Object {
+                    [ordered]@{
+                        Label = $_.Label; N = $_.N
+                        Baseline = [math]::Round($_.Baseline, 4); Candidate = [math]::Round($_.Candidate, 4)
+                        Points = [math]::Round($_.Points, 1); Lo = [math]::Round($_.Lo, 1)
+                        Hi = [math]::Round($_.Hi, 1)
+                    } })
+        } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Dir 'superiority.json')
         if ($controlled -and $all.Baseline -gt $ceil) {
             Write-Warning ((
                     'Baseline scored {0:p0} on this quiz, above the {1:p0} ceiling. ' +
@@ -618,7 +653,7 @@ How to answer:
         $n = 0
         foreach ($inst in Get-Instances) {
             $n++
-            $path = Join-Path $Dir "prompts\$($inst.Id).txt"
+            $path = Join-Path $Dir "prompts/$($inst.Id).txt"
             # Git and the OS may change line endings, so compare without them.
             $want = ($inst.Prompt -replace '\r\n', "`n").TrimEnd()
             $have = if (Test-Path -LiteralPath $path) {
@@ -657,5 +692,171 @@ How to answer:
         }
         'Imported {0} of {1} problems. Unknown ids skipped: {2}. Missing: {3}.' -f $found.Count,
             $known.Count, $unknown, ($known.Count - $found.Count)
+    }
+    'Report' {
+        foreach ($p in 'Challenger', 'Challenged', 'Settings', 'Operator') {
+            if (-not (Get-Variable $p -ValueOnly)) { throw "$p is required." }
+        }
+        $seedText = if ($Seed) { $Seed } else { Get-RunSeed $Dir }
+        $cand = Join-Path $Dir 'candidate'
+        $base = Join-Path $Dir 'baseline'
+        $hasBase = Test-Path -LiteralPath (Join-Path $base 'answers')
+        $sides = @($cand) + @(if ($hasBase) { $base })
+        foreach ($s in $sides) {
+            Copy-Item -LiteralPath (Join-Path $Dir 'quiz/config.json') -Destination $s -Force
+            $v = Invoke-Self 'Verify', '-Seed', $seedText, '-Dir', $s
+            if (-not $v.Ok) { throw "Verify failed for ${s}:`n$($v.Text)" }
+        }
+        $supArgs = @('Superiority', '-Dir', $cand) + @(if ($hasBase) { '-BaselineDir', $base })
+        $sup = Invoke-Self $supArgs
+        if (-not $sup.Ok) { throw "Superiority failed:`n$($sup.Text)" }
+        $scan = ($sides | ForEach-Object {
+                "$(Split-Path $_ -Leaf):`n" + (Invoke-Self 'Scan', '-Dir', $_).Text }) -join "`n`n"
+        $sj = Get-Content -LiteralPath (Join-Path $cand 'superiority.json') -Raw | ConvertFrom-Json
+        $all = $sj.Rows[-1]
+        $leaf = Split-Path (Resolve-Path -LiteralPath $Dir) -Leaf
+        $date = if ($leaf -match '\d{4}-\d{2}-\d{2}') { $Matches[0] } else { Get-Date -Format 'yyyy-MM-dd' }
+        $control = if ($hasBase) { 'yes' } else { 'ceiling' }
+        $row = ('| {0} | `{1}` | `{2}` | {3} | {4} | {5} | {6:p0} | {7:p0} | {8:+0;-0;0} | ' +
+            '{9:+0;-0;0} to {10:+0;-0;0} | {11} | 0 | [folder](runs/{12}/) |') -f $date, $Challenger,
+            $Challenged, $Settings, $Operator, $control, [double]$all.Baseline, [double]$all.Candidate,
+            [double]$all.Points, [double]$all.Lo, [double]$all.Hi, $sj.Verdict, $leaf
+        [ordered]@{
+            Date = $date; Challenger = $Challenger; Challenged = $Challenged; Settings = $Settings
+            Operator = $Operator; Control = $control; SeedSha256 = (Get-Sha256Hex $seedText)
+            Verdict = $sj.Verdict; Rows = $sj.Rows
+        } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $Dir 'result.json')
+        $md = @"
+# Result
+
+| Item | Value |
+|---|---|
+| Date | $date |
+| Challenger | ``$Challenger`` |
+| Challenged | ``$Challenged`` |
+| Settings | $Settings |
+| Operator | $Operator |
+| Control | $control |
+| Seed SHA-256 | ``$(Get-Sha256Hex $seedText)`` |
+| Verdict | $($sj.Verdict) |
+
+## Superiority
+
+``````text
+$($sup.Text)
+``````
+
+## Signal scan
+
+``````text
+$scan
+``````
+
+## README row
+
+``````markdown
+$row
+``````
+"@
+        Set-Content -LiteralPath (Join-Path $Dir 'RESULT.md') -Value $md -Encoding utf8NoBOM
+        "Wrote RESULT.md and result.json in $Dir"
+        'Add this row to the Challenges table in README.md:'
+        $row
+    }
+    'Check' {
+        $steps = [System.Collections.Generic.List[object]]::new()
+        function Add-Step([string]$Name, [bool]$Ok, [string]$Detail) {
+            $steps.Add([pscustomobject]@{ Step = $Name; Ok = $Ok; Detail = $Detail })
+        }
+        $tmp = Join-Path ([IO.Path]::GetTempPath()) ("battery-check-" + [guid]::NewGuid().ToString('n'))
+        New-Item -ItemType Directory $tmp | Out-Null
+        $flagged = 0
+        try {
+            $seedText = Get-RunSeed $Dir
+            $hash = Get-Sha256Hex $seedText
+            $commit = Get-Content -LiteralPath (Join-Path $Dir 'COMMITMENT.md') -Raw
+            Add-Step 'Seed matches commitment' ($commit -match $hash) $hash
+
+            $isQuiz = Test-Path -LiteralPath (Join-Path $Dir 'quiz')
+            $problemDir = Join-Path $Dir $(if ($isQuiz) { 'quiz' } else { 'ladder' })
+            $cp = Invoke-Self 'CheckPrompts', '-Seed', $seedText, '-Dir', $problemDir
+            Add-Step 'Prompts match seed' ($cp.Text -match 'Mismatches: 0\.') ($cp.Text -split "`n")[-1]
+
+            $sides = if ($isQuiz) {
+                @('candidate', 'baseline') | Where-Object {
+                    Test-Path -LiteralPath (Join-Path $Dir "$_/answers") }
+            }
+            else {
+                Get-ChildItem -LiteralPath $Dir -Directory -Filter 'base*' | ForEach-Object Name
+            }
+            foreach ($s in $sides) {
+                $copy = Join-Path $tmp $s
+                New-Item -ItemType Directory $copy | Out-Null
+                Copy-Item -LiteralPath (Join-Path $Dir "$s/answers") -Destination $copy -Recurse
+                Copy-Item -LiteralPath (Join-Path $problemDir 'config.json') -Destination $copy
+                $v = Invoke-Self 'Verify', '-Seed', $seedText, '-Dir', $copy
+                $mine = @{}
+                foreach ($r in Import-Csv -LiteralPath (Join-Path $copy 'results.csv')) { $mine[$r.Id] = $r.Pass }
+                $theirsPath = Join-Path $Dir "$s/results.csv"
+                $diff = if (Test-Path -LiteralPath $theirsPath) {
+                    @(Import-Csv -LiteralPath $theirsPath | Where-Object { $mine[$_.Id] -ne $_.Pass }).Count
+                }
+                else { -1 }
+                $detail = if ($diff -lt 0) { 'published results.csv missing' } else { "$diff items differ" }
+                Add-Step "Grades reproduce: $s" ($v.Ok -and $diff -eq 0) $detail
+                $sc = Invoke-Self 'Scan', '-Dir', (Join-Path $Dir $s)
+                if ($sc.Text -match 'Flagged (\d+)') { $flagged += [int]$Matches[1] }
+            }
+
+            if ($isQuiz) {
+                $cand = Join-Path $tmp 'candidate'
+                $supArgs = @('Superiority', '-Dir', $cand) +
+                    @(if ($sides -contains 'baseline') { '-BaselineDir', (Join-Path $tmp 'baseline') })
+                $sup = Invoke-Self $supArgs
+                $resPath = Join-Path $Dir 'result.json'
+                $ok = $false
+                $detail = 'result.json missing'
+                if ($sup.Ok -and (Test-Path -LiteralPath $resPath)) {
+                    $mineJ = Get-Content -LiteralPath (Join-Path $cand 'superiority.json') -Raw | ConvertFrom-Json
+                    $pub = Get-Content -LiteralPath $resPath -Raw | ConvertFrom-Json
+                    $a = $mineJ.Rows[-1]
+                    $b = $pub.Rows[-1]
+                    $ok = $mineJ.Verdict -eq $pub.Verdict -and $a.Points -eq $b.Points -and
+                        $a.Lo -eq $b.Lo -and $a.Hi -eq $b.Hi
+                    $detail = '{0:+0;-0;0} points ({1:+0;-0;0} to {2:+0;-0;0}), {3}' -f
+                        [double]$a.Points, [double]$a.Lo, [double]$a.Hi, $mineJ.Verdict
+                }
+                Add-Step 'Superiority reproduces result.json' $ok $detail
+            }
+            else {
+                $cal = Join-Path $tmp 'cal'
+                $bases = ($sides | ForEach-Object { Join-Path $tmp $_ }) -join ','
+                $c = Invoke-Self 'Calibrate', '-Dir', $cal, '-BaselineDir', $bases
+                $pubPath = Join-Path $Dir 'frontier.json'
+                $ok = $false
+                $detail = 'frontier.json missing'
+                if ($c.Ok -and (Test-Path -LiteralPath $pubPath)) {
+                    $key = { param($f) (@($f.Frontier) | Sort-Object Family |
+                                ForEach-Object { "$($_.Family)=$($_.Level)" }) -join ' ' }
+                    $mineF = & $key (Get-Content -LiteralPath (Join-Path $cal 'frontier.json') -Raw | ConvertFrom-Json)
+                    $pubF = & $key (Get-Content -LiteralPath $pubPath -Raw | ConvertFrom-Json)
+                    $ok = $mineF -eq $pubF
+                    $detail = $mineF
+                }
+                Add-Step 'Frontier reproduces frontier.json' $ok $detail
+            }
+        }
+        catch { Add-Step 'Check ran to the end' $false $_.Exception.Message }
+        finally { Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue }
+
+        $steps | ForEach-Object { '{0,-4} {1,-36} {2}' -f $(if ($_.Ok) { 'OK' } else { 'FAIL' }), $_.Step, $_.Detail }
+        "Scan flagged $flagged replies for review."
+        $allOk = -not ($steps | Where-Object { -not $_.Ok })
+        $outcome = if ($allOk) { 'reproduced' } else { 'differs' }
+        ''
+        'Add this row to VERIFICATIONS.md in the folder:'
+        '| {0} | {1} | check | all | {2} | Scan flagged {3} replies |' -f (Get-Date -Format 'yyyy-MM-dd'),
+            $Who, $outcome, $flagged
+        if (-not $allOk) { exit 1 }
     }
 }

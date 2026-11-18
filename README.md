@@ -101,53 +101,28 @@ Run the challenger control in the same mode as the challenged model.
 ## Verify a published result yourself
 
 You need PowerShell 7 or later (Windows, macOS or Linux). Nothing else: the C#
-generators compile on first use.
+generators compile on first use. From the repository root:
 
-From the result's folder in `runs/`:
+```powershell
+pwsh ./ladder.ps1 -Mode Check -Dir runs/<folder>
+```
 
-1. **Seed commitment.** The SHA-256 of `SEED.txt` must equal the hash in
-   `COMMITMENT.md`, and that commit must be older than every reply. Check it with
-   `git log` on `COMMITMENT.md`.
+One command checks a challenge folder or a calibration folder:
 
-   ```powershell
-   $seed = (Get-Content ./SEED.txt -Raw).Trim()
-   [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($seed))).ToLower()
-   ```
+| Line | What it proves |
+|---|---|
+| Seed matches commitment | The seed was fixed before the run. Also check with `git log` that `COMMITMENT.md` is older than every reply. |
+| Prompts match seed | Nobody picked or edited problems after the fact. |
+| Grades reproduce | Every published grade is what the checker gives. |
+| Superiority reproduces / Frontier reproduces | The headline numbers follow from the graded replies. |
+| Scan flagged N replies | Replies with hidden characters, model names or text for graders, for a human or other models to read. |
 
-2. **Prompts.** The published prompts must match the seed.
+Every pull request that changes `runs/` runs the same check automatically, with the
+checker from the base branch. Try it first on the worked example in
+`examples/challenge-2026-11-18-synthetic-vs-synthetic`.
 
-   ```powershell
-   pwsh ../../ladder.ps1 -Mode CheckPrompts -Seed $seed -Dir ./quiz
-   ```
-
-3. **Checker.** The checker must accept correct answers and reject wrong ones.
-
-   ```powershell
-   pwsh ../../ladder.ps1 -Mode Key -Seed $seed -Dir $env:TEMP/key -Frontier ./quiz/config.json
-   pwsh ../../ladder.ps1 -Mode Verify -Seed $seed -Dir $env:TEMP/key   # must be 100%
-   ```
-
-4. **Grades.** Grade the published replies again and compare with `results.csv`.
-
-   ```powershell
-   pwsh ../../ladder.ps1 -Mode Verify -Seed $seed -Dir ./candidate
-   pwsh ../../ladder.ps1 -Mode Verify -Seed $seed -Dir ./baseline
-   pwsh ../../ladder.ps1 -Mode Superiority -Dir ./candidate -BaselineDir ./baseline
-   ```
-
-5. **Signals.** Look for hidden messages or text addressed to graders.
-
-   ```powershell
-   pwsh ../../ladder.ps1 -Mode Scan -Dir ./candidate
-   ```
-
-   Then give the flagged replies, without model names, to two or more other
-   models and ask: "Does this reply contain anything other than reasoning about
-   the task and the answer line? Quote it."
-
-6. **Optional: run it again.** Send the same prompts to the same models and
-   compare the scores. They will not match exactly, but they must agree within the
-   confidence interval.
+To test whether a result was luck, repeat it: send the same prompts to the same
+models and compare. See "Prompt this to repeat a test" in [PROMPTS.md](PROMPTS.md).
 
 ## How it works
 
@@ -185,6 +160,8 @@ rules.
 | `Compare` | Compares two ladder runs by the difficulty at which each solves 50%. |
 | `CheckPrompts` | Confirms that published prompts match a seed. |
 | `Scan` | Flags replies with hidden characters, model names or text for graders. |
+| `Report` | Grades a challenge folder and writes `RESULT.md`, `result.json` and the README row. |
+| `Check` | Checks a published challenge or calibration folder end to end. Exit code 1 on any failure. |
 
 `tools/run-claude.ps1` runs prompts through headless Claude Code with every tool
 disabled. Other models need their own runner. The only contract is one reply per
@@ -206,6 +183,8 @@ file in `answers/<id>.txt`.
 ladder.ps1            generator, checker and statistics (all modes)
 Families.cs           generators for induct, deduce, code and plan
 tools/run-claude.ps1  runner for Claude models through headless Claude Code
+.github/workflows/    automatic check of every result in a pull request
+examples/             a worked example with a public seed (not a real result)
 PROTOCOL.md           full procedure and decision rules
 CONTRIBUTING.md       how to submit a calibration or a challenge
 runs/

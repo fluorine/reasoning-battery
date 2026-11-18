@@ -23,7 +23,7 @@ in the [README](README.md).
 No model access needed. About 10 minutes.
 
 ```text
-Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "1. Check a published result" sections, and check the result in runs/<result folder>. Tell me whether every number reproduces, then offer to submit the VERIFICATIONS.md row as a pull request.
+Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "1. Check a published result" sections, and run the check on runs/<result folder>. Show me the output, then offer to submit the VERIFICATIONS.md row as a pull request.
 ```
 
 ## Prompt this to repeat a test

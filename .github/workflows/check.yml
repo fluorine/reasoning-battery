@@ -1,0 +1,63 @@
+# Grades every result folder that a pull request adds or changes.
+# The checker comes from the base branch, so a pull request cannot grade itself.
+name: Check results
+
+on:
+  pull_request:
+    paths: ['runs/**', 'examples/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check result folders
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $base = if ($env:GITHUB_BASE_REF) { "origin/$env:GITHUB_BASE_REF" } else { 'HEAD' }
+          $checker = Join-Path $env:RUNNER_TEMP 'checker'
+          New-Item -ItemType Directory -Force $checker | Out-Null
+          foreach ($f in 'ladder.ps1', 'Families.cs') {
+            git show "${base}:$f" | Set-Content -LiteralPath (Join-Path $checker $f)
+          }
+          if ($env:GITHUB_BASE_REF) {
+            $files = @(git diff --name-only "$base...HEAD")
+            $folders = $files | Where-Object { $_ -match '^(runs|examples)/[^/]+/' } |
+              ForEach-Object { ($_ -split '/')[0..1] -join '/' } | Sort-Object -Unique
+            $checkerChanged = $files | Where-Object { $_ -in 'ladder.ps1', 'Families.cs' }
+          }
+          else {
+            $folders = Get-ChildItem runs, examples -Directory -ErrorAction SilentlyContinue |
+              ForEach-Object { "$($_.Parent.Name)/$($_.Name)" }
+            $checkerChanged = $null
+          }
+          $summary = [System.Text.StringBuilder]::new()
+          [void]$summary.AppendLine('## Result checks')
+          if ($checkerChanged) {
+            [void]$summary.AppendLine('> This pull request changes the checker. The folders below were checked with the checker from the base branch.')
+          }
+          $failed = 0
+          foreach ($folder in $folders) {
+            [void]$summary.AppendLine("### $folder")
+            if (-not (Test-Path (Join-Path $folder 'SEED.txt'))) {
+              [void]$summary.AppendLine('Seed not revealed yet. Only the commitment is published, so there is nothing to grade.')
+              continue
+            }
+            $out = pwsh -NoProfile -File (Join-Path $checker 'ladder.ps1') -Mode Check -Dir $folder *>&1 | Out-String
+            if ($LASTEXITCODE -ne 0) { $failed++ }
+            [void]$summary.AppendLine('```text')
+            [void]$summary.AppendLine($out.TrimEnd())
+            [void]$summary.AppendLine('```')
+          }
+          if (-not $folders) { [void]$summary.AppendLine('No result folders changed.') }
+          $summary.ToString() | Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY
+          $summary.ToString()
+          if ($failed) { throw "$failed folder(s) failed the check." }

@@ -1,0 +1,26 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+x = 20
+t = 40
+p = 14
+w = 29
+x = p * 9
+x = p * 8
+t = t * 8
+w = w + 26
+x = w - x
+p = x + w
+repeat 3 times:
+    t = t - w
+    t = p - w
+    p = p + p
+p = w + 87
+p = x + 2
+
+Answer format: ANSWER: the final values of x t p w, in that order, separated by spaces.
