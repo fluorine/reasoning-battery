@@ -5,7 +5,10 @@
 param(
     [Parameter(Mandatory)][string]$LadderDir,
     [Parameter(Mandatory)][string[]]$RunDir,
-    [Parameter(Mandatory)][string]$SeedFile,
+    # Ladder runs need the seed to grade between levels. -All does not.
+    [string]$SeedFile,
+    # Run every prompt in a quiz with no stopping rule.
+    [switch]$All,
     [string]$Model = 'claude-opus-5-5',
     [ValidateSet('low', 'medium', 'high', 'xhigh', 'max')][string]$Effort = 'high',
     [ValidateRange(1, 16)][int]$Parallel = 6,
@@ -21,7 +24,8 @@ $ErrorActionPreference = 'Stop'
 
 $ladderScript = Join-Path $PSScriptRoot '..\ladder.ps1'
 $claude = (Get-Command claude).Source
-$seed = (Get-Content -LiteralPath $SeedFile -Raw).Trim()
+if (-not $All -and -not $SeedFile) { throw 'SeedFile is required for a ladder run.' }
+$seed = if ($SeedFile) { (Get-Content -LiteralPath $SeedFile -Raw).Trim() }
 $cfg = Get-Content -LiteralPath (Join-Path $LadderDir 'config.json') -Raw | ConvertFrom-Json
 $promptDir = Join-Path $LadderDir 'prompts'
 $RunDir = @($RunDir -split ',' | Where-Object { $_ })
@@ -51,6 +55,18 @@ function Get-NextLevel([string]$Run, [string]$Family, $Results) {
 }
 
 function Get-Pending([hashtable]$Skip) {
+    if ($All) {
+        foreach ($r in $RunDir) {
+            $items = foreach ($p in Get-ChildItem -LiteralPath $promptDir -Filter *.txt) {
+                $id = $p.BaseName
+                if (-not (Test-Path (Join-Path $r "answers\$id.txt")) -and -not $Skip["$r|$id"]) {
+                    [pscustomobject]@{ Run = $r; Id = $id }
+                }
+            }
+            if ($items) { return @($items) }
+        }
+        return @()
+    }
     # Finish one run before the next, so a budget stop leaves whole runs.
     foreach ($r in $RunDir) {
         pwsh -NoProfile -File $ladderScript -Mode Verify -Seed $seed -Dir $r | Out-Null

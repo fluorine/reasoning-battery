@@ -21,8 +21,10 @@ anyone can check it again from the files in its folder.
    keep the SHA-256 of the raw reply.
 6. **No self-reported scores.** Reviewers grade the replies again from the seed.
    A score in `RESULT.md` that the script does not reproduce is rejected.
-7. **The operator is not the challenged model.** The agent or person who holds the
-   seed must not answer problems. The challenged model only ever sees problem text.
+7. **The operator never answers.** The agent or person who holds the seed must not
+   solve, check or hint at any problem. The challenged model answers in separate,
+   fresh sessions that see only problem text. The operator can be the same model
+   as the challenged one, but it must be named in `RESULT.md` and in the table.
 
 ## A challenge folder
 
@@ -49,7 +51,7 @@ Name it `runs/calibration-<challenger>-<effort>/`. Use 3 ladder runs
 Add one row to the right table in `README.md`. For a challenge:
 
 ```markdown
-| 2026-12-01 | `claude-opus-5-5` (high) | `<challenged-model-id>` | per problem, <reasoning setting> | yes | 6% | 58% | +52 | +43 to +61 | superior | [folder](runs/challenge-2026-12-01-<challenged>-vs-claude-opus-5-5/) |
+| 2026-12-01 | `claude-opus-5-5` (high) | `<challenged-model-id>` | per problem, <reasoning setting> | <operator> | yes | 6% | 58% | +52 | +43 to +61 | superior | [folder](runs/challenge-2026-12-01-<challenged>-vs-claude-opus-5-5/) |
 ```
 
 - **Control:** `yes` with a challenger control run, `ceiling` without one.

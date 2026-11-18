@@ -1,18 +1,41 @@
 # Reasoning battery
 
-A self-checking test of how far one language model exceeds another at exact,
-tool-free reasoning.
+**A model finds the edge of its own ability, then challenges another model, or a
+fresh instance of itself, to go past it. Anyone can check the result.**
 
-- A **challenger** model sets the bar. A calibration finds, for each task family,
-  the difficulty at which the challenger solves only 0–10% of problems.
-- A **challenged** model takes a fresh quiz at that difficulty.
-- **Superiority** = challenged success − challenger success on the same quiz, in
-  percentage points, with a 95% confidence interval.
+The idea is simple. A model cannot easily solve a problem harder than itself, but
+it can easily *build* one: choose the answer first, then construct a problem
+around it. Checking an answer is cheap even when finding it is hard. So a model can
+write tests that it fails itself.
 
-Every problem is built from an answer that the generator already holds, so the
-problems can be harder than the model that wrote the generator can solve. A
-deterministic script grades every answer. No language model judges, so no message
-in a reply can change a score.
+1. **Know your limits.** The **challenger** runs a ladder of problems that grow
+   harder without end, in seven families: logic, arithmetic, memory, induction,
+   deduction, code reading and planning. For each family, the calibration finds the
+   level where the challenger solves only 0–10%. That is the limit it admits.
+2. **Challenge.** A **challenged** model gets a fresh quiz at exactly those levels.
+   It can be a newer model, a rival model or a new instance of the challenger.
+3. **Measure.** **Superiority** = challenged success − challenger success on the
+   same quiz, in percentage points, with a 95% confidence interval.
+4. **Check.** A script, not a model, grades every answer, so no message in a reply
+   can change a score. Each run commits to a secret seed before it starts. With the
+   seed, anyone can rebuild every problem and grade every reply again.
+
+A model that wins can become the next challenger. Each link in the chain shows how
+far one model went past the limit that the previous one admitted.
+
+## Challenge a model with one prompt
+
+Give this line to a coding agent that has a shell and can call the model you want
+to test (for example Claude Code):
+
+```text
+Read https://github.com/fluorine/reasoning-battery/blob/main/runs/calibration-claude-opus-5-5-high/CHALLENGE.md and follow it as the operator. The challenged model is <MODEL ID>, with <REASONING SETTING>.
+```
+
+The agent makes a fresh quiz, runs the challenged model on it without tools,
+grades the replies and prepares a pull request with the result. It asks you before
+it spends usage or publishes anything. If the challenged model wins, it offers to
+calibrate it as the next challenger.
 
 ## Results
 
@@ -20,29 +43,26 @@ in a reply can change a score.
 
 | Challenger | Effort | Date | Frontier: difficulty at 0–10% success | Status | Challenge it |
 |---|---|---|---|---|---|
-| `claude-opus-5-5` | high | 2026-11-18 | pending | running | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high/CHALLENGE.md) |
+| `claude-opus-5-5` | high | 2026-11-18 | pending | in progress | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high/CHALLENGE.md) |
 
 ### Challenges
 
-| Date | Challenger | Challenged | Settings | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Verdict | Evidence |
-|---|---|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — | — | — |
+| Date | Challenger | Challenged | Settings | Operator | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Verdict | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — | — | — | — |
 
 - **Control** is `yes` when the challenger also ran the same quiz. It is
   `ceiling` when it did not. The challenger's score is then set to 10%, its worst
   case from calibration, which keeps the result conservative.
+- **Operator** is the agent or person who held the seed and ran the quiz.
 - Only results that follow [CONTRIBUTING.md](CONTRIBUTING.md) go in this table.
+- Planned: a progress graph across the chain of challenges, once there are enough
+  results to draw one.
 
-## Challenge a model
+## Other ways to run a challenge
 
-Open the challenger's `CHALLENGE.md` (linked in the table above). It holds:
-
-1. **An operator prompt.** Paste it into a coding agent with a shell, such as
-   Claude Code. The agent then makes a fresh quiz, runs it, grades it and prepares
-   the pull request. The operator agent never answers problems itself.
-2. **The messages for the challenged model.** Use these when you run the quiz by
-   hand in a chat app.
-3. **The manual steps**, for operators who prefer to type the commands.
+Each challenger's `CHALLENGE.md` (linked in the table above) also holds the steps
+to run the quiz by hand in a chat app, with the exact messages to send.
 
 The challenged model only ever sees problem text. It never sees the seed, the
 generator, the challenger's name or this repository.
