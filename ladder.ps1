@@ -4,7 +4,7 @@
 param(
     [Parameter(Mandatory)]
     [ValidateSet('Generate', 'Key', 'Verify', 'Compare',
-        'Calibrate', 'Quiz', 'Superiority', 'Scan')]
+        'Calibrate', 'Quiz', 'Superiority', 'Scan', 'Bundle', 'Import', 'CheckPrompts')]
     [string]$Mode,
     [string]$Seed,
     [Parameter(Mandatory)][string]$Dir,
@@ -15,7 +15,8 @@ param(
     [ValidateRange(1, 50)][int]$PerLevel = 5,
     [string]$Frontier,
     [ValidateRange(0.0, 0.5)][double]$Ceiling = 0.10,
-    [ValidateRange(1, 200)][int]$PerFamily = 15
+    [ValidateRange(1, 200)][int]$PerFamily = 15,
+    [string[]]$ReplyFile
 )
 
 Set-StrictMode -Version Latest
@@ -302,9 +303,11 @@ function Format-D50([double]$Value, [int]$Censor) {
 
 $Quiz = $null
 $QuizCeiling = $Ceiling
-if ($Mode -in 'Generate', 'Key', 'Verify', 'Quiz' -and -not $Seed) { throw 'Seed is required.' }
+if ($Mode -in 'Generate', 'Key', 'Verify', 'Quiz', 'CheckPrompts' -and -not $Seed) {
+    throw 'Seed is required.'
+}
 $cfgPath = Join-Path $Dir 'config.json'
-if ($Mode -eq 'Verify' -and (Test-Path -LiteralPath $cfgPath)) {
+if ($Mode -in 'Verify', 'CheckPrompts' -and (Test-Path -LiteralPath $cfgPath)) {
     $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
     if ($cfg.Kind -eq 'quiz') {
         $Quiz = @($cfg.Frontier)
@@ -321,6 +324,7 @@ if ($Mode -in 'Quiz', 'Key' -and $Frontier) {
     $front = Get-Content -LiteralPath $Frontier -Raw | ConvertFrom-Json
     $Quiz = @($front.Frontier)
     $QuizCeiling = $front.Ceiling
+    if ($Mode -eq 'Key' -and $front.PSObject.Properties['PerFamily']) { $PerFamily = $front.PerFamily }
 }
 if ($Mode -eq 'Quiz' -and -not $Quiz) { throw 'Frontier is required: run Calibrate first.' }
 
@@ -477,16 +481,24 @@ switch ($Mode) {
         $cfgQ = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
         if ($cfgQ.Kind -ne 'quiz') { throw 'Dir must be a graded quiz directory.' }
         $cand = @(Import-Csv -LiteralPath (Join-Path $Dir 'results.csv'))
-        $best = $null
-        $bestOk = -1
-        foreach ($b in Get-BaselineDirs) {
-            $r = @(Import-Csv -LiteralPath (Join-Path $b 'results.csv'))
-            $k = @($r | Where-Object Pass -EQ 'True').Count
-            if ($k -gt $bestOk) { $best = $r; $bestOk = $k }
-        }
+        $ceil = [double]$cfgQ.Ceiling
+        $controlled = [bool]$BaselineDir
         $chal = @{}
-        foreach ($r in $best) { $chal[$r.Id] = $r.Pass -eq 'True' }
-        if ($chal.Count -ne $cand.Count) { throw 'The quiz directories hold different items.' }
+        if ($controlled) {
+            $best = $null
+            $bestOk = -1
+            foreach ($b in Get-BaselineDirs) {
+                $r = @(Import-Csv -LiteralPath (Join-Path $b 'results.csv'))
+                $k = @($r | Where-Object Pass -EQ 'True').Count
+                if ($k -gt $bestOk) { $best = $r; $bestOk = $k }
+            }
+            foreach ($r in $best) { $chal[$r.Id] = $r.Pass -eq 'True' }
+            if ($chal.Count -ne $cand.Count) { throw 'The quiz directories hold different items.' }
+        }
+        else {
+            # No control run: assume the baseline scores the ceiling, its worst case.
+            foreach ($r in $cand) { $chal[$r.Id] = $false }
+        }
 
         $groups = @($cand | Group-Object Family | ForEach-Object { , @($_.Name, $_.Group) })
         $groups += , @('OVERALL', $cand)
@@ -505,21 +517,25 @@ switch ($Mode) {
             $lo, $hi = Get-CiBounds ([LadderGen.Stats]::BootPairedDiff($a, $b, 2000, $bootSeed++))
             $ra = @($a | Where-Object { $_ }).Count / $a.Count
             $rb = @($b | Where-Object { $_ }).Count / $b.Count
+            if (-not $controlled) { $rb = $ceil; $lo -= $ceil; $hi -= $ceil }
             [pscustomobject]@{
                 Label = $g[0]; N = $a.Count; Baseline = $rb; Candidate = $ra
                 Points = ($ra - $rb) * 100; Lo = $lo * 100; Hi = $hi * 100
-                Beyond = if ($failed) { $beyond / $failed } else { [double]::NaN }
+                Beyond = if ($failed -and $controlled) { $beyond / $failed } else { [double]::NaN }
             }
         }
         'Superiority = candidate success - baseline success on the frontier quiz, in points.'
+        if (-not $controlled) {
+            'UNCONTROLLED: no baseline run on this quiz. Baseline set to the {0:p0} ceiling.' -f $ceil
+        }
         foreach ($x in $result) {
+            $beyond = if ([double]::IsNaN($x.Beyond)) { 'n/a' } else { $x.Beyond.ToString('p0') }
             ('{0,-8} n={1,-4} baseline {2,4:p0}  candidate {3,4:p0}  superiority {4,4:+0;-0;0} ' +
-                '(95% CI {5:+0;-0;0} to {6:+0;-0;0})  solved {7:p0} of baseline failures') -f
-            $x.Label, $x.N, $x.Baseline, $x.Candidate, $x.Points, $x.Lo, $x.Hi, $x.Beyond
+                '(95% CI {5:+0;-0;0} to {6:+0;-0;0})  solved {7} of baseline failures') -f
+            $x.Label, $x.N, $x.Baseline, $x.Candidate, $x.Points, $x.Lo, $x.Hi, $beyond
         }
         $all = $result[-1]
-        $ceil = [double]$cfgQ.Ceiling
-        if ($all.Baseline -gt $ceil) {
+        if ($controlled -and $all.Baseline -gt $ceil) {
             Write-Warning ((
                     'Baseline scored {0:p0} on this quiz, above the {1:p0} ceiling. ' +
                     'Calibrate again with more problems per level.') -f $all.Baseline, $ceil)
@@ -536,7 +552,7 @@ switch ($Mode) {
     'Scan' {
         $checks = [ordered]@{
             'invisible or bidi characters'   =
-                '[​-‏‪-‮⁠-⁤⁦-⁩﻿]|\uDB40[\uDC00-\uDC7F]'
+                '[\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]|\uDB40[\uDC00-\uDC7F]'
             'names a model or vendor'        = $ModelNames
             'addresses the test or graders'  =
                 '(?i)\b(grader|graders|evaluator|auditor|judge|benchmark|test author|' +
@@ -559,5 +575,87 @@ switch ($Mode) {
             if ($why) { $flagged++; '{0}  {1}' -f $file.Name, ($why -join '; ') }
         }
         'Scanned {0} replies. Flagged {1} for auditor review.' -f $files.Count, $flagged
+    }
+    'Bundle' {
+        $prompts = @(Get-ChildItem -LiteralPath (Join-Path $Dir 'prompts') -Filter *.txt |
+                Sort-Object Name)
+        if (-not $prompts) { throw "No prompts in $Dir. Run Generate or Quiz first." }
+        $sb = [System.Text.StringBuilder]::new()
+        [void]$sb.AppendLine(@"
+# Problem set
+
+This file holds $($prompts.Count) independent problems. Each problem is complete in
+itself. The problems have no connection to each other.
+
+How to answer:
+
+1. Do not use tools, code execution, search or outside help.
+2. For each problem, start a new line with the marker ITEM and the problem's id,
+   for example: ITEM $($prompts[0].BaseName)
+3. After the marker, write your work, then the answer line in the exact format
+   that the problem asks for. In each problem's section, only the last line that
+   starts with "ANSWER:" is graded.
+4. Answer as many problems as you can, in any order. A problem with no answer
+   counts as wrong. If you stop early, the next message will ask you to continue.
+
+"@)
+        foreach ($p in $prompts) {
+            $text = Get-Content -LiteralPath $p.FullName -Raw
+            if ($text -match $ModelNames) {
+                throw "Prompt $($p.BaseName) names a model or vendor: '$($Matches[0])'."
+            }
+            [void]$sb.AppendLine("----- PROBLEM $($p.BaseName) -----")
+            [void]$sb.AppendLine($text.TrimEnd())
+            [void]$sb.AppendLine("----- END OF PROBLEM $($p.BaseName) -----")
+            [void]$sb.AppendLine()
+        }
+        $out = Join-Path $Dir 'bundle.md'
+        Set-Content -LiteralPath $out -Value $sb.ToString() -Encoding utf8NoBOM -NoNewline
+        'Wrote {0} problems to {1} ({2:n0} KB)' -f $prompts.Count, $out, ((Get-Item $out).Length / 1KB)
+    }
+    'CheckPrompts' {
+        $bad = 0
+        $n = 0
+        foreach ($inst in Get-Instances) {
+            $n++
+            $path = Join-Path $Dir "prompts\$($inst.Id).txt"
+            # Git and the OS may change line endings, so compare without them.
+            $want = ($inst.Prompt -replace '\r\n', "`n").TrimEnd()
+            $have = if (Test-Path -LiteralPath $path) {
+                ((Get-Content -LiteralPath $path -Raw) -replace '\r\n', "`n").TrimEnd()
+            }
+            if ($have -cne $want) { $bad++; "MISMATCH $($inst.Id)" }
+        }
+        'Checked {0} prompts against the seed. Mismatches: {1}.' -f $n, $bad
+    }
+    'Import' {
+        if (-not $ReplyFile) { throw 'ReplyFile is required.' }
+        $ReplyFile = @($ReplyFile -split ',' | Where-Object { $_ })
+        $known = @{}
+        foreach ($p in Get-ChildItem -LiteralPath (Join-Path $Dir 'prompts') -Filter *.txt) {
+            $known[$p.BaseName] = $true
+        }
+        $answerDir = Join-Path $Dir 'answers'
+        New-Item -ItemType Directory -Force $answerDir | Out-Null
+        $found = @{}
+        $unknown = 0
+        foreach ($f in $ReplyFile) {
+            $text = Get-Content -LiteralPath $f -Raw
+            $marks = [regex]::Matches($text, '(?m)^[\s#>*`]*ITEM\s+([A-Za-z0-9-]+)[\s*`:]*$')
+            for ($i = 0; $i -lt $marks.Count; $i++) {
+                $id = $marks[$i].Groups[1].Value
+                if (-not $known.ContainsKey($id)) { $unknown++; continue }
+                $start = $marks[$i].Index + $marks[$i].Length
+                $end = if ($i + 1 -lt $marks.Count) { $marks[$i + 1].Index } else { $text.Length }
+                # A later section for the same id replaces the earlier one.
+                $found[$id] = $text.Substring($start, $end - $start).Trim()
+            }
+        }
+        foreach ($id in $found.Keys) {
+            Set-Content -LiteralPath (Join-Path $answerDir "$id.txt") -Value $found[$id] `
+                -Encoding utf8NoBOM -NoNewline
+        }
+        'Imported {0} of {1} problems. Unknown ids skipped: {2}. Missing: {3}.' -f $found.Count,
+            $known.Count, $unknown, ($known.Count - $found.Count)
     }
 }
