@@ -47,17 +47,39 @@ calibrate it as the next challenger.
 
 ### Challenges
 
-| Date | Challenger | Challenged | Settings | Operator | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Verdict | Evidence |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — | — | — | — |
+| Date | Challenger | Challenged | Settings | Operator | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Verdict | Checks | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — | — | — | — | — |
 
 - **Control** is `yes` when the challenger also ran the same quiz. It is
   `ceiling` when it did not. The challenger's score is then set to 10%, its worst
   case from calibration, which keeps the result conservative.
 - **Operator** is the agent or person who held the seed and ran the quiz.
+- **Checks** is the number of independent people who reproduced or replicated the
+  result. See `VERIFICATIONS.md` in its folder.
 - Only results that follow [CONTRIBUTING.md](CONTRIBUTING.md) go in this table.
 - Planned: a progress graph across the chain of challenges, once there are enough
   results to draw one.
+
+## Contribute
+
+You do not need model access to help. Each entry in [PROMPTS.md](PROMPTS.md) is
+one line to give a coding agent:
+
+| Prompt this to… | What happens |
+|---|---|
+| challenge a model | A fresh quiz runs against a published challenger. |
+| write a challenge for another model | Your model finds its own limit, then challenges another model to go past it. |
+| repeat a test | The same quiz runs again on the same models, to test whether a result was luck. |
+| check a published result | The problems are rebuilt from the seed and the replies are graded again. No model access needed. |
+| audit replies for hidden signals | The replies are searched for hidden characters, encoded text or messages to graders. |
+| make a new challenger only | A model, often the last winner, is calibrated so that others can challenge it. |
+| sharpen a calibration | More runs make a frontier more precise. |
+| add a runner for another provider | The battery gets support for another model provider. |
+| propose a new task family | A family that no model has trained on is added. |
+| report a problem | An issue is drafted for a checker or prompt problem. |
+
+[CONTRIBUTING.md](CONTRIBUTING.md) has the steps, the rules and the folder layouts.
 
 ## Other ways to run a challenge
 
