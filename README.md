@@ -87,18 +87,19 @@ calibrate it as the next challenger.
 ### Benchmark leaderboard
 
 `d50` is the difficulty at which the model solves 50% of the problems within the
-budget (higher is better). Tokens per solved problem is all output tokens, hidden
+budget (higher is better). `>` marks a lower bound: the model passed every trial
+that the staircase gave it in that family. Tokens per solved problem is all output tokens, hidden
 reasoning included, divided by the correct replies (lower is better).
 
 | Model | Effort | Budget | Date | d50 per family | Tokens per solved problem | Checks | Evidence |
 |---|---|---|---|---|---|---|---|
-| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | pending | pending | 0 | [folder](runs/calibration-claude-opus-5-5-high-8k/) |
+| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | sat 37 variables, mult 36 digits, track 41 operations, induct 6.0 rule steps, plan 21 moves, deduce >19 people, code >333 statements | 5,403 overall (sat 10,598, mult 6,628, track 4,178, induct 9,666, plan 8,920, deduce 1,653, code 1,382) | 0 | [folder](runs/calibration-claude-opus-5-5-high-8k/) |
 
 ### Calibrations (challengers)
 
 | Challenger | Effort | Budget | Date | Frontier: level (difficulty) at about 50% success | Tokens per solved problem | Status | Challenge it |
 |---|---|---|---|---|---|---|---|
-| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | pending | pending | in progress | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md) |
+| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | sat L6 (37 variables), mult L8 (33 digits), track L5 (46 operations), induct L6 (6 rule steps), plan L6 (22 moves); deduce and code not calibrated (passed every trial) | sat 10,598, mult 6,628, track 4,178, induct 9,666, plan 8,920 | ready, 5 families | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md) |
 | `claude-opus-5-5` | high | none | 2026-11-18 | none | — | stopped for cost, replaced by the row above | [STOPPED.md](runs/calibration-claude-opus-5-5-high/STOPPED.md) |
 
 ### Challenges

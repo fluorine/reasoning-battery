@@ -139,6 +139,10 @@ the level before it. There is no upper limit.
    - `TokensPerItem` and `TokensPerSolved`: output tokens per trial and per correct
      trial.
 
+   A family whose curve does not cross 50% inside the visited levels has no
+   frontier. It goes in `Uncalibrated` in `frontier.json`, with its `d50` as a
+   bound, and the quiz leaves it out.
+
    More runs (`stair2`, `stair3`, each with its own `Run` name and so its own
    problems) make the frontier more precise. `Calibrate` pools them.
 

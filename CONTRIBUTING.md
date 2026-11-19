@@ -132,8 +132,9 @@ the chain grows.
    tokens per solved problem of each family.
 
 If `Calibrate` warns that the 50% point is outside the visited levels, the
-staircase did not reach the model's limit in that family. Add trials (a second run,
-or a higher `-Start`) before you publish.
+staircase did not reach the model's limit in that family. The family stays out of
+`frontier.json` (it is listed under `Uncalibrated`). To add it, run more trials,
+for example a second run with a higher `-Start`.
 
 ### 6. Sharpen a calibration
 
