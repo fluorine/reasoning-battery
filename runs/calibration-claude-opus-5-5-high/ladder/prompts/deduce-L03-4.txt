@@ -1,0 +1,18 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+6 people sit in a row of 6 seats, numbered 1 to 6 from left to right.
+Each seat holds exactly one person.
+People: Hal, Ivy, Jon, Oto, Pia, Sol
+
+Clues:
+1. Oto and Hal sit exactly 2 seats apart.
+2. Oto sits next to Ivy.
+3. Jon sits somewhere to the left of Pia.
+4. Ivy and Pia sit exactly 5 seats apart.
+5. Sol does not sit in seat 5.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 6, separated by spaces.

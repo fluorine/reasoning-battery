@@ -1,0 +1,22 @@
+This assignment satisfies all 155 clauses; I checked each clause against it.
+
+**How it was found.** I fixed variables that appear mostly with one sign, then followed the clauses those choices forced, backtracking when a clause came out false.
+
+1. **Initial choices:** x8 = T, x27 = F, x5 = F, x17 = F, x29 = T.
+2. **Forced by those:**
+   - (−29 17 −35) gives x35 = F.
+   - (35 −23 17) gives x23 = F.
+3. **Choosing x30:**
+   - x30 = F fails. It forces x28 = T, then x9 = T, x6 = F, x20 = T and x21 = F, which makes (21 27 6) false.
+   - So x30 = T.
+4. **Choosing x36:** I took x36 = F (x36 = T led to a conflict). That forces:
+   - x13 = T, then x34 = F, then x1 = F, then x33 = F.
+   - Clause (3 −13 33) then needs x3 = T.
+   - x20 = T and x12 = T.
+5. **Choosing x3:** I had first tried x3 = F, and it led to a contradiction in every branch. With x3 = T:
+   - (−20 −3 −6) gives x6 = F, then x21 = T, x10 = F, x2 = T and x14 = F.
+   - Then x31 = F and x7 = F.
+6. **Remaining choices:** x4 = F, x16 = F and x25 = F. These force x37 = F, x28 = T, x9 = T, x22 = T, x24 = T and x18 = F.
+7. **Free variables:** The rest (x11, x15, x19, x26, x32) can all be set to F.
+
+ANSWER: -1 2 3 -4 -5 -6 -7 8 9 -10 -11 12 13 -14 -15 -16 -17 -18 -19 20 21 22 -23 24 -25 -26 -27 28 29 30 -31 -32 -33 -34 -35 -36 -37

@@ -1,0 +1,19 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+6 people sit in a row of 6 seats, numbered 1 to 6 from left to right.
+Each seat holds exactly one person.
+People: Ana, Jon, Max, Noa, Pia, Rui
+
+Clues:
+1. Max sits somewhere to the left of Noa.
+2. Rui sits at one end of the row.
+3. Max does not sit next to Pia.
+4. Ana sits somewhere to the left of Max.
+5. Max sits in seat 4.
+6. Max does not sit next to Noa.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 6, separated by spaces.

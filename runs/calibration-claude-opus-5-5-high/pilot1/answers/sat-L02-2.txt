@@ -1,0 +1,29 @@
+I found an assignment by setting a few variables, simplifying, and forcing the rest. I then checked it against all 55 clauses.
+
+**Choices that simplify the formula**
+
+1. **x7 = TRUE** satisfies every clause containing 7: (5 7 −11), (7 −3 10), (−4 −13 7), (1 −4 7), (7 10 3), (7 11 4), (9 −3 7), (10 5 7) and (−11 7 6).
+2. **x11 = FALSE** satisfies every clause containing −11, such as (−9 10 −11), (3 −7 −11) and (−11 −7 9).
+3. **x2 = FALSE** satisfies every clause containing −2, such as (−1 −7 −2), (−2 8 −7) and (1 −2 5).
+4. **x6 = FALSE** satisfies every clause containing −6, such as (5 2 −6), (2 −6 4) and (−6 3 2).
+5. **x3 = FALSE** satisfies every clause containing −3, such as (−3 4 5), (−3 −5 −7) and (−12 6 −3).
+
+**Forced values**
+
+6. With x7 true, (−7 −9 −8) reduces to (−9 ∨ −8). With x11 false, (8 −9 11) reduces to (8 ∨ −9). If x9 were true, x8 would have to be both false and true. So **x9 = FALSE**.
+7. With x6 and x9 false, (6 12 9) forces **x12 = TRUE**.
+8. Choose **x5 = FALSE**. Then (5 −10 6), with x6 false, forces **x10 = FALSE**.
+9. Choose **x13 = FALSE**. This satisfies (−13 1 2), (8 2 −13) and (−13 −7 −9).
+10. With x10 false, (4 10 8) becomes (4 ∨ 8). Choose **x8 = TRUE**, **x4 = FALSE** and **x1 = FALSE**.
+
+**Check**
+
+Every clause has at least one true literal under this assignment. For example:
+- (−9 1 −10) is satisfied by −9.
+- (5 −10 −4) is satisfied by −10.
+- (4 −11 −12) is satisfied by −11.
+- (11 12 4) is satisfied by 12.
+
+The remaining clauses each contain at least one of these true literals: 7, 8, 12, −1, −2, −3, −4, −5, −6, −9, −10, −11 or −13.
+
+ANSWER: -1 -2 -3 -4 -5 -6 7 8 -9 -10 -11 12 -13

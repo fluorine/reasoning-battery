@@ -1,0 +1,26 @@
+I found an assignment by working through the clauses by hand, then checked it against all 122 clauses. Every clause is satisfied.
+
+**Initial choices.** I set x3=T, x29=F, x14=F and x15=F, because x3 appears mostly as a positive literal and the other three appear mostly negated.
+
+**Forced consequences:**
+- (-7 14 -3) forces x7=F.
+- (14 29 -5) forces x5=F.
+- (23 15 25) needs x23 or x25 true.
+  - My first try was x25=T. That led to a contradiction in clause (7 16 2).
+  - So I set x25=F, which forces x23=T.
+- x23=T forces x4=T through (4 -23 29).
+- x23=T also forces x24=F through (-23 15 -24).
+
+**Remaining choices and their consequences:**
+- x17=T forces x11=T through (11 -3 -17).
+- x20=F forces x22=F through (-22 29 20) and x1=T through (1 20 -23).
+- With x1=T and x22=F, (-1 16 22) forces x16=T.
+- x16=T forces:
+  - x9=T, from (9 -16 25)
+  - x8=F, from (-16 -8 24)
+  - x13=F, from (4 -13 -16)
+- x28=F and x6=F; x6=F forces x26=F through (-26 6 -23).
+- x12=T forces x2=F through (29 -2 -12).
+- The rest are free choices that satisfy the remaining clauses: x21=F, x18=F, x19=F, x10=F, x27=T.
+
+ANSWER: 1 -2 3 4 -5 -6 -7 -8 9 -10 11 12 -13 -14 -15 16 17 -18 -19 -20 -21 -22 23 -24 -25 -26 27 -28 -29

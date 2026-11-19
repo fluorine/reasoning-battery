@@ -1,0 +1,23 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+8 people sit in a row of 8 seats, numbered 1 to 8 from left to right.
+Each seat holds exactly one person.
+People: Ana, Cai, Hal, Kit, Lea, Noa, Oto, Pia
+
+Clues:
+1. Kit does not sit in seat 3.
+2. Ana sits somewhere to the left of Pia.
+3. Hal and Ana sit exactly 3 seats apart.
+4. Oto sits next to Ana.
+5. Hal does not sit in seat 6.
+6. Oto does not sit next to Noa.
+7. Lea sits in seat 8.
+8. Noa and Cai sit exactly 3 seats apart.
+9. Cai does not sit in seat 4.
+10. Noa sits somewhere to the left of Oto.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 8, separated by spaces.

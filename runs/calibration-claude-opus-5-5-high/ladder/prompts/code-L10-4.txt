@@ -1,0 +1,84 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+t = 35
+r = 36
+x = 25
+u = 6
+u = t + 11
+u = x * 3
+r = u + 46
+repeat 2 times:
+    u = r + u
+    u = u + 19
+    x = u - t
+    t = u + r
+u = x - x
+if r > 730:
+    r = r + u
+    x = t * 9
+    u = x + t
+else:
+    x = x + 73
+    x = x - r
+    u = r + r
+t = x + 97
+u = x * 2
+x = x + x
+if r is even:
+    if x < u:
+        x = r - u
+    else:
+        u = t + u
+else:
+    x = x - r
+repeat 3 times:
+    repeat 3 times:
+        r = x + x
+    t = x * 3
+    x = x - x
+x = u - u
+r = x + 14
+t = t + 69
+repeat 3 times:
+    u = r + 92
+if r < t:
+    u = t * 3
+    u = t * 9
+    t = x * 8
+    x = t - x
+else:
+    r = r - u
+u = u + t
+if r > 764:
+    x = t + 30
+else:
+    t = x * 8
+    t = x - u
+if t > 228:
+    r = t * 7
+else:
+    t = r + t
+    if r > 235:
+        t = r * 9
+    else:
+        t = x - x
+repeat 3 times:
+    x = t + 80
+    u = u * 7
+    t = r - x
+u = r * 9
+x = t * 6
+if t is even:
+    r = x - t
+else:
+    t = u * 9
+    u = t * 7
+x = r + 28
+
+Answer format: ANSWER: the final values of t r x u, in that order, separated by spaces.

@@ -1,0 +1,27 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+r = 48
+x = 48
+u = 21
+s = 7
+u = x * 9
+r = r - s
+repeat 3 times:
+    x = u * 3
+u = u * 8
+repeat 2 times:
+    s = r + 66
+    if s is even:
+        x = u - u
+    else:
+        r = s - r
+r = u - u
+r = r + u
+
+Answer format: ANSWER: the final values of r x u s, in that order, separated by spaces.

@@ -1,0 +1,35 @@
+I fixed x1, x12 and x11 by choice, then followed the forced consequences.
+
+**Step 1: set x1 = TRUE.**
+- This satisfies every clause that contains literal 1.
+- Two clauses contain -1, and they shrink to (5 ∨ -4) and (-11 ∨ 5).
+
+**Step 2: set x12 = FALSE.**
+- This satisfies every clause that contains -12.
+- Three clauses shrink to two literals: (13 ∨ -2), (-11 ∨ 3) and (-10 ∨ 12 ∨ 9) → (-10 ∨ 9).
+
+**Step 3: set x11 = TRUE and propagate.**
+- (-11 ∨ 3) forces x3 = TRUE.
+- (-11 ∨ 5) forces x5 = TRUE.
+- (-11 ∨ 6 ∨ -3) forces x6 = TRUE.
+- (12 ∨ 7 ∨ -6) forces x7 = TRUE.
+- (-11 ∨ -8 ∨ -5) forces x8 = FALSE.
+- (8 ∨ 4 ∨ -11) forces x4 = TRUE.
+- (-4 ∨ 8 ∨ -13) forces x13 = FALSE.
+- (13 ∨ -2) forces x2 = FALSE.
+
+**Step 4: choose the rest.**
+- (-10 ∨ -7 ∨ -13) is already satisfied by x13 = FALSE.
+- Set x10 = FALSE, which satisfies (-10 ∨ 9) and leaves x9 free.
+- Set x9 = FALSE, which also satisfies (-13 ∨ -11 ∨ -9).
+
+**Check.** I went through every remaining clause with this full assignment, and each one has at least one true literal. For example:
+- (-1 ∨ 5 ∨ -4) is satisfied by x5.
+- (-1 ∨ -11 ∨ 5) is satisfied by x5.
+- (-2 ∨ -11 ∨ -13) is satisfied by -2.
+- (-8 ∨ 9 ∨ -4) is satisfied by -8.
+- (5 ∨ -13 ∨ -10) is satisfied by x5.
+
+**Result:** x1, x3, x4, x5, x6, x7 and x11 are TRUE. x2, x8, x9, x10, x12 and x13 are FALSE.
+
+ANSWER: 1 -2 3 4 5 6 7 -8 -9 -10 11 -12 -13

@@ -1,0 +1,10 @@
+{
+  "id": "mult-L01-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.010184,
+  "durationMs": 3173,
+  "outputTokens": 108,
+  "thinkingTokens": 0,
+  "rawSha256": "f3dba130e76d38d019ed138ee67dcccf43ff38ed091122d641d793ba5a6c87a9",
+  "redacted": false
+}

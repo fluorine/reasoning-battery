@@ -1,0 +1,22 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+12 people sit in a row of 12 seats, numbered 1 to 12 from left to right.
+Each seat holds exactly one person.
+People: Ben, Dev, Eli, Fay, Ivy, Jon, Kit, Lea, Max, Noa, Pia, Tea
+
+Clues:
+1. Tea and Eli sit exactly 3 seats apart.
+2. Kit and Ivy sit exactly 9 seats apart.
+3. Max and Noa sit exactly 8 seats apart.
+4. Tea and Noa sit exactly 9 seats apart.
+5. Jon sits next to Lea.
+6. Tea sits next to Ivy.
+7. Ben sits in seat 6.
+8. Lea and Fay sit exactly 7 seats apart.
+9. Pia does not sit in seat 3.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 12, separated by spaces.

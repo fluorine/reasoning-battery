@@ -1,0 +1,21 @@
+I found this assignment by fixing a few frequently occurring variables and propagating the consequences through the clauses.
+
+1. **Initial choices.** I set x7 = T, which satisfies many clauses because x7 appears positive often. I set x22 = F, since x22 appears negated often.
+2. **x12 = F.** This forces x6 = T, from clause (6 12 22).
+3. **x11 = F.** With x6 = T and x12 = F, clause (-6 -11 12) forces this.
+4. **Further free choices.** I chose x8 = T, x10 = F, x20 = F, x18 = F and x1 = F.
+5. **x2 = F.** With x1 = F and x10 = F, clause (1 -2 10) forces this.
+6. **x19 = F.** With x2 = F and x8 = T, clause (2 -19 -8) forces this.
+7. **x9 = F.** With x19 = F and x8 = T, clause (19 -8 -9) forces this.
+8. **x14 = T.** This is a free choice, and it clears every remaining clause that contains x14.
+9. **x4 = T.** This is also a free choice. It then forces:
+   - x5 = T, from (-8 -4 5);
+   - x17 = F, from (-17 22 -4);
+   - x16 = F, from (1 -4 -16);
+   - x15 = F, from (-5 -15 10).
+10. **x3 = F and x13 = F.** Both values satisfy clause (3 -13 2), so I set both to false.
+11. **x21 = F.** x21 is unconstrained by this point, so I set it to false.
+
+I spot-checked several clauses against the final assignment, and each one I checked is satisfied.
+
+ANSWER: -1 -2 -3 4 5 6 7 8 -9 -10 -11 -12 -13 14 -15 -16 -17 -18 -19 -20 -21 -22

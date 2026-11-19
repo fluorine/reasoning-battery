@@ -1,0 +1,27 @@
+A satisfying assignment is x1=F, x2=F, x3=F, x4=F, x5=T, x6=T, x7=F, x8=F, x9=F, x10=F. I found it by fixing values one at a time and simplifying the clauses after each choice.
+
+1. **Set x1 = FALSE.** Every clause containing −1 is satisfied. The clause (−8 1 −3) shrinks to (−8 −3).
+
+2. **Set x5 = TRUE.** Every clause containing 5 is satisfied. Three clauses shrink:
+   - (−3 −5 −8) becomes (−3 −8).
+   - (6 −5 3) becomes (6 3).
+   - (−2 −4 −5) becomes (−2 −4).
+
+3. **Set x3 = FALSE.** The clause (6 3) then forces **x6 = TRUE**. The clauses still open are:
+   - (2 9 −8)
+   - (−4 −7)
+   - (4 10 −8)
+   - (8 −7 −4)
+   - (−2 −4)
+   - (−9 8 7)
+   - (7 2 −8)
+
+4. **Set x4 = FALSE.** This leaves (10 −8), (−9 8 7), (2 9 −8) and (7 2 −8).
+
+5. **Set x8 = FALSE.** This satisfies every remaining clause except (−9 7).
+
+6. **Set x9 = FALSE.** This satisfies (−9 7). The variables x2, x7 and x10 are now unconstrained, so I set them all to FALSE.
+
+7. **Spot-check.** The clauses involving x6 are (10 −6 5), (−6 5 −10), (5 −7 −6), (5 7 −6) and (−6 −1 9). All of them hold because x5 is TRUE or x1 is FALSE. The clauses (7 5 2) and (5 6 2) also hold because x5 is TRUE.
+
+ANSWER: -1 -2 -3 -4 5 6 -7 -8 -9 -10

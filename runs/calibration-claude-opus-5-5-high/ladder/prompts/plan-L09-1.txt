@@ -1,0 +1,22 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+A 4x4 sliding puzzle. "." is the empty cell. Start:
+
+ 9  2  8 12
+ 6  7 14  3
+ 5 13  4  .
+ 1 10 15 11
+
+Goal:
+
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+13 14 15  .
+
+A move slides one tile that is next to the empty cell (up, down, left or right, not diagonal) into the empty cell. Name each move by its tile number.
+Reach the goal in at most 59 moves. A solution with 59 moves exists.
+
+Answer format: ANSWER: the tile numbers in move order, separated by spaces.

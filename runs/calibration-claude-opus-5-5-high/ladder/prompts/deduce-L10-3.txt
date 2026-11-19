@@ -1,0 +1,27 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+13 people sit in a row of 13 seats, numbered 1 to 13 from left to right.
+Each seat holds exactly one person.
+People: Dev, Eli, Fay, Hal, Jon, Kit, Lea, Max, Oto, Pia, Rui, Sol, Tea
+
+Clues:
+1. Hal does not sit in seat 9.
+2. Rui and Kit sit exactly 6 seats apart.
+3. Kit sits in seat 6.
+4. Eli and Dev sit exactly 3 seats apart.
+5. Eli sits next to Pia.
+6. Oto and Hal sit exactly 2 seats apart.
+7. Fay sits next to Tea.
+8. Eli sits somewhere to the left of Dev.
+9. Max and Rui sit exactly 9 seats apart.
+10. Fay sits in seat 1.
+11. Lea sits somewhere to the left of Jon.
+12. Hal sits somewhere to the left of Oto.
+13. Jon sits in seat 5.
+14. Dev sits next to Hal.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 13, separated by spaces.

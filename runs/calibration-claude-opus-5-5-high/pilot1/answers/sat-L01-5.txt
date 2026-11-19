@@ -1,0 +1,12 @@
+I found an assignment by setting variables one at a time and simplifying the clauses after each choice.
+
+1. **x1 = FALSE.** This satisfies every clause containing −1: clauses 2, 4, 5, 8, 11, 14, 19, 21, 23, 30 and 38.
+2. **x5 = FALSE.** This satisfies every clause containing −5, such as (3 −5 9), (−6 −5 −9) and (10 −5 −8). Clause (9 1 5) then reduces to just 9, so **x9 = TRUE** is forced.
+3. **x7 = TRUE.** This satisfies (−9 7 4), (5 7 2), (2 7 8), (−4 6 7) and (7 −8 10).
+4. **x6 = TRUE.** This satisfies (4 6 5) and (5 3 6).
+5. **x3 = FALSE and x10 = FALSE.** This satisfies (−3 −9 10), (10 5 −3), (−10 3 2) and (−4 −3 8).
+6. **x2, x4 and x8 are unconstrained** at this point, so I set them all to FALSE.
+
+**Check:** I then checked all 42 clauses against the full assignment, and each one contains at least one true literal. For example, (−4 2 −10) holds by −4, (−7 −10 9) by 9, (9 9 −8 −6)-type clauses by x9, and (9 −10 3) by 9.
+
+ANSWER: -1 -2 -3 -4 -5 6 7 -8 9 -10

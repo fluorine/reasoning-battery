@@ -1,0 +1,21 @@
+I found an assignment by hand: fix some variables, propagate the forced values, and backtrack locally when a clause fails. I checked the final assignment against every clause.
+
+**Initial choices.** I fixed variables whose literals mostly appear with one sign: 31=T, 45=F, 16=F, 14=F, 8=F, 27=F, 24=F, 10=F, 13=F, 25=F and 41=F.
+
+**Propagation.** These forced further values:
+- 7=T (clause 6), then 34=F (clause 184), then 3=F (clause 166).
+- Choosing 23=T forced 6=F (clause 202).
+- That forced 37=T, 19=T and 4=F (clauses 67, 112, 128).
+- Then 43=F, 39=T, 38=T, 35=T, 33=T and 26=F followed.
+
+**Repairs after conflicts.**
+1. Clause (26 −40 25) failed. I set 25=T, which forced 2=T and 11=F. It also allowed 17=T and 1=T.
+2. Clause (9 10 26) failed. I set 10=T; none of the clauses containing −10 broke.
+3. Clause (−44 48 8) failed. I set 8=T and 41=T, which in turn needed 17=F, 1=F, 15=T and 29=T.
+4. Clause (27 20 30) failed. Since 25=T now satisfies clause 166, 3 could be T. I set 3=T, then 21=T and 30=T.
+5. The only remaining failure was (36 11 −33). I set 7=F, which is safe because every clause containing 7 is satisfied by another literal. This allowed 12=F and 33=F.
+6. With 33=F, clause (33 46 20) needed 46=T. That forced 48=T (clause 179) and 47=T (clause 182), and both are compatible with all other clauses.
+
+The final assignment satisfies all 202 clauses.
+
+ANSWER: -1 2 3 -4 -5 -6 -7 8 -9 10 -11 -12 -13 -14 15 -16 -17 -18 19 -20 21 22 23 -24 25 -26 -27 -28 29 30 31 -32 -33 -34 35 -36 37 38 39 40 41 42 -43 44 -45 46 47 48

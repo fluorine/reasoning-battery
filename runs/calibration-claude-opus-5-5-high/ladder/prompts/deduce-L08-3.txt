@@ -1,0 +1,24 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+11 people sit in a row of 11 seats, numbered 1 to 11 from left to right.
+Each seat holds exactly one person.
+People: Ana, Ben, Dev, Eli, Fay, Gus, Max, Oto, Pia, Quin, Rui
+
+Clues:
+1. Eli sits next to Fay.
+2. Gus sits next to Max.
+3. Ben sits next to Eli.
+4. Pia sits somewhere to the left of Max.
+5. Max sits next to Pia.
+6. Ana sits somewhere to the left of Rui.
+7. Eli sits somewhere to the left of Pia.
+8. Quin and Dev sit exactly 2 seats apart.
+9. Gus and Fay sit exactly 7 seats apart.
+10. Dev and Gus sit exactly 3 seats apart.
+11. Ana and Eli sit exactly 4 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 11, separated by spaces.

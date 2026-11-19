@@ -1,0 +1,25 @@
+I found an assignment that satisfies all 202 clauses and checked it against each clause.
+
+**How I got there.** I fixed values that most clauses favour: x12, x23, x27, x28, x34, x35 and x36 FALSE, and x45, x48 and x19 TRUE. I then set every value those choices forced, plus some free picks. My first two attempts hit contradictions:
+
+- **First conflict:** clause 49 (20 39 -4) failed. I fixed it by making x31 TRUE, which frees x2 and x4.
+- **Second conflict:** clause 202 (-17 -32 -33) failed because x17, x32 and x33 were all forced TRUE. I fixed it by making x13 TRUE, so clause 182 no longer forces x32. That forces x4 = T, x39 = T and x43 = T, and then x32 = F, x38 = F, x47 = T, x37 = T, x30 = F and x3 = T. x25 was left free, so I set it FALSE.
+
+**Final assignment** (T = TRUE, F = FALSE):
+
+| Var | Val | Var | Val | Var | Val | Var | Val |
+|---|---|---|---|---|---|---|---|
+| 1 | T | 13 | T | 25 | F | 37 | T |
+| 2 | F | 14 | T | 26 | F | 38 | F |
+| 3 | T | 15 | F | 27 | F | 39 | T |
+| 4 | T | 16 | T | 28 | F | 40 | F |
+| 5 | F | 17 | T | 29 | T | 41 | F |
+| 6 | F | 18 | T | 30 | F | 42 | F |
+| 7 | F | 19 | T | 31 | T | 43 | T |
+| 8 | F | 20 | F | 32 | F | 44 | F |
+| 9 | T | 21 | T | 33 | T | 45 | T |
+| 10 | F | 22 | F | 34 | F | 46 | F |
+| 11 | F | 23 | F | 35 | F | 47 | T |
+| 12 | F | 24 | T | 36 | F | 48 | T |
+
+ANSWER: 1 -2 3 4 -5 -6 -7 -8 9 -10 -11 -12 13 14 -15 16 17 18 19 -20 21 -22 -23 24 -25 -26 -27 -28 29 -30 31 -32 33 -34 -35 -36 37 -38 39 -40 -41 -42 43 -44 45 -46 47 48

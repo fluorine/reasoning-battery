@@ -1,0 +1,23 @@
+I found this by hand with case analysis and unit propagation, then checked it against all 71 clauses.
+
+**Choices that fail:**
+- **x6 = T, x12 = T, x2 = T:** clauses 9, 62, 23 and 37 force x1, x9, x11 and x4 TRUE. Propagation then forces x5 TRUE and x8 FALSE. That violates clause 30 (−5 −4 8). So x2 must be FALSE.
+- **x2 = F, x4 = F:** clause 69 forces x3 FALSE. Then x9 = F, x11 = T, x8 = F, x16 = T and x14 = T are forced. Clauses 40 and 27 force x7 = F and x15 = F, which violates clause 13 (3 7 15). So x4 must be TRUE.
+
+**Choice that works:** x6 = T, x12 = T, x2 = F, x3 = F, x4 = T. Each step below is forced:
+- Clause 39 (1 −4 3) gives x1 = T.
+- Clause 32 (2 −8 −1) gives x8 = F.
+- Clause 30 (−5 −4 8) gives x5 = F.
+- Clause 15 (−11 5 −4) gives x11 = F.
+- Clause 45 (8 −12 16) gives x16 = T.
+- Clause 53 (−9 −16 −4) gives x9 = F.
+- Clause 58 (11 8 7) gives x7 = T.
+- Clause 44 (14 2 −16) gives x14 = T.
+- Clause 27 (−15 −14 9) gives x15 = F.
+- Clause 36 (17 −14 5) gives x17 = T.
+
+Only clause 52 (10 −16 −13) still involves x10 and x13. Setting both to FALSE satisfies it.
+
+**Check:** I went through all 71 clauses with this assignment, and each one has at least one true literal.
+
+ANSWER: 1 -2 -3 4 -5 6 7 -8 -9 -10 -11 12 -13 14 -15 16 17

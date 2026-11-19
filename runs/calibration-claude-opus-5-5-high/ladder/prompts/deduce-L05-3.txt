@@ -1,0 +1,20 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+8 people sit in a row of 8 seats, numbered 1 to 8 from left to right.
+Each seat holds exactly one person.
+People: Cai, Ivy, Jon, Oto, Pia, Quin, Sol, Tea
+
+Clues:
+1. Jon and Sol sit exactly 5 seats apart.
+2. Sol sits next to Tea.
+3. Quin sits at one end of the row.
+4. Pia sits next to Tea.
+5. Ivy sits next to Quin.
+6. Jon sits in seat 8.
+7. Cai does not sit in seat 7.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 8, separated by spaces.

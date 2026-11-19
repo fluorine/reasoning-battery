@@ -1,0 +1,61 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+s = 47
+q = 3
+w = 12
+y = 40
+if q is even:
+    q = s + 31
+    w = y + 2
+    q = y - s
+    q = q + s
+    w = y + w
+else:
+    q = q + q
+w = w * 8
+q = s * 6
+y = s * 2
+q = q - s
+s = y + 47
+y = q + y
+s = w - y
+w = s * 7
+w = q + y
+y = y + 48
+q = s + 41
+s = w + 94
+repeat 4 times:
+    s = s * 5
+q = y + s
+q = q - w
+s = y + 49
+repeat 3 times:
+    w = w + q
+    y = y * 2
+repeat 3 times:
+    q = s + y
+    y = s - q
+s = w + s
+y = w + 85
+w = w + 96
+q = w - w
+if s is even:
+    w = y * 6
+else:
+    repeat 3 times:
+        w = w + 43
+        q = y - w
+y = y + q
+if w is even:
+    y = w * 2
+else:
+    s = s - w
+    y = q - s
+
+Answer format: ANSWER: the final values of s q w y, in that order, separated by spaces.

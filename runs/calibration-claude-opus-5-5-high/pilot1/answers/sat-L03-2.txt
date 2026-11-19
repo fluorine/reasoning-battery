@@ -1,0 +1,29 @@
+The assignment below satisfies all 71 clauses. I found it by fixing a few variables, propagating the forced values, then checking every clause.
+
+**Step 1: set x17 = TRUE.** This satisfies all 11 clauses that contain 17. The 9 clauses containing −17 shrink to two-literal clauses:
+(−6 ∨ 3), (−9 ∨ 13), (−4 ∨ 12), (12 ∨ 8), (−15 ∨ 3), (−3 ∨ 2), (7 ∨ −10), (−4 ∨ 3), (−5 ∨ 15).
+
+**Step 2: choose x4 = F, x12 = T, x3 = T.**
+- x12 = T satisfies (12 ∨ 8).
+- x3 = T satisfies (−6 ∨ 3) and (−15 ∨ 3).
+- (−3 ∨ 2) then forces **x2 = T**.
+
+**Step 3: choose x10 = T and propagate.**
+- (7 ∨ −10) forces **x7 = T**.
+- (5 ∨ −7 ∨ −2) forces **x5 = T**.
+- (−5 ∨ 15) forces **x15 = T**.
+- (−5 ∨ −3 ∨ 9) forces **x9 = T**.
+- (−9 ∨ 13) forces **x13 = T**.
+- (−14 ∨ −2 ∨ −13) forces **x14 = F**.
+- (−5 ∨ −11 ∨ −7) forces **x11 = F**.
+- (8 ∨ −7 ∨ −9) forces **x8 = T**.
+
+**Step 4: fill in the free variables.**
+- (6 ∨ −2 ∨ 16) needs x6 or x16, so set **x16 = T**.
+- x6 and x1 are then unconstrained, so set **x6 = F** and **x1 = F**.
+
+**Step 5: check.** All 71 clauses were checked against the final assignment and each has at least one true literal.
+
+Final assignment: x1=F, x2=T, x3=T, x4=F, x5=T, x6=F, x7=T, x8=T, x9=T, x10=T, x11=F, x12=T, x13=T, x14=F, x15=T, x16=T, x17=T.
+
+ANSWER: -1 2 3 -4 5 -6 7 8 9 10 -11 12 13 -14 15 16 17

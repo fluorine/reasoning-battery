@@ -1,0 +1,85 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+z = 5
+y = 28
+t = 47
+p = 35
+if y < z:
+    t = p - z
+    z = z * 8
+else:
+    p = y + p
+    z = z * 6
+p = t * 3
+repeat 3 times:
+    y = z + y
+    z = t + p
+    t = y + 40
+y = y + z
+z = z - p
+t = y + t
+y = p - y
+t = p - p
+if t > 288:
+    z = p + 95
+    t = p + z
+else:
+    repeat 4 times:
+        t = t * 5
+        z = t + z
+    z = t - z
+if t < y:
+    p = p * 4
+    repeat 3 times:
+        z = p * 7
+        p = y + 16
+else:
+    y = y + 37
+    p = z * 2
+t = t + 57
+if p < y:
+    if y > 745:
+        y = y - y
+        p = t - z
+    else:
+        z = z - p
+        t = z + z
+else:
+    t = p * 9
+z = y * 3
+if y > 637:
+    p = y + 5
+    z = z * 4
+else:
+    t = z - p
+    y = y + t
+    t = t * 9
+if y < t:
+    t = z * 3
+    repeat 4 times:
+        p = y + p
+        t = p - p
+else:
+    y = y - z
+    y = z * 4
+if z is even:
+    t = y + t
+    if t > 772:
+        y = y + t
+    else:
+        z = y * 8
+    z = t * 3
+else:
+    p = t + 92
+t = y * 8
+p = t - z
+y = p + p
+y = t * 6
+
+Answer format: ANSWER: the final values of z y t p, in that order, separated by spaces.

@@ -1,0 +1,48 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+y = 25
+r = 30
+p = 23
+z = 33
+p = r + y
+y = r - y
+repeat 4 times:
+    if r > 144:
+        r = p + y
+        y = z - r
+    else:
+        z = r + 39
+p = y - r
+p = z - p
+z = r + p
+repeat 3 times:
+    p = r + 24
+    y = r * 5
+if r is even:
+    repeat 2 times:
+        r = z * 8
+        p = r * 8
+        y = p + 99
+        r = p - r
+else:
+    p = z - r
+z = z - y
+repeat 2 times:
+    y = p - z
+    p = r + p
+repeat 2 times:
+    p = z * 9
+    repeat 3 times:
+        r = y - z
+        p = z + 9
+repeat 3 times:
+    y = y + r
+p = r + 15
+
+Answer format: ANSWER: the final values of y r p z, in that order, separated by spaces.

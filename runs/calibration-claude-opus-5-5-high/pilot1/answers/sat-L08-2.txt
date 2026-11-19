@@ -1,0 +1,18 @@
+I found an assignment by hand, using case-splitting and unit propagation. I then checked it against all 265 clauses.
+
+**How the assignment was reached**
+
+1. I first fixed x13, x57 and x63 to TRUE, since each appears mostly as a positive literal.
+2. Setting x44 = TRUE ran into contradictions. With x44 = FALSE, clause (-25 -13 44) forces x25 = FALSE.
+3. I set x46 = TRUE and x54 = FALSE, then x52 = FALSE. Propagation then forces x41 = T, x40 = F, x53 = T, x56 = T, x58 = F, x5 = T and x21 = F.
+4. Next I chose x49 = T, x8 = F, x35 = T and x47 = T. These force x23 = T, x7 = F, x15 = F, x39 = F, x34 = F and x28 = T.
+5. I then chose x17 = T and x38 = T.
+   - Choosing x55 = F at this point leads to a conflict on clause (36 4 14).
+   - Choosing x55 = TRUE instead works. It forces x19 = T and a chain of further values, and clause (36 4 14) then forces x36 = T.
+6. The few clauses still open were closed by choosing x20 = F, x9 = F, x43 = F, x61 = T, x31 = F, x24 = T and x51 = T.
+
+**Check**
+
+Going through all 265 clauses one by one, each has at least one true literal under the final assignment.
+
+ANSWER: 1 -2 3 -4 5 6 -7 -8 -9 10 11 -12 13 -14 -15 16 17 18 19 -20 -21 22 23 24 -25 26 -27 28 29 -30 -31 -32 33 -34 35 36 37 38 -39 -40 41 42 -43 -44 -45 46 47 -48 49 -50 51 -52 53 -54 55 56 57 -58 59 60 61 -62 63

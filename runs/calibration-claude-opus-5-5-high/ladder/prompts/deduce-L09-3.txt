@@ -1,0 +1,24 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+12 people sit in a row of 12 seats, numbered 1 to 12 from left to right.
+Each seat holds exactly one person.
+People: Ben, Dev, Gus, Hal, Jon, Kit, Lea, Noa, Oto, Pia, Rui, Sol
+
+Clues:
+1. Oto and Kit sit exactly 4 seats apart.
+2. Noa sits somewhere to the left of Sol.
+3. Hal and Jon sit exactly 11 seats apart.
+4. Gus and Lea sit exactly 7 seats apart.
+5. Jon sits in seat 1.
+6. Pia and Dev sit exactly 7 seats apart.
+7. Kit does not sit in seat 9.
+8. Sol and Lea sit exactly 3 seats apart.
+9. Lea sits somewhere to the left of Kit.
+10. Dev sits in seat 4.
+11. Sol sits next to Ben.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 12, separated by spaces.

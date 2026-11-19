@@ -1,0 +1,82 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+p = 21
+y = 18
+x = 31
+t = 30
+if x is even:
+    p = y - y
+    y = y * 2
+else:
+    if t < p:
+        x = t - t
+    else:
+        t = x + 35
+x = t + 37
+repeat 2 times:
+    p = x - x
+    y = x * 5
+    t = t + y
+t = t * 6
+x = t - t
+x = y + 83
+p = x + y
+t = t * 6
+t = x + x
+if p is even:
+    p = y - t
+    y = p + y
+    y = p * 6
+    y = t + p
+else:
+    p = y * 8
+    t = y + t
+t = x + 51
+y = t + 51
+if x is even:
+    p = y - x
+    y = p + p
+    p = x + 47
+else:
+    x = y + p
+    t = t + y
+    x = p * 2
+p = x + p
+t = x + 95
+x = p + t
+y = x + t
+repeat 4 times:
+    repeat 3 times:
+        y = p + t
+    t = p + y
+p = t * 4
+t = x * 9
+y = x - x
+x = x * 9
+y = t + 69
+if t < y:
+    if y < x:
+        x = y - x
+    else:
+        x = x + p
+else:
+    t = p - t
+    t = y + x
+y = y - y
+x = y + t
+p = p - p
+repeat 4 times:
+    t = x + y
+    x = x + y
+repeat 3 times:
+    repeat 4 times:
+        t = t + t
+        y = t - p
+
+Answer format: ANSWER: the final values of p y x t, in that order, separated by spaces.

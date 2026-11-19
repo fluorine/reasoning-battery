@@ -1,0 +1,33 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+w = 39
+s = 8
+z = 21
+p = 31
+p = s + w
+s = s - p
+if s is even:
+    s = s + z
+else:
+    if z is even:
+        s = w + p
+        p = s + 81
+    else:
+        p = z + s
+    p = p + z
+p = p + p
+s = p + 35
+z = z + 67
+s = z + 27
+if w < p:
+    p = z - z
+else:
+    p = z * 5
+
+Answer format: ANSWER: the final values of w s z p, in that order, separated by spaces.

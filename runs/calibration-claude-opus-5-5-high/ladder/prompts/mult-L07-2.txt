@@ -1,0 +1,9 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Compute the exact product:
+
+610159465081700584213814 * 304199130887332151459648
+
+Answer format: ANSWER: followed by the product as a plain integer.

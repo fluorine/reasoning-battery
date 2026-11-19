@@ -1,0 +1,17 @@
+I fixed a few variables, propagated the forced values, and backtracked once.
+
+1. **Set x2 = F.** Every clause containing −2 is then satisfied. The ones left that matter include (−11 −8), (−11 −6), (−4 −5) and (−9 8).
+2. **Set x4 = T.** Clause (2 −4 −5) forces **x5 = F**.
+3. **Set x7 = T** and **x12 = F.** Clause (12 −10 5) then forces **x10 = F**.
+4. **x8 must be F.** If x8 were T, clause (−11 2 −8) would force x11 = F. But clause (11 −4 −8) would force x11 = T. That is a contradiction, so **x8 = F**.
+5. **Propagate from x8 = F:**
+   - (2 −9 8) forces **x9 = F**.
+   - (8 12 13) forces **x13 = T**.
+6. **Choose x11 = T and x6 = F.** Clause (6 11 10) needs x6 or x11 true. Clause (−11 −6 2) forbids both being true. So exactly one is true, and I took x11.
+7. **Remaining choices:**
+   - (1 3 −7) needs x1 or x3, so I set **x1 = T**.
+   - **x3 = F** is free, because clauses (4 −3 13) and (12 −3 −9) are already satisfied by other literals.
+
+I checked all 55 clauses against the final assignment and each one has a true literal.
+
+ANSWER: 1 -2 -3 4 -5 -6 7 -8 -9 -10 11 -12 13

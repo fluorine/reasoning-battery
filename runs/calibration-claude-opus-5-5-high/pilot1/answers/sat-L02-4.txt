@@ -1,0 +1,31 @@
+Each variable is fixed below either by a deliberate choice or by a clause that leaves only one option.
+
+1. **Choose x1 = F.** Every clause containing ¬x1 is now satisfied.
+2. **Choose x7 = F.** This satisfies the clauses containing ¬x7.
+3. **Choose x4 = T.** This satisfies (7 −13 4), (5 4 7), (5 13 4), (4 12 1), (4 8 5), (9 4 −5), (1 −6 4) and (−10 1 4).
+4. **Choose x3 = F.**
+   - Clause (−6 3 −4) then forces x6 = F.
+   - Clause (3 −4 13) forces x13 = T.
+5. **Forced by x6 = F and x7 = F:** clause (12 6 7) forces x12 = T.
+6. **Forced by x12 = T:**
+   - Clause (−12 −8 6) forces x8 = F.
+   - Clause (−10 −12 8) then forces x10 = F.
+7. **Remaining constraints:** with these values, the only clauses not yet satisfied reduce to:
+   - (¬9 ∨ 5)
+   - (11 ∨ ¬9)
+   - (¬11 ∨ ¬2)
+   - (¬9 ∨ ¬11 ∨ 5)
+   - (¬5 ∨ 11 ∨ 2)
+8. **Final choice:** setting x2, x5, x9 and x11 all to F satisfies all five.
+
+**Spot checks on the full assignment:**
+- (−13 −9 5) holds because x9 is F.
+- (−12 −4 −3) holds because x3 is F.
+- (−4 9 13) holds because x13 is T.
+- (−10 −12 8) holds because x10 is F.
+- (−11 −2 10) holds because x11 is F.
+- (−3 −10 −4) holds because x3 is F.
+
+**Final assignment:** x4, x12 and x13 are TRUE; all other variables are FALSE.
+
+ANSWER: -1 -2 -3 4 -5 -6 -7 -8 -9 -10 -11 12 13

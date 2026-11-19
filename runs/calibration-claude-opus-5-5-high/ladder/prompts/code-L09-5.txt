@@ -1,0 +1,62 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+u = 39
+r = 3
+x = 35
+w = 6
+u = x + u
+r = r + u
+if w < x:
+    r = u * 6
+else:
+    x = w + 24
+u = r * 3
+u = x * 6
+repeat 4 times:
+    if x < u:
+        r = u + r
+        w = r * 3
+    else:
+        r = x + 4
+if w > 521:
+    w = x + 68
+    repeat 3 times:
+        w = x + r
+    x = r + 70
+    u = w * 4
+else:
+    x = r + 99
+w = w - r
+u = u + x
+w = r - w
+repeat 2 times:
+    x = x - x
+    r = w * 5
+w = x + 25
+repeat 4 times:
+    r = x * 7
+    if u is even:
+        r = w + u
+    else:
+        r = u * 8
+x = x * 2
+r = r - r
+repeat 2 times:
+    u = r + 93
+    x = u * 2
+    x = x - u
+    x = r + r
+repeat 3 times:
+    x = u + 12
+    u = u + 80
+w = u + x
+u = x * 3
+w = r + 31
+
+Answer format: ANSWER: the final values of u r x w, in that order, separated by spaces.

@@ -1,0 +1,28 @@
+Satisfying assignment: x1=T, x2=T, x3=T, x4=T, x5=T, x6=F, x7=T, x8=T, x9=T, x10=F. I found it by case-splitting on x1 and x4 and propagating forced values.
+
+**Case x1 = T, x4 = F (fails).**
+- Clause (4 3 -1) forces x3 = T. Clause (-3 -1 -10) then forces x10 = F.
+- If x2 = T: clause (-2 10 7) forces x7 = T.
+  - Clause (4 -7 -5) forces x5 = F.
+  - Clause (-2 5 6) forces x6 = T.
+  - Clause (-9 -2 5) forces x9 = F.
+  - Clause (9 4 -7) is now false.
+- If x2 = F: clause (-1 2 6) forces x6 = T.
+  - Clause (-1 -9 -6) forces x9 = F.
+  - Clause (-6 7 -3) forces x7 = T.
+  - Clause (9 4 -7) is again false.
+- So x4 must be TRUE when x1 is TRUE.
+
+**Case x1 = T, x4 = T (works).**
+- Clause (-4 -1 5) forces x5 = T.
+- Clause (-4 -1 3) forces x3 = T.
+- Clause (-3 -1 -10) forces x10 = F.
+- Clause (-4 -3 9) forces x9 = T.
+- Clause (-1 -9 -6) forces x6 = F.
+- Clause (-5 -9 2) forces x2 = T.
+- Clause (-2 10 7) forces x7 = T.
+- Clause (-7 -2 8) forces x8 = T.
+
+I checked this assignment against all 42 clauses, and each one has at least one true literal.
+
+ANSWER: 1 2 3 4 5 -6 7 8 9 -10

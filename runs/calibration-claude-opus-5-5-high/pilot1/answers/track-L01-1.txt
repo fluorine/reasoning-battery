@@ -1,0 +1,15 @@
+Applying each operation in order:
+
+| Step | Operation | Result |
+|---|---|---|
+| Start | — | A B C D E F G H I J K L |
+| 1 | swap 3 12 | A B L D E F G H I J K C |
+| 2 | reverse 6 12 | A B L D E C K J I H G F |
+| 3 | reverse 7 12 | A B L D E C F G H I J K |
+| 4 | rotate 5 | C F G H I J K A B L D E |
+| 5 | swap 1 2 | F C G H I J K A B L D E |
+| 6 | swap 5 10 (I ↔ L) | F C G H L J K A B I D E |
+| 7 | reverse 4 12 | F C G E D I B A K J L H |
+| 8 | swap 8 3 (A ↔ G) | F C A E D I B G K J L H |
+
+ANSWER: F C A E D I B G K J L H

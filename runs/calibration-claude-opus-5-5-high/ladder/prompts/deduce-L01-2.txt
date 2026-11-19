@@ -1,0 +1,16 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+4 people sit in a row of 4 seats, numbered 1 to 4 from left to right.
+Each seat holds exactly one person.
+People: Ben, Gus, Noa, Pia
+
+Clues:
+1. Noa sits somewhere to the left of Pia.
+2. Pia does not sit in seat 4.
+3. Gus sits somewhere to the left of Noa.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 4, separated by spaces.

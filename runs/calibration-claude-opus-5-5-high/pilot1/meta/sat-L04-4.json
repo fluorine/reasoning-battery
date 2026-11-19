@@ -1,0 +1,10 @@
+{
+  "id": "sat-L04-4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09660399999999998,
+  "durationMs": 35718,
+  "outputTokens": 4029,
+  "thinkingTokens": 3450,
+  "rawSha256": "cc8a26bca3418608f574b0d38e7132a8784da6bb70bba135a7355643357f9f7f",
+  "redacted": false
+}

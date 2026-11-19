@@ -1,0 +1,25 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+13 people sit in a row of 13 seats, numbered 1 to 13 from left to right.
+Each seat holds exactly one person.
+People: Ana, Ben, Dev, Gus, Hal, Ivy, Jon, Kit, Lea, Noa, Pia, Quin, Rui
+
+Clues:
+1. Kit sits next to Quin.
+2. Pia and Rui sit exactly 6 seats apart.
+3. Quin does not sit in seat 11.
+4. Gus sits next to Rui.
+5. Ana and Rui sit exactly 5 seats apart.
+6. Noa sits somewhere to the left of Jon.
+7. Dev sits next to Ivy.
+8. Jon sits next to Pia.
+9. Ben and Ana sit exactly 7 seats apart.
+10. Dev and Hal sit exactly 7 seats apart.
+11. Ivy sits in seat 3.
+12. Gus sits next to Noa.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 13, separated by spaces.

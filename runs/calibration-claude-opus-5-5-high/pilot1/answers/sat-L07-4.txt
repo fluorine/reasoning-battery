@@ -1,0 +1,29 @@
+I found an assignment by guessing values for variables that appear mostly with one sign, then filling in whatever the clauses forced.
+
+**First attempt (failed).** I set these to FALSE: x1, x7, x8, x22, x28, x33, x35, x36, x38, x41, x43, x44. That led to a contradiction:
+- Clause 31 forced x3 = T.
+- Clause 133 forced x45 = T.
+- Clause 39 then forced x25 = T, and clause 88 forced x34 = T.
+- But clause 89 forced x23 = F, and clause 14 then required x34 = F.
+
+Flipping x22 to TRUE also ended in a conflict, at clause 63.
+
+**Second attempt (succeeded).** I kept the other guesses but set x41 = T and x23 = T. The forced values then followed in this order:
+- **From x41 = T:** clause 179 gives x18 = T, clause 190 gives x10 = F, and clause 201 gives x48 = F. Clause 15 then gives x39 = T.
+- **From x3 = T:** clause 32 gives x9 = F, clause 131 gives x40 = F, and clause 144 gives x24 = F.
+- **From x23 = T:** clause 29 gives x47 = F and clause 77 gives x11 = F.
+- **Next steps:**
+  - Clause 26 gives x4 = T, so clause 93 gives x30 = T.
+  - Clause 174 gives x14 = T, so clause 113 gives x29 = F and clause 4 gives x37 = F.
+  - Clause 124 gives x2 = T, so clause 68 gives x16 = F and clause 193 gives x32 = T.
+  - Clause 30 gives x26 = T, then clause 51 gives x6 = T and clause 76 gives x13 = T.
+- **Further steps:**
+  - Clause 151 gives x19 = F, so clause 127 gives x17 = T.
+  - Clause 18 gives x21 = T, then clause 111 gives x20 = T and clause 186 gives x34 = T.
+  - Clause 38 gives x15 = F.
+- **Last forced values:** clause 133 gives x45 = T, clause 39 gives x25 = T, and clause 191 gives x42 = F.
+- **Free choices:** x5, x12, x27, x31 and x46 were not forced, so I set them all to FALSE.
+
+**Check.** I checked all 202 clauses against the final assignment, and each one has at least one true literal.
+
+ANSWER: -1 2 3 4 -5 6 -7 -8 -9 -10 -11 -12 13 14 -15 -16 17 18 -19 20 21 -22 23 -24 25 26 -27 -28 -29 30 -31 32 -33 34 -35 -36 -37 -38 39 -40 41 -42 -43 -44 45 -46 -47 -48

@@ -1,0 +1,15 @@
+I found this by fixing a few variables and propagating the forced values through the clauses.
+
+1. Set x6 = T and x3 = T. Clause (-6 -3 9) then forces x9 = T.
+2. Clause (-3 -9 -10) then forces x10 = F.
+3. Set x7 = T. This forces the rest:
+   - (-5 -7 -9) gives x5 = F.
+   - (-7 -9 -2) gives x2 = F.
+   - (8 -7 -6) gives x8 = T.
+   - (-9 -8 4) gives x4 = T.
+   - (-9 -1 5) gives x1 = F, because x5 is false.
+4. I then checked all 42 clauses against the full assignment, and each one has at least one true literal. Examples include (5 -4 -2), satisfied by x2 = F, and (-1 -7 10), satisfied by x1 = F.
+
+Final assignment: x1=F, x2=F, x3=T, x4=T, x5=F, x6=T, x7=T, x8=T, x9=T, x10=F.
+
+ANSWER: -1 -2 3 4 -5 6 7 8 9 -10

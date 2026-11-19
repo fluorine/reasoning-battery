@@ -1,0 +1,34 @@
+I found this assignment by unit propagation plus a few heuristic choices, then checked it against all 155 clauses.
+
+**Initial choices.** I fixed variables that appear mostly with one sign:
+- x30 = F, x24 = F, x20 = F (each appears negated in many clauses).
+- x31 = T, x1 = T (each appears positive in many clauses).
+- x23 = T and x37 = F.
+
+**Forced consequences:**
+- Clause (-1 30 36) with x1 = T and x30 = F forces x36 = T.
+- Clause (-31 -19 -36) then forces x19 = F.
+
+**Further choices:** x16 = F, x15 = F, x10 = F.
+
+**Propagation from those:**
+- (10 14 30) forces x14 = T.
+- (-36 -14 -12) forces x12 = F.
+- (12 37 6) forces x6 = T.
+
+**Choosing x34.** Setting x34 = T would force x4 = F by (-4 16 -34) and x4 = T by (-36 -34 4), a conflict. So x34 = F, which leads to:
+- (34 21 -31) forces x21 = T.
+- (34 22 24) forces x22 = T.
+- x21 = T forces x3 = T by (19 -21 3).
+- x3 = T forces x26 = T by (-3 26 37).
+- x26 = T forces x7 = T by (-31 7 -26).
+- x7 = T forces x11 = F by (-11 -7 30).
+- x22 = T forces x13 = F by (-13 16 -22).
+- x13 = F forces x28 = T by (28 30 13).
+- x13 = F also forces x8 = T by (13 -36 8).
+- x13 = F also forces x27 = F by (-27 34 13).
+- x8 = T forces x33 = T by (33 24 -8).
+
+**Remaining free choices.** I set x2 = T, x32 = F, x17 = T, x4 = F, x25 = F, x9 = F, x29 = F, x18 = F, x5 = F and x35 = F. All remaining clauses are then satisfied.
+
+ANSWER: 1 2 3 -4 -5 6 7 8 -9 -10 -11 -12 -13 14 -15 -16 17 -18 -19 -20 21 22 23 -24 -25 26 -27 28 -29 -30 31 -32 33 -34 -35 36 -37

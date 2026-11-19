@@ -1,0 +1,15 @@
+I found an assignment by trying values in turn and propagating the clauses each choice forces.
+
+1. **Set x3 = T.** This satisfies many clauses outright, including 14, 15, 16, 26, 27, 29 and 32.
+2. **Set x4 = T.** This satisfies clauses 8, 20, 24, 34 and 41.
+3. **Set x1 = F.**
+   - Clause 4 (1 ∨ 7 ∨ ¬3) then forces **x7 = T**.
+   - Clause 37 (¬9 ∨ ¬7 ∨ 1) then forces **x9 = F**.
+   - Clause 40 (¬2 ∨ ¬3 ∨ 9) then forces **x2 = F**.
+4. **x8 must be F.** If x8 were T, clause 30 (¬6 ∨ 1 ∨ ¬8) would force x6 = F. Clause 36 (¬3 ∨ ¬8 ∨ 6) would then force x6 = T, a contradiction.
+5. **x10 must be T.** With x3 = T and x8 = F, clause 18 (10 ∨ ¬3 ∨ 8) forces it.
+6. **Set x5 and x6.** The clauses that mention them are already satisfied, so I set **x5 = F** and **x6 = F**.
+
+**Check:** I verified all 42 clauses against the assignment x1=F, x2=F, x3=T, x4=T, x5=F, x6=F, x7=T, x8=F, x9=F, x10=T, and each has at least one true literal.
+
+ANSWER: -1 -2 3 4 -5 -6 7 -8 -9 10

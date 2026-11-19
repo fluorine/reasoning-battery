@@ -1,0 +1,17 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+5 people sit in a row of 5 seats, numbered 1 to 5 from left to right.
+Each seat holds exactly one person.
+People: Ana, Fay, Kit, Max, Noa
+
+Clues:
+1. Ana sits somewhere to the left of Kit.
+2. Noa sits in seat 4.
+3. Noa sits somewhere to the left of Max.
+4. Noa does not sit next to Kit.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 5, separated by spaces.

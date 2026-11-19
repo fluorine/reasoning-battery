@@ -1,0 +1,12 @@
+I found this assignment by reasoning through the clauses by hand, then checked it against all 155 clauses; every clause is satisfied.
+
+**How I got there**
+
+1. I started by setting x3 and x30 to FALSE, because both appear mostly as negated literals.
+2. That forced x13 TRUE through clause (3 13 35), since x35 should stay free.
+3. My first attempt set x23 FALSE, which made clause (23 25 34) impossible to satisfy alongside (14 -25 23). So I set **x23 = TRUE** instead.
+4. Clauses (-34 -13 -37) and (-37 5 34) then pointed to x34 FALSE, x37 TRUE and x5 TRUE. Those forced x36 FALSE, x11 TRUE, x19 TRUE, x6 TRUE and x35 TRUE.
+5. Choosing x7 FALSE forced a chain: x12 TRUE, x24 FALSE, x25 TRUE, x33 TRUE, x21 TRUE, x27 TRUE, x2 FALSE, x20 FALSE, x17 FALSE and x32 FALSE.
+6. The remaining clauses were satisfied by setting x8, x10, x15, x16, x22, x9, x28 and x18 FALSE, and x31, x1, x26, x4 and x29 TRUE.
+
+ANSWER: 1 -2 -3 4 5 6 -7 -8 -9 -10 11 12 13 -14 -15 -16 -17 -18 19 -20 21 -22 23 -24 25 26 27 -28 29 -30 31 -32 33 -34 35 -36 37

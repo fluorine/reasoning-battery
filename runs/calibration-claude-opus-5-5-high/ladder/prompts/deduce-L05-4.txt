@@ -1,0 +1,20 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+8 people sit in a row of 8 seats, numbered 1 to 8 from left to right.
+Each seat holds exactly one person.
+People: Ana, Cai, Dev, Fay, Gus, Hal, Pia, Tea
+
+Clues:
+1. Gus sits somewhere to the left of Hal.
+2. Hal and Tea sit exactly 4 seats apart.
+3. Gus sits next to Hal.
+4. Ana sits next to Cai.
+5. Dev sits next to Hal.
+6. Pia and Ana sit exactly 2 seats apart.
+7. Tea sits in seat 7.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 8, separated by spaces.

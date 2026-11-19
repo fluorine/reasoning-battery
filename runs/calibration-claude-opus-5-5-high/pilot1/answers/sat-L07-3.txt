@@ -1,0 +1,16 @@
+Found a satisfying assignment by hand: picked likely values for a few variables, followed what each choice forced, and backtracked once.
+
+1. I started with x3, x5 and x36 TRUE, and x12, x16, x44, x26, x8, x37 and x39 FALSE. Following the forced values led to a contradiction. Clause (41 16 -35) needed x35 FALSE, but (34 -43 35) needed x35 TRUE.
+2. **Fix:** I flipped x16 to TRUE, which satisfies (41 16 -35) directly.
+3. **Second pass:** I kept x36 TRUE and set x35 TRUE. Unit propagation then forced almost every other variable:
+   - x4 is TRUE, so x33 is FALSE.
+   - That forces x9 TRUE, x42 FALSE and x34 FALSE.
+   - That forces x7 FALSE and x38 FALSE.
+   - That forces x47 TRUE and x17 TRUE.
+   - From there, x13 is FALSE, x14 TRUE, x6 TRUE, x43 TRUE and x1 TRUE.
+   - Next come x10 TRUE, x15 FALSE, x24 FALSE and x25 FALSE.
+   - Then x40, x21, x18 and x22 are all TRUE, and x23 is FALSE.
+4. **Free variables:** x2, x29, x30, x27 and x48 were not forced. I set x2, x29, x30 and x48 FALSE and x27 TRUE.
+5. **Check:** I checked all 202 clauses against the final assignment and each has at least one true literal.
+
+ANSWER: 1 -2 3 4 5 6 -7 -8 9 10 -11 -12 -13 14 -15 16 17 18 19 20 21 22 -23 -24 -25 -26 27 28 -29 -30 31 32 -33 -34 35 36 -37 -38 -39 40 -41 -42 43 -44 45 -46 47 -48

@@ -1,0 +1,22 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+9 people sit in a row of 9 seats, numbered 1 to 9 from left to right.
+Each seat holds exactly one person.
+People: Dev, Eli, Fay, Hal, Lea, Noa, Pia, Quin, Tea
+
+Clues:
+1. Hal sits at one end of the row.
+2. Eli sits at one end of the row.
+3. Noa and Dev sit exactly 4 seats apart.
+4. Eli and Tea sit exactly 6 seats apart.
+5. Noa sits somewhere to the left of Quin.
+6. Hal sits somewhere to the left of Dev.
+7. Quin sits next to Dev.
+8. Fay does not sit next to Lea.
+9. Lea and Eli sit exactly 3 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 9, separated by spaces.

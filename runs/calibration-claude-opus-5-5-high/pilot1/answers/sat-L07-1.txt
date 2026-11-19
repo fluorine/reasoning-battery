@@ -1,0 +1,22 @@
+I found an assignment by hand: unit propagation plus backtracking, followed by a check of every clause.
+
+**How the search went**
+
+1. **First base guess: x23, x24, x45 all FALSE.** These variables appear mostly negated. Branching on x18 ruled this out:
+   - **x18 = TRUE:**
+     - Clause 88 forces x48, and clause 135 forces x28.
+     - x30 = FALSE breaks clause 197, so x30 = TRUE. Then clauses 45 and 46 force x12 and x14 FALSE.
+     - x4 = TRUE breaks clause 87 (through clauses 44 and 41), so x4 = FALSE.
+     - The forced chain from there ends in a violation of clause 105.
+   - **x18 = FALSE:** all three remaining combinations of x4 and x30 also hit conflicts.
+2. **So one of x23, x24, x45 must be TRUE.**
+   - Making x24 TRUE (with x18 TRUE) quickly broke clause 41.
+3. **Switching to x45 = TRUE (x23, x24 FALSE) worked:**
+   - With x18 = TRUE, x30 = TRUE leads to a conflict in both branches on x37. So x30 = FALSE, which forces x10 = TRUE.
+   - x4 = TRUE breaks clause 189 (via clauses 44, 1 and 24), so x4 = FALSE.
+   - Then I chose x21, x39, x33 and x38 FALSE, and x6 and x1 TRUE.
+   - Propagation from those choices fixed most of the remaining variables. The last free ones I set to x9 = TRUE and x12 = TRUE, with the rest FALSE.
+
+**Verification:** I checked all 202 clauses against the final assignment, and each has at least one true literal. For example, clause 151 (−10 −32 −38) holds via ¬x38, clause 195 via ¬x47, and clause 202 via x12.
+
+ANSWER: 1 -2 3 -4 5 6 7 -8 9 10 -11 12 -13 -14 -15 -16 -17 18 -19 -20 -21 -22 -23 -24 25 26 -27 -28 -29 -30 -31 32 -33 -34 -35 -36 37 -38 -39 -40 -41 42 -43 -44 45 -46 -47 -48

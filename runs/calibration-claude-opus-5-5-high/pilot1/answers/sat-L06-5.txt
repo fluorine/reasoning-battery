@@ -1,0 +1,18 @@
+I found a satisfying assignment by fixing likely values, propagating forced literals, and backtracking once on a conflict. I then checked all 155 clauses against the final assignment.
+
+**First attempt.** I set 27, 23, 9, 8, 1, 15 and 30 TRUE and 33 FALSE. Propagation forced 12, 4, 14, 31 and 35 TRUE and 29 FALSE. That led to a conflict:
+- Clause (−15 29 37) with 15 TRUE and 29 FALSE needs 37 TRUE.
+- Clause (−12 −31 −37) with 12 and 31 TRUE needs 37 FALSE.
+
+**Backtrack: set 15 = FALSE.** Each step below follows from the clause shown:
+- (15 −9 −16) gives 16 = F, then (16 −32 3) gives 3 = T.
+- (18 −12 −30) gives 18 = T, then (−18 15 5) gives 5 = T.
+- (−12 4 −25) gives 4 = T, and (−12 −25 35) gives 35 = T.
+- (−23 −22 29) with 29 FALSE gives 22 = F.
+- (33 −25 −11) gives 11 = F, then (31 11 29) gives 31 = T and (29 −17 11) gives 17 = F.
+- (−12 −31 −37) gives 37 = F, and (−24 −31 −35) gives 24 = F, then (20 33 24) gives 20 = T.
+- I chose 7 = F, which satisfies the clauses containing −7.
+- For the remaining variables I chose 34 = F, 13 = T, 2 = T, 10 = T, 14 = F and 36 = F. Clause (−26 37 36) then forced 26 = F, (−11 6 26) gave 6 = T, and (26 −2 −19) gave 19 = F.
+- 28 and 21 were unconstrained by this point, so I set both FALSE.
+
+ANSWER: 1 2 3 4 5 6 -7 8 9 10 -11 12 13 -14 -15 -16 -17 18 -19 20 -21 -22 23 -24 25 -26 27 -28 -29 30 31 32 -33 -34 35 -36 -37

@@ -1,0 +1,14 @@
+{
+  "Kind": "ladder",
+  "MaxLevel": 10,
+  "PerLevel": 5,
+  "Families": [
+    "sat",
+    "mult",
+    "track",
+    "induct",
+    "deduce",
+    "code",
+    "plan"
+  ]
+}

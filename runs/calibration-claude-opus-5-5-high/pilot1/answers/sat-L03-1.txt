@@ -1,0 +1,21 @@
+I found an assignment by fixing a few variables, simplifying the clauses and propagating forced values. I then checked it against all 71 clauses.
+
+**Choices and forced values**
+
+1. Set x10 = F. This satisfies every clause containing −10.
+2. Set x3 = T. This satisfies every clause containing 3.
+3. Set x8 = T. Clause (−7 −8 10) then forces x7 = F.
+4. Set x11 = T.
+   - Clause (−11 7 −6), with x7 = F, forces x6 = F.
+   - Clause (6 −11 −14) forces x14 = F.
+5. Set x13 = F.
+   - Clause (10 13 −12) forces x12 = F.
+   - Clause (12 −11 −1) then forces x1 = F.
+6. Set x15 = T and x5 = T.
+   - Clause (1 9 −5) forces x9 = T.
+   - Clause (17 6 −9) then forces x17 = T.
+7. The remaining variables are free, so set x2 = F, x4 = F and x16 = F.
+
+**Check:** I checked each of the 71 clauses against the final assignment. Every clause has at least one true literal; for example, (5 −9 −1) is satisfied by x5 = T and (−15 −17 −1) by x1 = F.
+
+ANSWER: -1 -2 3 -4 5 -6 -7 8 9 -10 11 -12 -13 -14 15 -16 17

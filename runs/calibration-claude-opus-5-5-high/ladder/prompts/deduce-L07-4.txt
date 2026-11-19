@@ -1,0 +1,22 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+10 people sit in a row of 10 seats, numbered 1 to 10 from left to right.
+Each seat holds exactly one person.
+People: Ana, Cai, Dev, Fay, Gus, Hal, Ivy, Jon, Pia, Sol
+
+Clues:
+1. Sol sits in seat 10.
+2. Cai sits next to Ana.
+3. Dev sits next to Ivy.
+4. Pia and Fay sit exactly 4 seats apart.
+5. Dev and Gus sit exactly 2 seats apart.
+6. Cai sits in seat 9.
+7. Pia and Hal sit exactly 6 seats apart.
+8. Pia and Gus sit exactly 5 seats apart.
+9. Fay sits somewhere to the left of Jon.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 10, separated by spaces.

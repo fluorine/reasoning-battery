@@ -1,0 +1,19 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+6 people sit in a row of 6 seats, numbered 1 to 6 from left to right.
+Each seat holds exactly one person.
+People: Ana, Gus, Ivy, Lea, Max, Pia
+
+Clues:
+1. Ivy sits somewhere to the left of Pia.
+2. Max sits at one end of the row.
+3. Pia and Ana sit exactly 2 seats apart.
+4. Pia does not sit in seat 6.
+5. Ana and Gus sit exactly 2 seats apart.
+6. Max and Lea sit exactly 2 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 6, separated by spaces.

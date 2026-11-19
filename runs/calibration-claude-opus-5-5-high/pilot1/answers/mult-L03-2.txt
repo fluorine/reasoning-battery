@@ -1,0 +1,13 @@
+5584717 × 8353624 = **46,652,625,964,408**
+
+I split the second factor into place-value parts and added the partial products:
+
+- 5584717 × 8,000,000 = 44,677,736,000,000
+- 5584717 × 353,000 = 1,971,405,101,000
+- 5584717 × 624 = 3,484,863,408
+
+Adding the last two gives 1,974,889,964,408. Adding the first part gives 46,652,625,964,408.
+
+As a check, I used digit sums modulo 9. 5584717 ≡ 1 and 8353624 ≡ 4, so the product should be ≡ 4. The result's digit sum is 67, and 67 ≡ 4, so the check passes.
+
+ANSWER: 46652625964408

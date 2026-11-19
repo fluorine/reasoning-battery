@@ -1,0 +1,29 @@
+I found an assignment by setting a few variables, following the clauses each choice forced, and then checking all 71 clauses against the result.
+
+**Starting choices**
+
+1. **x1 = T and x17 = T.** Each satisfies many clauses outright. With x17 true, the clauses (-17 -7 11) and (-17 -7 -11) reduce to (-7 ∨ 11) and (-7 ∨ -11). Both can hold only if **x7 = F**.
+2. **x10 = F.** Then (10 -5 2) becomes (-5 ∨ 2) and (-2 -5 10) becomes (-2 ∨ -5). Both can hold only if **x5 = F**.
+
+**What those choices force**
+
+- x5 = F and (-1 5 11) give **x11 = T**.
+- x5 = F, x7 = F and (-6 5 7) give **x6 = F**.
+- x5 = F, x7 = F and (5 3 7) give **x3 = T**.
+- x11 = T and (-11 5 12) give **x12 = T**.
+- x12 = T and (-12 -9 5) give **x9 = F**.
+- x6 = F and (-17 13 6) give **x13 = T**.
+- x6 = F and (10 8 6) give **x8 = T**.
+- x3 = T and (14 7 -3) give **x14 = T**.
+- x8 = T and (7 -8 -16) give **x16 = F**.
+- x12 = T, x6 = F and (6 -12 2) give **x2 = T**.
+
+**Free choices**
+
+The only remaining constraint on x4 and x15 is (-4 -5... ) style clause (-4 5 -15), which needs x4 = F or x15 = F. I chose **x4 = F** and **x15 = F**.
+
+**Check**
+
+I checked every one of the 71 clauses against the final assignment, and each has at least one true literal.
+
+ANSWER: 1 2 3 -4 -5 -6 -7 8 -9 -10 11 12 13 14 -15 -16 17

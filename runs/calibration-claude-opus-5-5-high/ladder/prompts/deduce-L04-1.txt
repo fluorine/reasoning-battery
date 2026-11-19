@@ -1,0 +1,19 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+7 people sit in a row of 7 seats, numbered 1 to 7 from left to right.
+Each seat holds exactly one person.
+People: Ana, Ben, Dev, Hal, Ivy, Quin, Tea
+
+Clues:
+1. Ben sits somewhere to the left of Hal.
+2. Tea sits somewhere to the left of Ben.
+3. Ivy sits in seat 7.
+4. Quin sits in seat 4.
+5. Tea and Ivy sit exactly 4 seats apart.
+6. Dev and Tea sit exactly 2 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 7, separated by spaces.

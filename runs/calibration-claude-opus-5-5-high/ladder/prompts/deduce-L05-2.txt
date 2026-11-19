@@ -1,0 +1,24 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+8 people sit in a row of 8 seats, numbered 1 to 8 from left to right.
+Each seat holds exactly one person.
+People: Fay, Ivy, Kit, Lea, Oto, Rui, Sol, Tea
+
+Clues:
+1. Lea does not sit in seat 5.
+2. Fay does not sit in seat 5.
+3. Kit sits next to Ivy.
+4. Kit sits somewhere to the left of Oto.
+5. Fay and Lea sit exactly 2 seats apart.
+6. Kit does not sit in seat 3.
+7. Ivy and Oto sit exactly 3 seats apart.
+8. Oto sits somewhere to the left of Sol.
+9. Rui sits somewhere to the left of Oto.
+10. Oto and Tea sit exactly 2 seats apart.
+11. Tea sits next to Fay.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 8, separated by spaces.

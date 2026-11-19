@@ -1,0 +1,26 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+13 people sit in a row of 13 seats, numbered 1 to 13 from left to right.
+Each seat holds exactly one person.
+People: Ana, Ben, Eli, Gus, Hal, Ivy, Kit, Lea, Max, Noa, Oto, Rui, Tea
+
+Clues:
+1. Tea sits next to Kit.
+2. Noa sits next to Oto.
+3. Rui and Max sit exactly 12 seats apart.
+4. Gus sits somewhere to the left of Rui.
+5. Lea does not sit next to Kit.
+6. Hal sits next to Oto.
+7. Gus and Max sit exactly 3 seats apart.
+8. Kit and Rui sit exactly 3 seats apart.
+9. Ana and Tea sit exactly 9 seats apart.
+10. Eli sits somewhere to the left of Oto.
+11. Rui and Hal sit exactly 6 seats apart.
+12. Ivy sits next to Tea.
+13. Noa sits somewhere to the left of Lea.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 13, separated by spaces.

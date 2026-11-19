@@ -1,0 +1,24 @@
+I found an assignment by trying values, propagating what each clause then forces, and backtracking once. I then checked it against all 71 clauses.
+
+**First attempt.** I set x6 = T, x7 = F, x16 = T, x12 = F, x10 = F, x11 = F, x14 = F and x15 = F. This leaves a small group of clauses over x1, x2, x3, x8, x9 and x13, and both values of x9 fail:
+- If x9 = T, clause (−9 10 −8) forces x8 = F. Clause (8 1 −16) then forces x1 = T, and clause (−3 −1 15) forces x3 = F. That falsifies (11 8 3).
+- If x9 = F, clause (9 13 11) forces x13 = T, and clause (9 3 14) forces x3 = T. Clause (−3 −1 15) then forces x1 = F, (8 1 −16) forces x8 = T, and (−8 11 −2) forces x2 = F. That falsifies (−3 −13 2).
+
+So x11 = F is wrong under these choices.
+
+**Second attempt.** I kept x6 = T, x7 = F, x16 = T, x12 = F and set x11 = T. The clauses then force the rest:
+- (−11 −10 7) forces x10 = F.
+- (−8 10 −11) forces x8 = F.
+- (−11 10 −9) forces x9 = F.
+- (−11 −15 7) forces x15 = F.
+- (8 1 −16) forces x1 = T.
+- (−3 −1 15) forces x3 = F.
+- (9 3 14) forces x14 = T.
+- (5 9 3) forces x5 = T.
+- (−14 17 −1) forces x17 = T.
+- (−1 −4 9) forces x4 = F.
+- (13 10 2) needs x13 or x2, so I chose x13 = T and x2 = F.
+
+**Check.** Every one of the 71 clauses has at least one true literal under this assignment.
+
+ANSWER: 1 -2 -3 -4 5 6 -7 -8 -9 -10 11 -12 13 14 -15 16 17

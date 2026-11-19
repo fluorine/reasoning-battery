@@ -1,0 +1,22 @@
+Applying the 8 operations to the starting sequence in order:
+
+**Start:** A B C D E F G H I J K L
+
+1. **reverse 5 9:** E F G H I becomes I H G F E.
+   A B C D I H G F E J K L
+2. **swap 6 1:** exchange H and A.
+   H B C D I A G F E J K L
+3. **swap 7 8:** exchange G and F.
+   H B C D I A F G E J K L
+4. **reverse 4 12:** D I A F G E J K L becomes L K J E G F A I D.
+   H B C L K J E G F A I D
+5. **rotate 5:** move H B C L K to the end.
+   J E G F A I D H B C L K
+6. **rotate 10:** move the first 10 items to the end.
+   L K J E G F A I D H B C
+7. **swap 12 6:** exchange C and F.
+   L K J E G C A I D H B F
+8. **swap 7 12:** exchange A and F.
+   L K J E G C F I D H B A
+
+ANSWER: L K J E G C F I D H B A

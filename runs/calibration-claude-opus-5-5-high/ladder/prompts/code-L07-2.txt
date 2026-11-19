@@ -1,0 +1,38 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+p = 1
+x = 48
+r = 11
+z = 43
+r = x + r
+r = r + r
+repeat 4 times:
+    x = p * 3
+    x = z + 78
+    z = p * 9
+x = x + z
+repeat 2 times:
+    z = p + r
+    z = r + z
+r = p * 9
+if x > 257:
+    x = x + 68
+    p = z * 6
+else:
+    p = x * 3
+    z = p + 97
+repeat 4 times:
+    r = x + r
+    z = z - z
+repeat 2 times:
+    z = r + r
+    z = r + 49
+    r = x + x
+
+Answer format: ANSWER: the final values of p x r z, in that order, separated by spaces.

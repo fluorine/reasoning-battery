@@ -1,0 +1,10 @@
+{
+  "id": "track-L01-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.022564,
+  "durationMs": 7748,
+  "outputTokens": 657,
+  "thinkingTokens": 306,
+  "rawSha256": "443bf3cdee9538620e1ba9304507ff84a46a07027bc092b30c8af14b1b65d6da",
+  "redacted": false
+}

@@ -1,0 +1,23 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+10 people sit in a row of 10 seats, numbered 1 to 10 from left to right.
+Each seat holds exactly one person.
+People: Ana, Cai, Dev, Gus, Kit, Lea, Pia, Quin, Sol, Tea
+
+Clues:
+1. Ana sits next to Kit.
+2. Quin sits somewhere to the left of Lea.
+3. Kit sits somewhere to the left of Quin.
+4. Kit sits next to Pia.
+5. Dev sits next to Quin.
+6. Gus sits somewhere to the left of Cai.
+7. Gus and Kit sit exactly 5 seats apart.
+8. Pia sits next to Cai.
+9. Cai and Quin sit exactly 5 seats apart.
+10. Tea and Kit sit exactly 4 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 10, separated by spaces.

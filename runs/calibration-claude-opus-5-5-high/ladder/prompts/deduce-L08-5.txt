@@ -1,0 +1,25 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+11 people sit in a row of 11 seats, numbered 1 to 11 from left to right.
+Each seat holds exactly one person.
+People: Dev, Eli, Gus, Hal, Jon, Lea, Max, Oto, Rui, Sol, Tea
+
+Clues:
+1. Hal and Oto sit exactly 5 seats apart.
+2. Dev sits next to Lea.
+3. Tea sits next to Hal.
+4. Gus does not sit next to Dev.
+5. Eli does not sit next to Jon.
+6. Dev sits in seat 9.
+7. Lea does not sit next to Eli.
+8. Eli and Rui sit exactly 2 seats apart.
+9. Eli does not sit next to Sol.
+10. Sol and Dev sit exactly 5 seats apart.
+11. Rui sits somewhere to the left of Jon.
+12. Hal and Dev sit exactly 8 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 11, separated by spaces.

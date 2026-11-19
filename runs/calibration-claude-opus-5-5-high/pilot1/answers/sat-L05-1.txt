@@ -1,0 +1,24 @@
+I set x1, x6, x26 and x28 to FALSE first, because they appear negated in many clauses. I then propagated the forced values and backtracked when I hit a conflict.
+
+1. **x19 = TRUE fails.** With x29 = FALSE, x2 must be TRUE, which forces x17 FALSE and x9 TRUE. That leads to x15 = FALSE, which breaks (15 29 28). With x29 = TRUE, x9 must be FALSE. Every branch on x27, x15 and x4 then ends in a violated clause, for example (−7 22 24) or (8 2 7).
+2. **x19 = FALSE works.**
+   - (1 −21 19) forces x21 = FALSE.
+   - That forces x14 = FALSE through (21 26 −14).
+   - That forces x18 = TRUE through (14 1 18).
+   - I chose x20 = FALSE, x29 = TRUE, x27 = TRUE, x15 = TRUE and x13 = TRUE.
+3. **Propagation from there:**
+   - x13 = TRUE forces x5 = TRUE and x10 = FALSE.
+   - x5 = TRUE forces x7 = FALSE.
+   - x10 = FALSE forces x9 = TRUE and x12 = FALSE.
+   - x7 = FALSE forces x16 = TRUE.
+   - x16 = TRUE forces x22 = TRUE.
+   - x22 = TRUE forces x17 = FALSE.
+4. **Remaining choices:**
+   - I chose x2 = TRUE and x8 = TRUE.
+   - x8 = TRUE forces x24 = TRUE and x25 = TRUE.
+   - x24 = TRUE forces x11 = TRUE.
+   - I set x23 = FALSE, x3 = FALSE and x4 = FALSE.
+
+I checked this assignment against all 122 clauses, and each one has at least one true literal.
+
+ANSWER: -1 2 -3 -4 5 -6 -7 8 9 -10 11 -12 13 -14 15 16 -17 18 -19 -20 -21 22 -23 24 25 -26 27 -28 29

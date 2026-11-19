@@ -1,0 +1,19 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+7 people sit in a row of 7 seats, numbered 1 to 7 from left to right.
+Each seat holds exactly one person.
+People: Ana, Cai, Gus, Kit, Lea, Oto, Tea
+
+Clues:
+1. Kit and Ana sit exactly 3 seats apart.
+2. Oto sits in seat 4.
+3. Gus and Ana sit exactly 2 seats apart.
+4. Oto sits somewhere to the left of Cai.
+5. Gus does not sit next to Oto.
+6. Cai sits somewhere to the left of Tea.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 7, separated by spaces.

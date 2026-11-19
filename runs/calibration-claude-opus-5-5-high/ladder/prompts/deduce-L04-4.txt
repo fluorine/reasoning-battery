@@ -1,0 +1,19 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+7 people sit in a row of 7 seats, numbered 1 to 7 from left to right.
+Each seat holds exactly one person.
+People: Ana, Dev, Kit, Lea, Max, Oto, Rui
+
+Clues:
+1. Rui sits somewhere to the left of Max.
+2. Kit sits in seat 1.
+3. Oto and Max sit exactly 3 seats apart.
+4. Lea and Rui sit exactly 4 seats apart.
+5. Lea and Dev sit exactly 3 seats apart.
+6. Max sits next to Lea.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 7, separated by spaces.

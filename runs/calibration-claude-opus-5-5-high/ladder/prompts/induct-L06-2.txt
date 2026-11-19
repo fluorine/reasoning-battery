@@ -1,0 +1,30 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+A hidden rule maps a list of 8 digits to another list of 8 digits.
+The rule applies at most 6 operations from this library, in order.
+The same operation can occur more than once.
+
+- prefix: replace every element with the sum of it and all elements before it, modulo 10.
+- pairswap: swap the elements at positions 1-2, 3-4, 5-6 and 7-8.
+- reverse: reverse the order of the list.
+- complement: replace every element x with 9 - x.
+- add c: add c to every element, modulo 10. c is 1 to 9.
+- sort: sort the list in ascending order.
+- addindex: add its position to every element, modulo 10. The first position is 0.
+- mul c: multiply every element by c, modulo 10. c is 3, 7 or 9.
+- rotate c: move the first c elements to the end, in the same order. c is 1 to 7.
+
+Examples:
+[6 9 9 2 7 2 9 9] -> [2 9 0 1 2 2 3 6]
+[7 1 3 7 3 4 6 0] -> [0 4 1 5 6 6 0 7]
+[4 4 4 7 6 0 4 8] -> [3 4 1 5 9 6 9 0]
+[9 5 7 4 4 4 4 9] -> [3 7 4 1 2 8 9 0]
+[3 0 8 8 7 6 0 9] -> [9 3 7 8 2 6 7 7]
+[3 3 9 8 1 4 7 9] -> [3 3 7 1 2 9 6 7]
+
+Find a rule of at most 6 operations that reproduces every example.
+Any rule that reproduces every example is correct.
+
+Answer format: ANSWER: the operations in order, separated by semicolons. Example: ANSWER: add 3; reverse; rotate 2

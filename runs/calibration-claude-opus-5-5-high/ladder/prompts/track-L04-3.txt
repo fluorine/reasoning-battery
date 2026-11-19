@@ -1,0 +1,44 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Start with this sequence (position 1 is the leftmost item):
+A B C D E F G H I J K L
+
+Apply these 30 operations in order:
+- swap i j: exchange the items at positions i and j.
+- reverse i j: reverse the items at positions i through j, inclusive.
+- rotate r: move the first r items to the end, in the same order.
+
+1. swap 10 2
+2. swap 9 7
+3. rotate 4
+4. rotate 6
+5. swap 2 11
+6. reverse 5 7
+7. swap 6 7
+8. swap 8 4
+9. swap 12 2
+10. reverse 5 8
+11. rotate 4
+12. rotate 7
+13. reverse 9 12
+14. rotate 10
+15. swap 6 5
+16. swap 7 3
+17. rotate 10
+18. swap 11 9
+19. rotate 7
+20. rotate 4
+21. rotate 8
+22. swap 11 6
+23. swap 11 2
+24. swap 6 7
+25. reverse 7 10
+26. rotate 1
+27. rotate 6
+28. reverse 9 12
+29. swap 3 2
+30. swap 7 2
+
+Answer format: ANSWER: followed by the final 12 letters separated by spaces.

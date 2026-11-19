@@ -1,0 +1,84 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+p = 47
+z = 26
+q = 2
+x = 42
+z = z + 42
+z = q + 11
+z = q + 68
+q = q * 9
+repeat 4 times:
+    x = z + 27
+    x = x + 78
+if q is even:
+    x = x - z
+    p = z - z
+else:
+    p = x + 26
+    if z < q:
+        q = x - p
+    else:
+        p = p - x
+repeat 4 times:
+    q = q + q
+if p > 350:
+    q = p - z
+    if x is even:
+        p = z - z
+    else:
+        x = q + 8
+else:
+    q = z + 98
+repeat 3 times:
+    x = z + 78
+    if x is even:
+        x = z + q
+    else:
+        z = p - p
+x = p + 1
+z = x + x
+repeat 3 times:
+    if p > 369:
+        z = z + 80
+    else:
+        z = z + q
+if p > 131:
+    x = p * 4
+else:
+    q = z * 3
+    z = x + 64
+repeat 4 times:
+    repeat 3 times:
+        p = z + 98
+    z = p - q
+x = p - z
+z = z + 39
+x = p + x
+repeat 3 times:
+    x = p + 66
+q = x + p
+x = x * 3
+repeat 3 times:
+    p = q - z
+    z = z + x
+q = x + x
+repeat 3 times:
+    q = z - p
+p = x + p
+repeat 3 times:
+    p = q - q
+    if x is even:
+        x = z - x
+    else:
+        z = p + 8
+q = x - x
+p = z - q
+
+Answer format: ANSWER: the final values of p z q x, in that order, separated by spaces.

@@ -1,0 +1,22 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+11 people sit in a row of 11 seats, numbered 1 to 11 from left to right.
+Each seat holds exactly one person.
+People: Ben, Cai, Dev, Fay, Gus, Hal, Jon, Kit, Pia, Sol, Tea
+
+Clues:
+1. Jon sits in seat 4.
+2. Gus sits next to Tea.
+3. Sol sits somewhere to the left of Fay.
+4. Dev sits next to Ben.
+5. Cai and Ben sit exactly 5 seats apart.
+6. Sol and Fay sit exactly 5 seats apart.
+7. Ben sits next to Tea.
+8. Hal and Sol sit exactly 10 seats apart.
+9. Kit sits somewhere to the left of Cai.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 11, separated by spaces.

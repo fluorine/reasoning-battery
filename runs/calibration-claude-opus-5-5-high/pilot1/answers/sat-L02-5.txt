@@ -1,0 +1,23 @@
+I found an assignment that satisfies all 55 clauses. Here is how I narrowed it down.
+
+**Step 1 – Fix x10 = F, which forces x4 = T.**
+If x10 = F and x4 = F, clause (11 10 4) needs x11 = T. But clause (10 4 −11) then needs x11 = F. So with x10 = F, x4 must be T.
+
+**Step 2 – Choose x12 = T and follow the forced values.**
+- (1 −4 −12) forces x1 = T.
+- (7 −12 −4) forces x7 = T.
+- (9 −12 10) forces x9 = T.
+
+**Step 3 – x13 must be F.**
+Clause (−12 −13 −3) gives ¬x13 ∨ ¬x3. Clause (3 −13 −12) gives ¬x13 ∨ x3. Together these force x13 = F. Then (13 2 −4) forces x2 = T.
+
+**Step 4 – Pick the remaining variables.**
+- Choose x6 = T. Then (−6 −4 −11) forces x11 = F.
+- Set x3 = F, x5 = F and x8 = F. This satisfies (−5 −4 −8), (−12 −3 −5), (−8 −3 5) and (8 −5 13).
+
+**Step 5 – Check.**
+I checked each of the 55 clauses against this assignment, and each has at least one true literal.
+
+Final assignment: x1 T, x2 T, x3 F, x4 T, x5 F, x6 T, x7 T, x8 F, x9 T, x10 F, x11 F, x12 T, x13 F.
+
+ANSWER: 1 2 -3 4 -5 6 7 -8 9 -10 -11 12 -13

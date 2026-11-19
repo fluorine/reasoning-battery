@@ -1,0 +1,27 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+13 people sit in a row of 13 seats, numbered 1 to 13 from left to right.
+Each seat holds exactly one person.
+People: Cai, Dev, Fay, Gus, Jon, Lea, Max, Noa, Oto, Pia, Quin, Rui, Sol
+
+Clues:
+1. Dev does not sit in seat 5.
+2. Max sits somewhere to the left of Lea.
+3. Max sits next to Pia.
+4. Dev sits somewhere to the left of Cai.
+5. Cai and Dev sit exactly 5 seats apart.
+6. Jon sits next to Pia.
+7. Rui sits next to Cai.
+8. Lea sits next to Max.
+9. Lea and Noa sit exactly 8 seats apart.
+10. Oto sits next to Gus.
+11. Quin sits somewhere to the left of Max.
+12. Lea sits somewhere to the left of Oto.
+13. Sol sits next to Noa.
+14. Cai and Oto sit exactly 2 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 13, separated by spaces.

@@ -1,0 +1,281 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Start with this sequence (position 1 is the leftmost item):
+A B C D E F G H I J K L
+
+Apply these 267 operations in order:
+- swap i j: exchange the items at positions i and j.
+- reverse i j: reverse the items at positions i through j, inclusive.
+- rotate r: move the first r items to the end, in the same order.
+
+1. rotate 8
+2. reverse 7 10
+3. reverse 8 9
+4. rotate 8
+5. swap 11 9
+6. swap 3 12
+7. swap 9 12
+8. reverse 9 12
+9. rotate 8
+10. rotate 2
+11. rotate 4
+12. swap 11 9
+13. rotate 6
+14. rotate 11
+15. reverse 9 12
+16. reverse 4 12
+17. rotate 8
+18. swap 2 6
+19. rotate 11
+20. reverse 3 6
+21. swap 5 6
+22. rotate 6
+23. rotate 10
+24. rotate 7
+25. swap 8 9
+26. swap 2 12
+27. reverse 5 7
+28. reverse 7 12
+29. swap 8 6
+30. swap 4 10
+31. reverse 5 7
+32. rotate 8
+33. rotate 7
+34. reverse 5 6
+35. rotate 6
+36. rotate 10
+37. swap 1 2
+38. reverse 1 5
+39. rotate 3
+40. rotate 7
+41. rotate 3
+42. reverse 5 6
+43. rotate 11
+44. rotate 3
+45. rotate 4
+46. reverse 5 7
+47. rotate 10
+48. rotate 8
+49. reverse 7 10
+50. rotate 6
+51. rotate 7
+52. swap 7 2
+53. swap 11 4
+54. reverse 7 9
+55. reverse 3 5
+56. swap 9 1
+57. rotate 3
+58. rotate 6
+59. rotate 7
+60. rotate 5
+61. swap 8 3
+62. rotate 3
+63. rotate 1
+64. rotate 11
+65. rotate 11
+66. swap 11 5
+67. swap 1 11
+68. rotate 1
+69. reverse 7 10
+70. reverse 10 12
+71. reverse 6 10
+72. swap 10 7
+73. reverse 8 12
+74. swap 9 8
+75. swap 8 3
+76. reverse 4 7
+77. reverse 6 8
+78. swap 11 6
+79. rotate 9
+80. rotate 10
+81. reverse 1 11
+82. rotate 9
+83. swap 7 4
+84. rotate 1
+85. reverse 7 8
+86. rotate 1
+87. reverse 5 10
+88. swap 10 11
+89. swap 3 1
+90. reverse 4 9
+91. reverse 7 11
+92. rotate 9
+93. rotate 10
+94. swap 3 11
+95. rotate 6
+96. reverse 8 10
+97. reverse 4 12
+98. rotate 1
+99. swap 10 7
+100. swap 5 9
+101. swap 1 4
+102. rotate 9
+103. reverse 5 11
+104. rotate 8
+105. swap 3 8
+106. rotate 4
+107. rotate 10
+108. reverse 7 8
+109. rotate 2
+110. reverse 10 12
+111. swap 6 4
+112. reverse 10 11
+113. reverse 5 6
+114. reverse 9 10
+115. reverse 1 5
+116. swap 8 10
+117. reverse 4 6
+118. swap 1 10
+119. reverse 11 12
+120. reverse 4 12
+121. rotate 6
+122. reverse 11 12
+123. swap 1 4
+124. swap 9 7
+125. rotate 7
+126. swap 7 8
+127. reverse 6 8
+128. rotate 3
+129. reverse 10 11
+130. rotate 9
+131. reverse 6 12
+132. rotate 11
+133. swap 2 8
+134. swap 7 5
+135. swap 4 1
+136. swap 9 12
+137. rotate 5
+138. rotate 9
+139. swap 10 5
+140. reverse 2 6
+141. rotate 7
+142. reverse 11 12
+143. swap 8 7
+144. swap 3 9
+145. reverse 8 10
+146. reverse 3 4
+147. swap 3 1
+148. rotate 10
+149. rotate 10
+150. reverse 5 6
+151. reverse 4 6
+152. reverse 5 6
+153. rotate 5
+154. swap 8 3
+155. swap 8 7
+156. rotate 6
+157. swap 6 9
+158. swap 2 1
+159. rotate 4
+160. reverse 2 8
+161. rotate 11
+162. rotate 4
+163. rotate 11
+164. swap 4 2
+165. reverse 3 7
+166. rotate 1
+167. reverse 8 10
+168. rotate 11
+169. reverse 4 12
+170. swap 7 2
+171. rotate 10
+172. reverse 3 8
+173. swap 1 11
+174. swap 7 2
+175. rotate 3
+176. reverse 4 9
+177. swap 11 1
+178. swap 10 3
+179. reverse 5 7
+180. reverse 5 10
+181. swap 12 10
+182. swap 3 2
+183. swap 7 12
+184. reverse 5 7
+185. reverse 9 11
+186. reverse 9 10
+187. reverse 8 12
+188. swap 1 4
+189. reverse 1 11
+190. reverse 11 12
+191. swap 10 8
+192. swap 12 8
+193. swap 8 2
+194. swap 2 1
+195. swap 3 5
+196. rotate 8
+197. swap 9 12
+198. reverse 1 12
+199. rotate 11
+200. swap 11 6
+201. rotate 2
+202. swap 6 7
+203. swap 6 8
+204. reverse 3 10
+205. rotate 3
+206. swap 2 6
+207. rotate 9
+208. rotate 10
+209. rotate 4
+210. rotate 11
+211. rotate 4
+212. swap 10 11
+213. swap 10 12
+214. rotate 1
+215. reverse 6 8
+216. rotate 9
+217. swap 6 4
+218. rotate 9
+219. reverse 11 12
+220. swap 3 6
+221. rotate 7
+222. rotate 9
+223. reverse 7 10
+224. rotate 3
+225. rotate 8
+226. rotate 11
+227. rotate 5
+228. swap 3 2
+229. rotate 2
+230. reverse 2 4
+231. reverse 10 11
+232. swap 3 1
+233. swap 1 7
+234. swap 5 11
+235. swap 12 2
+236. reverse 2 12
+237. reverse 6 12
+238. reverse 6 9
+239. rotate 5
+240. swap 10 9
+241. reverse 1 11
+242. rotate 6
+243. reverse 11 12
+244. reverse 4 10
+245. swap 10 2
+246. rotate 7
+247. swap 3 4
+248. swap 7 9
+249. swap 1 8
+250. swap 11 5
+251. swap 2 10
+252. rotate 6
+253. reverse 2 3
+254. reverse 11 12
+255. reverse 3 9
+256. reverse 8 12
+257. reverse 3 7
+258. reverse 9 12
+259. swap 10 9
+260. swap 9 11
+261. rotate 3
+262. reverse 9 11
+263. rotate 4
+264. reverse 10 12
+265. reverse 1 10
+266. swap 2 7
+267. rotate 10
+
+Answer format: ANSWER: followed by the final 12 letters separated by spaces.

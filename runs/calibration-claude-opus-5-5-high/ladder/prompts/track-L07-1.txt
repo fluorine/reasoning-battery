@@ -1,0 +1,125 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Start with this sequence (position 1 is the leftmost item):
+A B C D E F G H I J K L
+
+Apply these 111 operations in order:
+- swap i j: exchange the items at positions i and j.
+- reverse i j: reverse the items at positions i through j, inclusive.
+- rotate r: move the first r items to the end, in the same order.
+
+1. reverse 3 11
+2. swap 4 2
+3. reverse 6 9
+4. swap 10 9
+5. swap 4 11
+6. reverse 10 12
+7. rotate 11
+8. reverse 3 9
+9. swap 6 8
+10. reverse 7 8
+11. reverse 3 10
+12. rotate 4
+13. rotate 8
+14. rotate 11
+15. swap 9 12
+16. swap 11 10
+17. rotate 4
+18. reverse 10 12
+19. reverse 8 12
+20. rotate 10
+21. swap 5 8
+22. reverse 6 11
+23. reverse 1 6
+24. rotate 11
+25. swap 12 1
+26. reverse 3 8
+27. rotate 8
+28. swap 12 5
+29. swap 10 6
+30. swap 2 10
+31. rotate 6
+32. rotate 4
+33. swap 11 2
+34. reverse 1 5
+35. reverse 5 7
+36. rotate 9
+37. swap 11 9
+38. reverse 6 9
+39. reverse 3 10
+40. swap 8 11
+41. rotate 1
+42. rotate 2
+43. reverse 6 11
+44. swap 11 1
+45. reverse 11 12
+46. rotate 1
+47. swap 2 7
+48. swap 10 1
+49. reverse 4 12
+50. rotate 9
+51. reverse 4 6
+52. swap 1 2
+53. reverse 1 5
+54. reverse 2 5
+55. swap 11 7
+56. rotate 9
+57. rotate 3
+58. rotate 4
+59. reverse 5 8
+60. swap 3 11
+61. rotate 9
+62. swap 10 12
+63. reverse 7 12
+64. reverse 1 9
+65. swap 7 12
+66. reverse 7 8
+67. rotate 6
+68. reverse 3 6
+69. rotate 4
+70. rotate 11
+71. reverse 1 12
+72. rotate 2
+73. rotate 3
+74. rotate 3
+75. swap 8 3
+76. rotate 5
+77. rotate 3
+78. rotate 2
+79. rotate 8
+80. swap 5 12
+81. rotate 4
+82. swap 10 7
+83. reverse 6 9
+84. reverse 4 8
+85. swap 11 5
+86. swap 7 4
+87. swap 10 9
+88. reverse 11 12
+89. swap 1 5
+90. swap 8 5
+91. rotate 9
+92. swap 1 3
+93. reverse 10 11
+94. rotate 3
+95. rotate 8
+96. swap 11 5
+97. swap 2 10
+98. reverse 8 11
+99. reverse 5 10
+100. reverse 9 11
+101. swap 9 2
+102. reverse 10 12
+103. swap 4 9
+104. swap 10 3
+105. rotate 8
+106. swap 8 12
+107. rotate 9
+108. rotate 8
+109. rotate 3
+110. swap 3 12
+111. rotate 7
+
+Answer format: ANSWER: followed by the final 12 letters separated by spaces.

@@ -1,0 +1,42 @@
+A satisfying assignment exists: unit propagation from five starting guesses fixes almost every variable, and one free variable remains (x11, set FALSE).
+
+**Initial guesses.** Set x8, x15, x20, x29 = FALSE, since they appear negated in many clauses.
+
+**First attempt (x16 = FALSE) fails.**
+- (16 27 29) forces x27 = T and (29 8 24) forces x24 = T.
+- (8 -7 29) forces x7 = F, then (-27 5 -24) forces x5 = T.
+- (7 -25 16) forces x25 = F, then (20 -23 25) forces x23 = F.
+- (7 23 -28) forces x28 = F, then (28 19 20) forces x19 = T.
+- (6 23 -19) then forces x6 = T, but (-6 -19 16) forces x6 = F. This is a contradiction, so x16 must be TRUE.
+
+**Second attempt (x16 = TRUE) succeeds.**
+1. x24 = T and x7 = F still follow as before.
+2. x23 = T is impossible: (-23 25) and (-23 10) would make x25 and x10 both true, violating (-25 -10 8). So x23 = F.
+3. With x23 = F:
+   - (7 23 -28) gives x28 = F.
+   - (-16 23 -2) gives x2 = F.
+   - (28 19 20) gives x19 = T.
+   - (6 23 -19) gives x6 = T.
+   - (-25 -19 -6) gives x25 = F.
+   - (2 29 9) gives x9 = T.
+4. With x9 = T:
+   - (-18 -9 29) gives x18 = F.
+   - (-9 -12 20) gives x12 = F.
+   - (-14 -16 12) gives x14 = F.
+   - (-10 14 -9) gives x10 = F.
+   - (14 -4 15) gives x4 = F.
+5. With x10 = F:
+   - (10 12 -1) gives x1 = F.
+   - (10 4 3) gives x3 = T.
+   - (4 8 13) gives x13 = T.
+   - (28 5 -13) gives x5 = T.
+6. With x5 = T:
+   - (-5 21 1) gives x21 = T.
+   - (29 -5 22) gives x22 = T.
+   - (-21 26 -19) gives x26 = T.
+   - (-26 -27 -13) gives x27 = F.
+   - (-26 -17 4) gives x17 = F.
+
+I checked all 122 clauses against the final assignment and each is satisfied.
+
+ANSWER: -1 -2 3 -4 5 6 -7 -8 9 -10 -11 -12 13 -14 -15 16 -17 -18 19 -20 21 22 -23 24 -25 26 -27 -28 -29

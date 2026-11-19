@@ -1,0 +1,37 @@
+I fixed variables that appear mostly negated, propagated the forced values (unit propagation), and branched only when no value was forced.
+
+**Step 1 – Initial choices.** Set x29, x33, x28, x31, x20, x4, x17 and x21 to FALSE. These variables appear mostly negated.
+
+**Step 2 – Forced values.**
+- Clause (20 29 −12) reduces to −12, so x12 = F.
+- Clause (12 14 −33) reduces to 14, so x14 = T.
+- Clause (−14 28 18) then forces x18 = T.
+- Clause (−14 −18 −3) then forces x3 = F.
+
+**Step 3 – Choose x24 = F.**
+- Clause (24 12 −16) forces x16 = F.
+
+**Step 4 – Choose x32 = F.**
+- Clause (32 6 29) forces x6 = T.
+- Clause (24 −6 27) forces x27 = T.
+- Clauses (−27 37 12) and (23 −27 29) force x37 = T and x23 = T.
+- Clauses (3 −34 −23) and (−7 31 −23) force x34 = F and x7 = F.
+- Clause (32 34 8) forces x8 = T.
+- Clause (1 7 28) forces x1 = T.
+
+**Step 5 – Choose x13 = T and x19 = T.**
+- Clauses (−19 15 3) and (12 −19 25) force x15 = T and x25 = T.
+- Clause (32 −36 −15) forces x36 = F.
+- Clause (−6 −15 22) forces x22 = T.
+- Clause (−22 17 9) forces x9 = T.
+- Clause (24 −22 −2) forces x2 = F.
+- Clause (30 2 21) forces x30 = T.
+- Clause (33 −30 11) forces x11 = T.
+- Clause (−1 −5 −11) forces x5 = F.
+- Clause (4 −9 26) forces x26 = T.
+
+**Step 6 – Free variables.** x10 and x35 are unconstrained by this point, so both are set to FALSE.
+
+**Check.** I spot-checked a sample of the original clauses against the final assignment, including (−11 −1 13), (−22 8 −30), (−19 −33 −25) and (−25 −3 −13), and each is satisfied. I did not re-check all 155 clauses one by one.
+
+ANSWER: 1 -2 -3 -4 -5 6 -7 8 9 -10 11 -12 13 14 15 -16 -17 18 19 -20 -21 22 23 -24 25 26 27 -28 -29 30 -31 -32 -33 -34 -35 -36 37

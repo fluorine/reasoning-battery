@@ -1,0 +1,18 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+6 people sit in a row of 6 seats, numbered 1 to 6 from left to right.
+Each seat holds exactly one person.
+People: Ben, Hal, Lea, Max, Noa, Tea
+
+Clues:
+1. Max sits somewhere to the left of Noa.
+2. Max and Ben sit exactly 5 seats apart.
+3. Max sits next to Hal.
+4. Lea sits somewhere to the left of Noa.
+5. Max and Lea sit exactly 3 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 6, separated by spaces.

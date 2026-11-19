@@ -1,0 +1,27 @@
+I found this assignment by fixing variables one at a time and propagating what each choice forced.
+
+**Choices and what they force**
+
+1. **x17 = F.** It appears negated in ten clauses, so this satisfies all of them at once.
+2. **x10 = F.** This satisfies its six negated clauses.
+   - (-7 17 10) then forces x7 = F.
+3. **x5 = F.** This satisfies its eight negated clauses.
+   - (7 5 2) forces x2 = T.
+   - (-2 5 11) forces x11 = T.
+4. **x1 = F and x8 = F.**
+   - (1 8 6) forces x6 = T.
+   - (-9 8 1) forces x9 = F.
+5. With x9 = F, (9 13 10) forces x13 = T.
+   - (-13 5 -18) then forces x18 = F.
+6. **x22 = F and x3 = F.**
+   - (-4 17 3) forces x4 = F.
+7. **x16 = F and x21 = T.**
+   - (-21 1 12) forces x12 = T.
+   - (3 -12 -20) then forces x20 = F.
+8. **x19 = F, x15 = F and x14 = F.** These satisfy the clauses that were still open: (-15 -11 -19), (9 -19 14), (-19 17 21), (19 20 21) and (4 21 -14).
+
+**Check**
+
+I went through all 92 clauses with the final assignment, and each one has at least one true literal.
+
+ANSWER: -1 2 -3 -4 -5 6 -7 -8 -9 -10 11 12 13 -14 -15 -16 -17 -18 -19 -20 21 -22

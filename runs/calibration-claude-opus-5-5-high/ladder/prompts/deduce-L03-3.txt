@@ -1,0 +1,21 @@
+Rules: no tools, no code execution, no outside help. Reason as long as you need.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+6 people sit in a row of 6 seats, numbered 1 to 6 from left to right.
+Each seat holds exactly one person.
+People: Ben, Dev, Fay, Oto, Pia, Tea
+
+Clues:
+1. Tea and Dev sit exactly 3 seats apart.
+2. Oto does not sit next to Tea.
+3. Ben sits next to Dev.
+4. Pia does not sit in seat 6.
+5. Ben does not sit in seat 2.
+6. Ben sits somewhere to the left of Oto.
+7. Tea sits next to Pia.
+8. Ben sits somewhere to the left of Pia.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 6, separated by spaces.
