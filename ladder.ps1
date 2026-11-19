@@ -52,6 +52,15 @@ $Families = @($Families -split ',' | Where-Object { $_ })
 $unknown = @($Families | Where-Object { -not $Scale.ContainsKey($_) })
 if ($unknown) { throw "Unknown family: $($unknown -join ', '). Use: $($Scale.Keys -join ', ')." }
 $Tokens = [string[]]('A'..'L')
+# The model under test sees only the problem: no word about a test or a rival.
+$BlindWords = '(?i)\b(challeng\w*|baseline|benchmark\w*|compet\w*|beat|other models?|' +
+    'leaderboard|calibrat\w*|graders?|superiority|candidate|opponent|rival)\b'
+
+function Get-BlindIssue([string]$Text) {
+    if ($Text -match $ModelNames) { return "names a model or vendor: '$($Matches[0])'" }
+    if ($Text -match $BlindWords) { return "mentions the test or a comparison: '$($Matches[0])'" }
+    $null
+}
 $ModelNames = '(?i)\b(claude|opus|sonnet|haiku|fable|anthropic|gpt|chatgpt|openai|' +
     'gemini|google|deepmind|llama|meta|mistral|grok|xai|deepseek|qwen)\b'
 # Published unbudgeted prompts use this text. Do not change it.
@@ -476,9 +485,8 @@ switch ($Mode) {
         Save-Config
         $count = 0
         foreach ($inst in Get-Instances) {
-            if ($inst.Prompt -match $ModelNames) {
-                throw "Prompt $($inst.Id) names a model or vendor: '$($Matches[0])'."
-            }
+            $issue = Get-BlindIssue $inst.Prompt
+            if ($issue) { throw "Prompt $($inst.Id) $issue." }
             $path = Join-Path $promptDir "$($inst.Id).txt"
             Set-Content -LiteralPath $path -Value $inst.Prompt -Encoding utf8NoBOM
             $count++
@@ -519,9 +527,8 @@ switch ($Mode) {
         $pending = foreach ($inst in Get-StairWalk) {
             $path = Join-Path $Dir "prompts/$($inst.Id).txt"
             if (-not (Test-Path -LiteralPath $path)) {
-                if ($inst.Prompt -match $ModelNames) {
-                    throw "Prompt $($inst.Id) names a model or vendor: '$($Matches[0])'."
-                }
+                $issue = Get-BlindIssue $inst.Prompt
+                if ($issue) { throw "Prompt $($inst.Id) $issue." }
                 Set-Content -LiteralPath $path -Value $inst.Prompt -Encoding utf8NoBOM
             }
             if ($inst.Pending) { $inst.Id } else { $done++ }
@@ -908,14 +915,15 @@ $(if ($Budget -gt 0) { @"
 "@)
         foreach ($p in $prompts) {
             $text = Get-Content -LiteralPath $p.FullName -Raw
-            if ($text -match $ModelNames) {
-                throw "Prompt $($p.BaseName) names a model or vendor: '$($Matches[0])'."
-            }
+            $issue = Get-BlindIssue $text
+            if ($issue) { throw "Prompt $($p.BaseName) $issue." }
             [void]$sb.AppendLine("----- PROBLEM $($p.BaseName) -----")
             [void]$sb.AppendLine($text.TrimEnd())
             [void]$sb.AppendLine("----- END OF PROBLEM $($p.BaseName) -----")
             [void]$sb.AppendLine()
         }
+        $issue = Get-BlindIssue $sb.ToString()
+        if ($issue) { throw "The bundle $issue." }
         $out = Join-Path $Dir 'bundle.md'
         Set-Content -LiteralPath $out -Value $sb.ToString() -Encoding utf8NoBOM -NoNewline
         'Wrote {0} problems to {1} ({2:n0} KB)' -f $prompts.Count, $out, ((Get-Item $out).Length / 1KB)
@@ -933,6 +941,8 @@ $(if ($Budget -gt 0) { @"
                 ((Get-Content -LiteralPath $path -Raw) -replace '\r\n', "`n").TrimEnd()
             }
             if ($have -cne $want) { $bad++; "MISMATCH $($inst.Id)" }
+            $issue = if ($null -ne $have) { Get-BlindIssue $have }
+            if ($issue) { $bad++; "NOT BLIND $($inst.Id): $issue" }
             $seen[$inst.Id] = $true
         }
         if ($Stair) {
