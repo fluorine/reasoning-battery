@@ -1,0 +1,35 @@
+I found a satisfying assignment by hand, choosing values greedily and propagating forced choices. I then checked the forced chains and the remaining open clauses against the clause list.
+
+**Starting choices:** x1, x16, x40, x42, x46 and x8 = FALSE.
+
+**Forced consequences:**
+- (1 46 −18) with x1, x46 false gives x18 = F.
+- (37 8 1) gives x37 = T.
+- x37 true and x42 false force x45 = F through (42 −37 −45).
+- x37 true forces x22 = T through (1 −37 22).
+- x45 false forces x39 = T through (45 39 1).
+- x45 false and x22 true force x33 = F through (45 −33 −22).
+- From x33 false: (2 33 46) gives x2 = T, and (−30 33 40) gives x30 = F.
+
+**Second choice:** x5 = FALSE.
+- (3 33 5) gives x3 = T, and (5 42 11) gives x11 = T.
+- x3 true forces x34 = T through (−3 42 34) and x44 = T through (−3 1 44).
+- x34 true forces x47 = F through (−34 33 −47).
+- x47 false forces x12 = T through (47 42 12).
+
+**Main chain:**
+- (−36 30 18) forces x36 = F.
+- x36 false gives x24 = F, then x21 = F.
+- x24 false gives x14 = T, then x20 = T.
+- x14 true gives x25 = F, x17 = T and x43 = F.
+- x43 false gives x10 = T and x19 = T.
+- x10 true gives x38 = F and x26 = T.
+- x38 false gives x4 = T.
+- x25 false gives x13 = T, which forces x41 = F.
+- x41 false gives x29 = F and x6 = F.
+- x29 false gives x27 = T, x28 = T and x15 = T.
+- x6 false gives x32 = F, which gives x31 = F and x23 = T.
+
+**Free choices at the end:** x48 = T and x7 = F satisfy (−15 48 −7). x9 and x35 are set to F with no conflicts.
+
+ANSWER: -1 2 3 4 -5 -6 -7 -8 -9 10 11 12 13 14 15 -16 17 -18 19 20 -21 22 23 -24 -25 26 27 28 -29 -30 -31 -32 -33 34 -35 -36 37 -38 39 -40 -41 -42 -43 44 -45 -46 -47 48

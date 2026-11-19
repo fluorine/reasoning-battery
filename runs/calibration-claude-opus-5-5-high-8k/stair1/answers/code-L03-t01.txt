@@ -1,0 +1,6 @@
+v starts at 39, then v = 39 + 45 = 84.
+The loop runs twice: v = 19 + 84 = 103, then v = 19 + 103 = 122.
+u = 23 is not greater than 567, so the else branch runs: v = 19 × 8 = 152.
+p, z and u are unchanged at 19, 7 and 23.
+
+ANSWER: 152 19 7 23

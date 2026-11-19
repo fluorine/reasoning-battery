@@ -1,0 +1,37 @@
+Tracing the program step by step, with every result taken modulo 1000:
+
+1. **Start:** y=46, v=22, q=42, u=31.
+2. **First if:** 31 < 42 is true, so y = 217, then y = 87.
+3. **v is even (22):** u = 248, v = 303, u = 323, q = 365.
+4. **Repeat 2:** u = 329, then 335.
+5. **Assignments:** y = 336, q = 639, u = 639.
+6. **u < v?** 639 < 303 is false, so y = 1008 → 8, q = 647, then q = 639.
+7. **v = q − u:** v = 0.
+8. **y > 130?** 8 is not, so the else runs: y = 0, then y = 0.
+9. **Assignments:** u = 685, q = 55, y = 782.
+10. **Repeat 3 (u = u − y):** u = 903, 121, 339.
+11. **Assignments:** v = 910, y = 564, u = 145, y = 592.
+12. **Repeat 3:**
+    - Pass 1: y = 736, q = 416.
+    - Pass 2: y = 888, q = 328.
+    - Pass 3: y = 104, q = 624.
+13. **Repeat 4 (y = v+v, v = y+78):** (820, 898), (796, 874), (748, 826), (652, 730). The line y = q·6 is always overwritten.
+14. **Assignments:** y = 693, v = 1423 → 423.
+15. **Repeat 2:**
+    - Pass 1: 423 < 145 is false, so v = 69.
+    - Pass 2: 69 < 145 is true, so u = 654.
+16. **u > 151:** v = 248, v = 594, u = 782, v = 287, y = 296.
+17. **y = y + q:** y = 920.
+18. **u < v?** 782 < 287 is false, so the else runs:
+    - Pass 1: q = 544, v = 505.
+    - Pass 2: q = 464, v = 723.
+    - Then v = 446.
+19. **y = u + v:** y = 228.
+20. **Repeat 4:** 782 < 446 is false each time, so y gains 9 four times: y = 264.
+21. **u > 268:** q = 446 − 264 = 182, v = 0.
+22. **Repeat 2:** y = 95, q = 692.
+23. **Assignments:** y = 793, u = 880, y = 858, q = 858.
+24. **Repeat 3:** q = 80.
+25. **Last line:** u = 7722 → 722.
+
+ANSWER: 858 0 80 722

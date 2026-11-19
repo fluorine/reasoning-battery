@@ -1,0 +1,33 @@
+I split each factor into 6-digit blocks, multiplied the blocks, and added the results with carries in base 10⁶.
+
+**Blocks**
+- A = 843361 | 540612 | 916473, so a₂ = 843361, a₁ = 540612, a₀ = 916473.
+- B = 524955 | 926123 | 390992, so b₂ = 524955, b₁ = 926123, b₀ = 390992.
+
+**Coefficients**
+
+| Coefficient | Terms | Value |
+|---|---|---|
+| c₀ | a₀b₀ = 358,333,611,216 | 358,333,611,216 |
+| c₁ | a₀b₁ = 848,766,724,179<br>a₁b₀ = 211,374,967,104 | 1,060,141,691,283 |
+| c₂ | a₀b₂ = 481,107,083,715<br>a₁b₁ = 500,673,207,276<br>a₂b₀ = 329,747,404,112 | 1,311,527,695,103 |
+| c₃ | a₁b₂ = 283,796,972,460<br>a₂b₁ = 781,056,019,403 | 1,064,852,991,863 |
+| c₄ | a₂b₂ = 442,726,573,755 | 442,726,573,755 |
+
+**Carrying in base 10⁶**
+
+| Step | Sum | Kept block | Carry |
+|---|---|---|---|
+| c₀ | 358,333,611,216 | 611216 | 358333 |
+| c₁ + carry | 1,060,142,049,616 | 049616 | 1060142 |
+| c₂ + carry | 1,311,528,755,245 | 755245 | 1311528 |
+| c₃ + carry | 1,064,854,303,391 | 303391 | 1064854 |
+| c₄ + carry | 442,727,638,609 | (leading part) | — |
+
+Joining the leading part and the kept blocks gives 442727638609 | 303391 | 755245 | 049616 | 611216.
+
+**Checks**
+- Size: A ≈ 8.43×10¹⁷ and B ≈ 5.25×10¹⁷, so the product should be about 4.43×10³⁵. That is 36 digits, which matches.
+- Mod 9: A ≡ 1 and B ≡ 4, so the product should be ≡ 4. The result's digit sum is 148, which is ≡ 4. ✓
+
+ANSWER: 442727638609303391755245049616611216

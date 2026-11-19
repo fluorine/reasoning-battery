@@ -1,0 +1,26 @@
+The arrangement below satisfies all 15 clues. I found it by placing Gus and Dev first, because most other seats depend on them.
+
+**Ruling out Gus in seats 10–12**
+- **Gus = 10:** every branch fails. Either no seat is left for Max, Fay or Noa, or Ben and Hal cannot sit together.
+- **Gus = 11:** Quin must be 14, Ana 4 and Jon 13. Both choices for Dev then make Max, Tea, Pia or Noa collide or fall off the row.
+- **Gus = 12:** Quin would have to be 9, since seat 15 is Sol's. Ana would then need seat −1 or 19, which is impossible.
+
+**Gus = 13 gives the solution**
+1. Quin is 10 or 16. Quin = 10 would put Ana at seat 0 or 20, so Quin = 16 and Ana = 6.
+2. Jon is next to Quin and seat 15 is Sol's, so Jon = 17.
+3. Dev = 12 fails: Rui = 10 forces Tea onto Max's seat 3, and Rui = 14 leaves Pia nowhere to sit. So Dev = 14.
+4. From Dev = 14:
+   - Rui = 12 and Noa = 3.
+   - Pia = 11, Fay = 10 and Max = 5.
+5. Lea sits next to Noa. Seat 4 leaves no seat for Tea, so Lea = 2 and Tea = 1.
+6. The free seats are 4, 7, 8 and 9. The only arrangement that works for Ben, Hal and Kit is Ben = 7, Hal = 8, Kit = 4. That leaves Eli = 9.
+
+**Final arrangement**
+
+| Seat | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Person | Tea | Lea | Noa | Kit | Max | Ana | Ben | Hal | Eli | Fay | Pia | Rui | Gus | Dev | Sol | Quin | Jon |
+
+I checked all 15 clues against this arrangement and each one holds.
+
+ANSWER: Tea Lea Noa Kit Max Ana Ben Hal Eli Fay Pia Rui Gus Dev Sol Quin Jon

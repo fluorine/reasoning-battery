@@ -1,0 +1,31 @@
+The product is **351927158928465698803979308894059288504441286136**. I worked it by hand, splitting each 24-digit number into four 6-digit chunks.
+
+**Chunks**
+- A = 699014 | 776171 | 657525 | 220428, read as a₃ | a₂ | a₁ | a₀
+- B = 503461 | 687685 | 472776 | 690762, read as b₃ | b₂ | b₁ | b₀
+
+**Partial products grouped by power of 10⁶**
+
+Each cᵢ is the sum of the products aⱼ·bₖ with j + k = i.
+
+| i | cᵢ |
+|---|---|
+| c₀ | 152,263,286,136 |
+| c₁ | 558,406,352,178 |
+| c₂ | 998,596,500,882 |
+| c₃ | 1,412,954,310,297 |
+| c₄ | 1,195,276,391,024 |
+| c₅ | 871,473,270,421 |
+| c₆ | 351,926,287,454 |
+
+**Carrying in base 10⁶**
+
+The final chunks are 286136, 504441, 059288, 308894, 803979, 465698. The top part is 351927158928.
+
+This gives a 48-digit result, which matches the size estimate of about 6.99×10²³ × 5.03×10²³ ≈ 3.52×10⁴⁷.
+
+**Checks**
+- **Mod 9:** A ≡ 7 and B ≡ 5, so A·B ≡ 35 ≡ 8. The result's digit sum is 242, which is ≡ 8. ✓
+- **Mod 1001:** Since 10⁶ ≡ 1 mod 1001, a number is congruent to the sum of its 6-digit chunks. That gives A ≡ 788 and B ≡ 332, so A·B ≡ 788·332 ≡ 355. The result's chunk sum is 2,939,291, which is ≡ 355. ✓
+
+ANSWER: 351927158928465698803979308894059288504441286136

@@ -1,0 +1,36 @@
+Applying the 30 operations in order:
+
+| Step | Operation | Result |
+|---|---|---|
+| 1 | swap 6 9 | A B C D E I G H F J K L |
+| 2 | reverse 1 9 | F H G I E D C B A J K L |
+| 3 | swap 12 3 | F H L I E D C B A J K G |
+| 4 | rotate 11 | G F H L I E D C B A J K |
+| 5 | swap 4 2 | G L H F I E D C B A J K |
+| 6 | rotate 6 | D C B A J K G L H F I E |
+| 7 | rotate 3 | A J K G L H F I E D C B |
+| 8 | rotate 7 | I E D C B A J K G L H F |
+| 9 | rotate 3 | C B A J K G L H F I E D |
+| 10 | reverse 2 7 | C L G K J A B H F I E D |
+| 11 | swap 8 3 | C L H K J A B G F I E D |
+| 12 | swap 5 3 | C L J K H A B G F I E D |
+| 13 | reverse 6 9 | C L J K H F G B A I E D |
+| 14 | rotate 8 | A I E D C L J K H F G B |
+| 15 | rotate 5 | L J K H F G B A I E D C |
+| 16 | swap 12 4 | L J K C F G B A I E D H |
+| 17 | rotate 4 | F G B A I E D H L J K C |
+| 18 | rotate 3 | A I E D H L J K C F G B |
+| 19 | swap 5 9 | A I E D C L J K H F G B |
+| 20 | rotate 10 | G B A I E D C L J K H F |
+| 21 | swap 8 3 | G B L I E D C A J K H F |
+| 22 | swap 6 12 | G B L I E F C A J K H D |
+| 23 | rotate 7 | A J K H D G B L I E F C |
+| 24 | swap 11 2 | A F K H D G B L I E J C |
+| 25 | rotate 11 | C A F K H D G B L I E J |
+| 26 | rotate 5 | D G B L I E J C A F K H |
+| 27 | reverse 7 12 | D G B L I E H K F A C J |
+| 28 | reverse 4 11 | D G B C A F K H E I L J |
+| 29 | reverse 11 12 | D G B C A F K H E I J L |
+| 30 | swap 3 11 | D G J C A F K H E I B L |
+
+ANSWER: D G J C A F K H E I B L

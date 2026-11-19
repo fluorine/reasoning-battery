@@ -1,0 +1,27 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+13 people sit in a row of 13 seats, numbered 1 to 13 from left to right.
+Each seat holds exactly one person.
+People: Ben, Dev, Eli, Fay, Gus, Hal, Ivy, Jon, Oto, Pia, Quin, Sol, Tea
+
+Clues:
+1. Pia and Oto sit exactly 3 seats apart.
+2. Dev sits next to Eli.
+3. Sol sits next to Ben.
+4. Fay sits somewhere to the left of Eli.
+5. Gus sits in seat 11.
+6. Sol sits next to Quin.
+7. Pia sits in seat 6.
+8. Jon sits next to Pia.
+9. Jon sits somewhere to the left of Tea.
+10. Eli and Fay sit exactly 8 seats apart.
+11. Oto sits next to Ivy.
+12. Quin sits next to Gus.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 13, separated by spaces.

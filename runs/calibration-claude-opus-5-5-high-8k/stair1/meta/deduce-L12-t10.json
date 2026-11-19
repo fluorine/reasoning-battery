@@ -1,0 +1,13 @@
+{
+  "id": "deduce-L12-t10",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.056232000000000004,
+  "costEstimateUsd": null,
+  "durationMs": 20948,
+  "outputTokens": 2238,
+  "thinkingTokens": 1082,
+  "rawSha256": "221a34e9310869e2fbd2f36e1a1470ea45c7528fb2b4d85990922b570c20740e",
+  "redacted": false
+}

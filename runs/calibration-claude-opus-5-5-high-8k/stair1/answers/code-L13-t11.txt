@@ -1,0 +1,80 @@
+Final values: r = 660, w = 619, p = 701, q = 41. Every result below is already reduced modulo 1000.
+
+**Opening**
+- Start with r=27, w=17, p=21, q=37.
+- r = 27 + 44 = 71.
+- The first loop multiplies r by 6 twice, giving 426 and then 556.
+- In the 4-step loop q=37 is odd every time, so only w changes: w = 556 + 21 = 577.
+
+**First branches**
+- p=21 is odd, so the else block runs: w=336, r=344, q = 336 − 37 = 299.
+- w=336 is even, so w = 299 + 88 = 387.
+- Then p=388, q = 344 − 299 = 45, and p = 0.
+
+**3-step loop (r += 85, r −= p, p = r + 20)**
+- After the loop, r=65 and p=85.
+- w = 85 − 45 = 40.
+
+**4-step loop**
+- w=40 throughout, and each pass adds it to q: q goes 85, 125, 165, 205.
+- r ends at 85 − 205 = 880.
+- Then p=221, w = 40 − 221 = 819, and q = 880 × 9 = 920.
+
+**q > 586 loop**
+- q=920 is above 586 on both passes, so r is multiplied by 27 twice: r = 760, then r = 520.
+
+**Middle section**
+- w=819 > 445, so w = 221 × 2 = 442.
+- Then q=442, w=94, q = 221 − 520 = 701, w=547, p=248, w=795.
+- The 4-step loop sets p = 795 × 7 = 565.
+- 565 < 520 is false, so p = 795 − 520 = 275.
+- r = 275 + 701 = 976.
+- p = 976 + 795 = 771.
+
+**Next branches**
+- p=771 is above both 432 and 487, so r = 795 + 89 = 884.
+- Then p=811, w=16, and w = 811 × 3 = 433.
+- 811 < 433 is false, so q = 701 × 3 = 103. Since 433 ≤ 627, p = 811 + 15 = 826.
+
+**Next loops and assignments**
+- The 3-step loop alternates q between 58 and 782; it ends with q=58, p=102.
+- Then w=317, then w = 884 − 102 = 782.
+- r = 58 + 45 = 103, and p = 102 − 103 = 999.
+- The 3-step loop leaves w = 103 + 174 = 277.
+- q = 277 + 999 = 276, then q = 999 − 103 = 896.
+- Subtracting r three times gives q = 587.
+- p = 206, then p = 587 − 206 = 381.
+- w=277 is not above 736, so w = 0.
+- Multiplying q by 4 three times gives 348, 392, 568.
+
+**Parity branches**
+- p=381 is odd, so q = 568 × 9 = 112.
+- p = 103 × 4 = 412, which is even, so q = 103 and then q = 412 − 103 = 309.
+- w=412, then w = 309 − 412 = 897.
+- r=103 is odd, so r = 897 + 60 = 957.
+- Then w=317, w=391, r = 391 + 957 = 348, w=346.
+- The 4-step loop sets r = 412 × 3 = 236.
+- r = 309 + 80 = 389, and w = 0.
+
+**Later loops**
+- The 4-step loop raises w by 18 each time and sets q = w − 389: q ends at 683, w at 72.
+- w = 389 × 2 = 778.
+- The 2-step loop gives r = 683 × 7 = 781 and w = 412 + 53 = 465.
+- w=465 is odd every time, so p = 781 + 683 = 464.
+
+**Final branches**
+- p=464 is even, so the 3-step block runs: p=834, w=562, and q alternates, ending at 151.
+- p = 151 + 54 = 205.
+- q = 781 + 64 = 845, and p = 562 + 205 = 767.
+- Adding p to w four times gives w = 630.
+- q = 781 + 767 = 548.
+- r = 630 − 767 = 863.
+- w = 767 × 2 = 534.
+- 767 < 534 is false, so p = 863 + 863 = 726.
+- Then p=0, q = 863 × 7 = 41, r = 534 × 9 = 806, p = 0, w = 534 + 85 = 619, and r = 0.
+
+**Last loop (p = q + r, r = w + q)**
+- Pass 1: p = 41, r = 660.
+- Passes 2–4: p = 41 + 660 = 701, r = 660.
+
+ANSWER: 660 619 701 41

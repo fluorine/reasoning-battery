@@ -1,0 +1,16 @@
+Tracing the program step by step (all values mod 1000):
+
+1. **Start:** v = 1, z = 8, q = 36, y = 34.
+2. **First loop (2 times):** z = 36 − 34 = 2 each time, so z = 2.
+3. **Next two lines:** y = 1 + 22 = 23, then v = 2 + 8 = 10.
+4. **Nested loop:** the inner loop sets v = 2 − 2 = 0. Then q = 0 + 2 = 2. Every outer pass gives the same result, so v = 0 and q = 2.
+5. **First if:** v > 470 is false (v = 0), so the else block runs: q = 2 + 84 = 86.
+6. **Next two lines:** q = 86 − 86 = 0, then z = 2 − 0 = 2.
+7. **Second if:** y < v means 23 < 0, which is false, so the else block runs:
+   - y = 2 × 6 = 12
+   - y = 0 + 97 = 97
+   - z = 0 × 7 = 0
+
+**Final values:** v = 0, z = 0, q = 0, y = 97.
+
+ANSWER: 0 0 0 97

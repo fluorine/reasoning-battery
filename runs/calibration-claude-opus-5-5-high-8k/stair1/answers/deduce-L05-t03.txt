@@ -1,0 +1,20 @@
+Working through the clues in order of how much they restrict the seating:
+
+**Pia and Max (clue 4).** Six seats apart allows only the pairs (1,7) or (2,8). Pia must be left of Kit (clue 7), so Pia cannot be in seat 8. That leaves three options: Pia 1 and Max 7, Pia 7 and Max 1, or Pia 2 and Max 8.
+
+**Ruling out two options (clue 8).** Max must be left of Lea.
+- Max in seat 8 is impossible.
+- Max in seat 7 forces Lea into seat 8 and Pia into seat 1. Oto must then sit next to Lea (clue 2), which means seat 7, but Max is there. This fails.
+- So Pia is in seat 7 and Max is in seat 1.
+
+**Kit and Oto.** Kit must be right of Pia, so Kit is in seat 8. Oto is 2 seats from Pia (clue 1), so Oto is in seat 5. Lea sits next to Oto (clue 2), so Lea is in seat 4 or 6.
+
+**Lea in seat 6 fails.** Jon must be 2 seats from Lea (clue 3), so Jon is in seat 4. Dev must then be right of Jon (clue 6), but the only free seats are 2 and 3.
+
+**Lea in seat 4.** Jon is in seat 2 or 6. Seats 2, 3 and 6 remain for Dev, Hal and Jon.
+- If Jon is in seat 6, Dev has no free seat to his right.
+- So Jon is in seat 2. Dev cannot be in seat 3, next to Lea (clue 5), so Dev is in seat 6 and Hal is in seat 3.
+
+This arrangement satisfies all eight clues.
+
+ANSWER: Max Jon Hal Lea Oto Dev Pia Kit

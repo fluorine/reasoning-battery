@@ -1,0 +1,25 @@
+I found this assignment by choosing values one at a time, simplifying the clauses after each choice, and filling in any value that was then forced. No backtracking was needed. I spot-checked many clauses against the result rather than all 122, but every chosen or forced value was carried through the full simplified clause list.
+
+**Initial choices.** I set x16, x21, x24 and x26 to TRUE, because each appears positively in many clauses. This satisfied a large share of the clauses and reduced many others to two literals.
+
+**Second round.**
+- I set x19 = F and x25 = T.
+- Clauses (−8 −25 27) and (−21 −8 −27) then force x8 = F.
+- I set x27 = T.
+
+**Third round.**
+- I set x4 = F. Clauses (4 −21 15) and (4 17 8) then force x15 = T and x17 = T.
+- (8 −17 −14) gives x14 = F, so (14 −27 11) gives x11 = T.
+- (−21 −11 −12) gives x12 = F, so (−25 12 3) gives x3 = T.
+- (−1 −16 −11) gives x1 = F.
+- (−26 −11 22) gives x22 = T.
+- (−11 −7 4) gives x7 = F.
+- (13 4 −15) gives x13 = T.
+- (−10 7 4) gives x10 = F.
+
+**Final choices.**
+- I set x6 = T. Clauses (29 8 −6) and (5 −25 −6) then force x29 = T and x5 = T.
+- (−5 −23 7) gives x23 = F.
+- The remaining free variables can be set as x2 = F, x20 = F, x18 = T, x9 = F and x28 = F without breaking any clause.
+
+ANSWER: -1 -2 3 -4 5 6 -7 -8 -9 -10 11 -12 13 -14 15 16 17 18 -19 -20 21 22 -23 24 25 26 27 -28 29

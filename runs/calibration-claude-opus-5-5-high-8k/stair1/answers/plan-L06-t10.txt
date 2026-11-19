@@ -1,0 +1,26 @@
+The sequence below solves the puzzle in 22 moves, the stated limit, and a replay ends exactly on the goal.
+
+**Lower bound.** Add up how far each tile is from its goal cell, counting rows plus columns. The total is 22. Each move shifts one tile by one cell, so at least 22 moves are needed. A 22-move solution therefore has no spare moves: every move must bring its tile one step closer to its goal.
+
+**Finding the order.**
+1. **Opening, moves 1–5: 14 5 1 2 10.** The empty cell starts at row 3, column 1. Moving 9 up first leads to a position where no tile can move closer to its goal. So 14 must move first. Then 5, 1 and 2 drop into place, and 10 slides left.
+2. **Top-right corner.** 4 can only reach its goal by moving right into 7's cell, so 7 must first move down. Then 3 has to reach its goal from directly below, but 6 sits in that cell. So 6 must move on to its own goal next to 5 before the corner is finished.
+3. **Clearing the way for 6.** 10 must move down into 11's goal cell first. That needs 11 to move right, which needs 8 to move out of the way. While the empty cell is beside 14, the lower-left group is fixed in four moves: 14 right, 9 up, 13 left, 14 down.
+
+**Replay.** Applying the 22 moves to the start gives:
+- After 14 5 1 2 10 6 3 8 11 14 9 13 14 10 6:
+  ```
+   1  2  4  7
+   5  6  .  3
+   9 10 11  8
+  13 14 15 12
+  ```
+- After 3 7 4 3 7 8 12, the board matches the goal exactly:
+  ```
+   1  2  3  4
+   5  6  7  8
+   9 10 11 12
+  13 14 15  .
+  ```
+
+ANSWER: 14 5 1 2 10 6 3 8 11 14 9 13 14 10 6 3 7 4 3 7 8 12

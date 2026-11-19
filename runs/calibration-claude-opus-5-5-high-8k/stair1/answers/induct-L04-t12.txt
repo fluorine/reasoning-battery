@@ -1,0 +1,23 @@
+I found the rule by first comparing the multisets of digits on each side, then working out the position mapping.
+
+**1. The output multiset is the complement of the input.** In example 1 the input is [2 3 7 5 5 4 9 7]. Its complement (9 − x) is [7 6 2 4 4 5 0 2], which as a multiset is {0,2,2,4,4,5,6,7}. That is exactly the multiset of the output [6 5 0 7 2 2 4 4]. Example 5 checks the same way. So the rule is "complement, then sort, then rearrange."
+
+**2. Find the rearrangement.** Let s₀…s₇ be the complemented digits sorted ascending. Matching positions in the examples gives:
+
+output = [s₂, s₃, s₄, s₅, s₆, s₇, s₀, s₁] after a pairswap.
+
+The list before the pairswap is s rotated by 5: [s₅, s₆, s₇, s₀, s₁, s₂, s₃, s₄].
+
+**3. Check example 1 step by step.**
+- complement: [7 6 2 4 4 5 0 2]
+- sort: [0 2 2 4 4 5 6 7]
+- rotate 5: [5 6 7 0 2 2 4 4]
+- pairswap: [6 5 0 7 2 2 4 4], which matches the expected output.
+
+**4. Check example 6 step by step.**
+- complement: [8 3 2 9 4 2 6 2]
+- sort: [2 2 2 3 4 6 8 9]
+- rotate 5: [6 8 9 2 2 2 3 4]
+- pairswap: [8 6 2 9 2 2 4 3], which matches the expected output.
+
+ANSWER: complement; sort; rotate 5; pairswap

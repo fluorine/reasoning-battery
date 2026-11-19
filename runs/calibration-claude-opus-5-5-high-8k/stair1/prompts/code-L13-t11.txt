@@ -1,0 +1,205 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+r = 27
+w = 17
+p = 21
+q = 37
+r = r + 44
+repeat 2 times:
+    r = r * 6
+repeat 4 times:
+    if q is even:
+        q = w + 42
+    else:
+        w = r + p
+if p is even:
+    w = r * 9
+    w = p - w
+else:
+    w = r * 6
+    r = w * 4
+    q = w - q
+if w is even:
+    w = q + 88
+else:
+    w = q - w
+    if p < q:
+        p = r + r
+    else:
+        r = p - r
+p = q + 89
+q = r - q
+p = r - r
+repeat 3 times:
+    r = r + 85
+    r = r - p
+    p = r + 20
+w = p - q
+repeat 4 times:
+    r = w - w
+    q = w + q
+    r = p - q
+p = q + 16
+w = w - p
+q = r * 9
+repeat 2 times:
+    if q > 586:
+        r = r * 3
+        r = r * 9
+    else:
+        r = p + w
+if w > 445:
+    w = p * 2
+else:
+    repeat 2 times:
+        r = p - p
+    r = r * 3
+    r = w - q
+q = p + p
+w = q * 7
+q = p - r
+w = p * 7
+p = w + q
+w = w + p
+repeat 4 times:
+    p = w * 7
+if p < r:
+    w = q + w
+else:
+    p = w - r
+r = p + q
+r = p + q
+repeat 2 times:
+    p = r + w
+if p > 432:
+    if p > 487:
+        r = w + 89
+    else:
+        r = q + q
+else:
+    w = q + w
+    p = q - p
+p = p + 40
+w = p - w
+w = p * 3
+if p < w:
+    r = w + p
+else:
+    q = q * 3
+    if w > 627:
+        w = p * 7
+    else:
+        p = p + 15
+repeat 3 times:
+    q = r - p
+    p = q + 44
+w = r + w
+w = r - p
+r = q + 45
+p = p - r
+repeat 3 times:
+    w = q * 3
+    w = r + w
+q = w + p
+q = p - r
+repeat 3 times:
+    q = q - r
+p = r + r
+p = q - p
+if w > 736:
+    repeat 3 times:
+        r = p * 6
+    w = r + 30
+    w = w * 8
+    w = p * 8
+else:
+    w = q - q
+repeat 3 times:
+    q = q * 4
+if p is even:
+    w = r - q
+    r = p - p
+    r = p + q
+    p = w + r
+    p = r + q
+else:
+    q = q * 9
+p = r * 4
+if p is even:
+    q = w + r
+    q = p - q
+else:
+    p = w - p
+    r = r * 4
+w = r * 4
+w = q - p
+if r is even:
+    q = r + 64
+    r = p + 80
+else:
+    if r is even:
+        q = w - q
+    else:
+        r = w + 60
+w = q + 8
+w = q + 82
+r = w + r
+w = q + 37
+repeat 4 times:
+    r = p * 3
+r = q + 80
+w = q - q
+repeat 4 times:
+    w = w + 18
+    q = q * 5
+    q = w - r
+w = r * 2
+repeat 2 times:
+    r = q * 7
+    w = p + 53
+repeat 4 times:
+    if w is even:
+        q = w * 6
+        w = w + w
+    else:
+        p = r + q
+if p is even:
+    repeat 3 times:
+        p = r + 53
+        q = p - q
+        w = r + r
+    p = q + 54
+else:
+    r = q + r
+q = r + 64
+p = w + p
+repeat 4 times:
+    w = w + p
+q = r + p
+repeat 2 times:
+    r = w - p
+w = p * 2
+if p < w:
+    p = p + p
+    r = r + 37
+else:
+    p = r + r
+p = w - w
+q = r * 7
+r = w * 9
+p = p * 8
+w = w + 85
+r = q - q
+repeat 4 times:
+    p = q + r
+    r = w + q
+
+Answer format: ANSWER: the final values of r w p q, in that order, separated by spaces.

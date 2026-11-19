@@ -1,0 +1,15 @@
+Tracing the program step by step:
+
+1. **Initial values:** t = 40, w = 4, x = 26, z = 22.
+2. **`x = z + x`:** x = 22 + 26 = 48.
+3. **First loop (3 times):** t and z do not change inside the loop, so every pass gives the same result.
+   - w = 40 × 7 = 280.
+   - x = 22 + 40 = 62.
+4. **`x = x * 2`:** x = 62 × 2 = 124.
+5. **Second loop (2 times):** x does not change inside the loop, so both passes give the same result.
+   - t = 124 × 9 = 1116, stored as 116.
+   - t = 124 + 52 = 176, which overwrites the previous value.
+
+Final values: t = 176, w = 280, x = 124, z = 22.
+
+ANSWER: 176 280 124 22

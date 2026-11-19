@@ -1,0 +1,24 @@
+The product is 6115213424257385911. I split the second factor as 1,000,000,000 + 325,314,829 and multiplied each part by a = 4,614,159,059.
+
+**1. The 10⁹ part:** a × 1,000,000,000 = 4,614,159,059,000,000,000
+
+**2. The 325,314,829 part,** split again as 325,000,000 + 314,829:
+
+- a × 325 = 1,384,247,717,700 + 115,353,976,475 = 1,499,601,694,175
+  - So a × 325,000,000 = 1,499,601,694,175,000,000
+- a × 314,829 = a × 314,000 + a × 829
+  - a × 314 = 1,384,247,717,700 + 64,598,226,826 = 1,448,845,944,526, so a × 314,000 = 1,448,845,944,526,000
+  - a × 829 = 3,691,327,247,200 + 133,810,612,711 = 3,825,137,859,911
+  - Sum: a × 314,829 = 1,452,671,082,385,911
+- Adding the two pieces: a × 325,314,829 = 1,501,054,365,257,385,911
+
+**3. Total:**
+4,614,159,059,000,000,000 + 1,501,054,365,257,385,911 = **6,115,213,424,257,385,911**
+
+**Check (casting out nines):**
+- The digits of 4614159059 sum to 44, which reduces to 8.
+- The digits of 1325314829 sum to 38, which reduces to 2.
+- So the product should reduce to 8 × 2 = 16, which reduces to 7.
+- The digits of the result sum to 70, which also reduces to 7, so the check passes.
+
+ANSWER: 6115213424257385911

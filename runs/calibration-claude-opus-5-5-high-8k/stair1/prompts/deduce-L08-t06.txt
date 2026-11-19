@@ -1,0 +1,24 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+11 people sit in a row of 11 seats, numbered 1 to 11 from left to right.
+Each seat holds exactly one person.
+People: Ana, Dev, Fay, Ivy, Kit, Lea, Oto, Pia, Quin, Rui, Tea
+
+Clues:
+1. Fay sits somewhere to the left of Tea.
+2. Oto sits somewhere to the left of Lea.
+3. Oto sits next to Pia.
+4. Kit sits somewhere to the left of Dev.
+5. Fay and Ivy sit exactly 8 seats apart.
+6. Kit sits in seat 7.
+7. Rui sits next to Ivy.
+8. Ana sits in seat 9.
+9. Oto and Fay sit exactly 3 seats apart.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 11, separated by spaces.

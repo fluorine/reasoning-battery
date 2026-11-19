@@ -1,0 +1,13 @@
+{
+  "id": "sat-L07-t09",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.16257600000000003,
+  "costEstimateUsd": null,
+  "durationMs": 56782,
+  "outputTokens": 6896,
+  "thinkingTokens": 6058,
+  "rawSha256": "9b03ae74a8f0b72720e98e1b98dc30a858bb620f13c3db7371fc45b460f289ca",
+  "redacted": false
+}

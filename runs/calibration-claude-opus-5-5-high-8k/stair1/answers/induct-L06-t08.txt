@@ -1,0 +1,25 @@
+The rule is **add 5 → rotate 6 → pairswap → prefix**. It reproduces Example 1, which was used to derive it, and Example 2, which I checked separately. Examples 3–6 are only partly verified.
+
+**1. The last step is `prefix`.** In every example, the last output digit equals the sum of the input digits mod 10. For example, 2+4+3+5+7+8+5+1 = 35, and the output ends in 5. That is what `prefix` produces in the last position. I checked this property on all six examples.
+
+**2. Undo the prefix.** Taking successive differences of the output recovers the list just before the prefix step. For Example 4, this pre-prefix list is [1 0 0 5 8 3 0 6].
+
+**3. That list is a reordering of input + 5.** For Example 4, input + 5 is [5 0 3 8 6 0 0 1]. This contains exactly the same digits as [1 0 0 5 8 3 0 6]. Example 1 shows the same match.
+
+**4. Find the reordering.** Split input + 5 into pairs Q0 Q1 Q2 Q3. The pre-prefix list is Q3, Q0, Q1, Q2, with each pair's digits swapped. That is `rotate 6` followed by `pairswap`. I confirmed the exact order on Examples 1 and 4.
+
+**Full check on Example 1:** [2 4 3 5 7 8 5 1]
+- add 5 → [7 9 8 0 2 3 0 6]
+- rotate 6 → [0 6 7 9 8 0 2 3]
+- pairswap → [6 0 9 7 0 8 3 2]
+- prefix → [6 6 5 2 2 0 3 5] ✓
+
+**Full check on Example 2:** [9 0 2 6 2 5 2 4]
+- add 5 → [4 5 7 1 7 0 7 9]
+- rotate 6 → [7 9 4 5 7 1 7 0]
+- pairswap → [9 7 5 4 1 7 0 7]
+- prefix → [9 6 1 5 6 3 3 0] ✓
+
+Examples 3, 5 and 6 were checked only against the last-digit property from step 1, not run through all four steps.
+
+ANSWER: add 5; rotate 6; pairswap; prefix

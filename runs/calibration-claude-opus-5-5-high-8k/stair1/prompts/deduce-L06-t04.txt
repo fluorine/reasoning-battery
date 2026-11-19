@@ -1,0 +1,23 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+9 people sit in a row of 9 seats, numbered 1 to 9 from left to right.
+Each seat holds exactly one person.
+People: Ben, Cai, Eli, Kit, Lea, Noa, Pia, Quin, Tea
+
+Clues:
+1. Lea and Kit sit exactly 4 seats apart.
+2. Noa and Pia sit exactly 2 seats apart.
+3. Quin sits somewhere to the left of Eli.
+4. Kit and Tea sit exactly 3 seats apart.
+5. Tea and Ben sit exactly 5 seats apart.
+6. Eli sits next to Pia.
+7. Noa sits somewhere to the left of Ben.
+8. Noa sits somewhere to the left of Lea.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 9, separated by spaces.

@@ -1,0 +1,48 @@
+The empty cell is at row 1, column 2 (counting from 0).
+
+**Lower bound.** The total Manhattan distance of the tiles from their goal cells is 15:
+- 6, 7, 5, 9, 13 and 14 are each 1 away.
+- 8, 15 and 11 are each 2 away.
+- 12 is 3 away.
+
+Each move changes one tile's distance by 1, so a 15-move solution must move every tile toward its goal on every move.
+
+**Moves 1–6: rotate the left side.**
+- 12 slides right. The empty cell is now at (1,1).
+- 6 slides right, 5 up, 9 up, 13 left and 14 left. These five tiles cycle into place.
+
+```
+ 1  2  3  4
+ 5  6 12  7
+ 9 10  8 15
+13 14  . 11
+```
+
+**Moves 7–8:** 11 slides left, then 15 slides down.
+
+```
+ 1  2  3  4
+ 5  6 12  7
+ 9 10  8  .
+13 14 11 15
+```
+
+**Moves 9–15: cycle the right side.**
+- 8 slides right.
+- 12 slides down.
+- 7 slides left.
+- 8 slides up.
+- 12 slides right.
+- 11 slides up.
+- 15 slides left.
+
+```
+ 1  2  3  4
+ 5  6  7  8
+ 9 10 11 12
+13 14 15  .
+```
+
+This reaches the goal in 15 moves.
+
+ANSWER: 12 6 5 9 13 14 11 15 8 12 7 8 12 11 15

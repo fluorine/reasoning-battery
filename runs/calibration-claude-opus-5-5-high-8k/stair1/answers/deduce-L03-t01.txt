@@ -1,0 +1,14 @@
+Dev must be exactly 2 seats right of Tea, because Tea is left of Dev and they sit 2 apart. So Tea is in seat d−2, where Dev is in seat d. I tested each possible seat for Dev.
+
+- **Dev in seat 3:** Tea is in seat 1. Sol must be between Pia and Dev, so Sol is in seat 2. That leaves no seat left of Sol for Pia. This fails.
+- **Dev in seat 4:** Tea is in seat 2. Sol must be in seat 2 or 3. Seat 2 is Tea's and seat 3 is banned for Sol. This fails.
+- **Dev in seat 5:** Tea is in seat 3. Sol must be in seat 2 or 4.
+  - If Sol is in seat 2, Quin must be in seat 1 or 3. Seat 3 is Tea's, and seat 1 must hold Pia, who has to be left of Sol. This fails.
+  - If Sol is in seat 4, Quin must be in seat 3 or 5, but those are Tea's and Dev's. This fails.
+- **Dev in seat 6:** Tea is in seat 4. Sol cannot be in seat 3 or 4, and needs Pia somewhere to the left, so Sol is in seat 2 or 5.
+  - If Sol is in seat 5, Quin must be in seat 4 or 6, but those are Tea's and Dev's. This fails.
+  - If Sol is in seat 2, Pia is in seat 1 and Quin is in seat 3. Kit takes the last seat, seat 5. Every clue holds.
+
+The only solution is Pia, Sol, Quin, Tea, Kit, Dev.
+
+ANSWER: Pia Sol Quin Tea Kit Dev

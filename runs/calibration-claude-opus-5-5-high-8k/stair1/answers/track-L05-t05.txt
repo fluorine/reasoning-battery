@@ -1,0 +1,53 @@
+Simulating each operation in order, the sequence after every step is:
+
+| Step | Operation | Result |
+|---|---|---|
+| 0 | start | A B C D E F G H I J K L |
+| 1 | rotate 2 | C D E F G H I J K L A B |
+| 2 | reverse 11 12 | C D E F G H I J K L B A |
+| 3 | reverse 10 11 | C D E F G H I J K B L A |
+| 4 | rotate 8 | K B L A C D E F G H I J |
+| 5 | swap 7 8 | K B L A C D F E G H I J |
+| 6 | rotate 11 | J K B L A C D F E G H I |
+| 7 | swap 2 11 | J H B L A C D F E G K I |
+| 8 | swap 9 1 | E H B L A C D F J G K I |
+| 9 | rotate 4 | A C D F J G K I E H B L |
+| 10 | reverse 11 12 | A C D F J G K I E H L B |
+| 11 | rotate 9 | H L B A C D F J G K I E |
+| 12 | rotate 5 | D F J G K I E H L B A C |
+| 13 | rotate 5 | I E H L B A C D F J G K |
+| 14 | reverse 10 11 | I E H L B A C D F G J K |
+| 15 | reverse 5 11 | I E H L J G F D C A B K |
+| 16 | rotate 3 | L J G F D C A B K I E H |
+| 17 | swap 7 8 | L J G F D C B A K I E H |
+| 18 | rotate 5 | C B A K I E H L J G F D |
+| 19 | reverse 1 6 | E I K A B C H L J G F D |
+| 20 | rotate 10 | F D E I K A B C H L J G |
+| 21 | swap 3 1 | E D F I K A B C H L J G |
+| 22 | rotate 8 | H L J G E D F I K A B C |
+| 23 | swap 3 8 | H L I G E D F J K A B C |
+| 24 | swap 12 1 | C L I G E D F J K A B H |
+| 25 | rotate 2 | I G E D F J K A B H C L |
+| 26 | swap 7 3 | I G K D F J E A B H C L |
+| 27 | swap 10 7 | I G K D F J H A B E C L |
+| 28 | reverse 8 10 | I G K D F J H E B A C L |
+| 29 | swap 11 9 | I G K D F J H E C A B L |
+| 30 | reverse 4 8 | I G K E H J F D C A B L |
+| 31 | rotate 5 | J F D C A B L I G K E H |
+| 32 | reverse 5 12 | J F D C H E K G I L B A |
+| 33 | rotate 5 | E K G I L B A J F D C H |
+| 34 | reverse 4 9 | E K G F J A B L I D C H |
+| 35 | swap 3 9 | E K I F J A B L G D C H |
+| 36 | rotate 8 | G D C H E K I F J A B L |
+| 37 | swap 4 6 | G D C K E H I F J A B L |
+| 38 | reverse 4 6 | G D C H E K I F J A B L |
+| 39 | reverse 3 11 | G D B A J F I K E H C L |
+| 40 | swap 3 9 | G D E A J F I K B H C L |
+| 41 | rotate 2 | E A J F I K B H C L G D |
+| 42 | swap 3 11 | E A G F I K B H C L J D |
+| 43 | rotate 7 | H C L J D E A G F I K B |
+| 44 | rotate 8 | F I K B H C L J D E A G |
+| 45 | reverse 9 10 | F I K B H C L J E D A G |
+| 46 | rotate 11 | G F I K B H C L J E D A |
+
+ANSWER: G F I K B H C L J E D A

@@ -1,0 +1,23 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+8 people sit in a row of 8 seats, numbered 1 to 8 from left to right.
+Each seat holds exactly one person.
+People: Dev, Hal, Jon, Kit, Lea, Max, Oto, Pia
+
+Clues:
+1. Pia and Oto sit exactly 2 seats apart.
+2. Oto sits next to Lea.
+3. Jon and Lea sit exactly 2 seats apart.
+4. Pia and Max sit exactly 6 seats apart.
+5. Lea does not sit next to Dev.
+6. Jon sits somewhere to the left of Dev.
+7. Pia sits somewhere to the left of Kit.
+8. Max sits somewhere to the left of Lea.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 8, separated by spaces.

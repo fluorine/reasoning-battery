@@ -1,0 +1,152 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+y = 13
+x = 26
+s = 30
+v = 40
+repeat 4 times:
+    s = x - y
+repeat 4 times:
+    x = v + 95
+    v = v + v
+    y = y - y
+s = y + 68
+s = v * 6
+x = x + y
+if x < y:
+    repeat 2 times:
+        x = y + 34
+        s = y + s
+        x = y - y
+        y = y + 66
+else:
+    x = y * 3
+v = v - s
+v = v + 33
+s = v + s
+repeat 4 times:
+    x = y - v
+    v = v * 9
+if y < v:
+    if y > 403:
+        x = y * 2
+        v = y - x
+    else:
+        y = s - y
+else:
+    x = x - x
+y = v + y
+y = s + s
+s = v + 7
+v = x + y
+if v < x:
+    s = s + 95
+    v = s + y
+    repeat 3 times:
+        x = x - y
+        s = y - v
+else:
+    x = x - x
+y = v + 22
+v = v - s
+v = y + v
+x = s - x
+repeat 3 times:
+    v = s + x
+    y = y + 23
+repeat 4 times:
+    if x > 508:
+        y = x - v
+    else:
+        v = v - s
+if y < s:
+    y = v + 38
+else:
+    x = x + 67
+repeat 2 times:
+    v = y * 8
+    s = x - y
+    s = s - x
+v = y * 3
+repeat 4 times:
+    s = y - x
+    x = y * 9
+y = x + 56
+y = v + s
+v = x - x
+x = y + v
+v = x + x
+repeat 3 times:
+    x = s * 3
+    y = s + 78
+y = s + 47
+if v is even:
+    s = x - v
+    x = x + s
+    v = v + 13
+    y = x + s
+else:
+    y = v * 8
+    s = x * 8
+y = v + v
+if s < v:
+    s = x + s
+else:
+    if y > 742:
+        v = s + 43
+    else:
+        v = x + v
+if y is even:
+    if v is even:
+        v = v * 3
+    else:
+        y = s + y
+else:
+    repeat 2 times:
+        s = s * 4
+    x = s - y
+repeat 3 times:
+    y = y + y
+repeat 2 times:
+    y = x + y
+    if x < y:
+        s = s * 7
+    else:
+        x = x + v
+v = y + y
+repeat 4 times:
+    y = y + 87
+    if v < y:
+        x = x + y
+    else:
+        x = s * 7
+s = x - y
+x = x - x
+v = v - x
+if x > 619:
+    s = y + 60
+else:
+    x = s + x
+    s = x * 7
+    y = v + 65
+v = x - y
+v = s + x
+x = v - s
+if v < y:
+    repeat 4 times:
+        x = x * 5
+        v = x + y
+        x = x + 57
+    s = s + 68
+else:
+    s = x + x
+
+Answer format: ANSWER: the final values of y x s v, in that order, separated by spaces.

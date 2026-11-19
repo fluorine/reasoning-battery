@@ -1,0 +1,13 @@
+Seats 1 to 7 are Ben, Kit, Noa, Rui, Jon, Oto, Sol.
+
+1. Jon is in seat 5 (clue 5).
+2. Noa is two seats from Jon, so Noa is in seat 3 or seat 7 (clue 2). Noa must be left of Sol (clue 4), so Noa cannot be in seat 7. Noa is in seat 3.
+3. Oto sits directly left of Sol (clues 1 and 7), and Sol is right of seat 3. That leaves Sol in seat 4, 6 or 7.
+   - If Sol were in seat 4, Oto would need seat 3, which Noa holds.
+   - If Sol were in seat 6, Oto would need seat 5, which Jon holds.
+   - So Sol is in seat 7 and Oto is in seat 6.
+4. Rui sits next to Jon (clue 6). Seat 6 is taken, so Rui is in seat 4.
+5. Ben is at an end (clue 3). Seat 7 is taken, so Ben is in seat 1.
+6. Kit takes the remaining seat, 2.
+
+ANSWER: Ben Kit Noa Rui Jon Oto Sol

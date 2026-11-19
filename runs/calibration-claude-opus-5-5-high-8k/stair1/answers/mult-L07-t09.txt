@@ -1,0 +1,30 @@
+I split both numbers into 4-digit blocks, multiplied them block by block like long multiplication, then carried in base 10⁴.
+
+**Blocks (most significant first):**
+- A = 3217 | 4218 | 9440 | 7706 | 2275 | 1046
+- B = 1573 | 3640 | 3356 | 1914 | 5089 | 0251
+
+**Column sums** (block products adding to each power of 10⁴, lowest first):
+
+| Column | Sum |
+|---|---|
+| c0 | 262,546 |
+| c1 | 5,894,119 |
+| c2 | 15,513,725 |
+| c3 | 49,450,000 |
+| c4 | 75,290,502 |
+| c5 | 76,128,723 |
+| c6 | 87,753,620 |
+| c7 | 66,796,084 |
+| c8 | 40,998,892 |
+| c9 | 18,344,794 |
+| c10 | 5,060,341 |
+
+**Carrying in base 10⁴** gives these blocks (most significant first):
+506 | 2175 | 8894 | 5572 | 4860 | 1233 | 6252 | 5447 | 1551 | 4314 | 4145 | 2546
+
+**Checks:**
+- **Size:** about 3.2×10²³ × 1.57×10²³ ≈ 5.06×10⁴⁶, which means 47 digits. The result has 47 digits.
+- **Remainder mod 9:** A ≡ 2 and B ≡ 1, so the product should be ≡ 2. The result's digits sum to 191, and 191 ≡ 2 (mod 9).
+
+ANSWER: 50621758894557248601233625254471551431441452546

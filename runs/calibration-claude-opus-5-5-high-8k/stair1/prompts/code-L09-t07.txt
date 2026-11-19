@@ -1,0 +1,66 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+u = 11
+s = 15
+w = 16
+z = 47
+repeat 4 times:
+    w = w * 3
+    u = z - w
+    w = s + 40
+    w = z + s
+z = s + s
+z = w + 37
+if s > 240:
+    if z > 839:
+        s = w + 45
+    else:
+        u = u + 28
+    u = z + u
+else:
+    u = u + u
+z = u * 4
+if s is even:
+    if w > 219:
+        w = u + u
+        u = s + 34
+        z = u + 21
+    else:
+        z = s * 6
+else:
+    z = z * 5
+if w > 729:
+    u = w + 33
+    z = w + s
+    z = s * 9
+else:
+    s = s + s
+    u = u * 5
+    z = z - u
+w = u + z
+w = z + w
+w = w + z
+u = u + 99
+repeat 3 times:
+    u = z * 6
+    u = s * 3
+s = w - u
+s = w + 28
+w = u - w
+s = u + w
+if u > 633:
+    z = z + 82
+    z = s - z
+    z = u + 88
+else:
+    s = w + s
+
+Answer format: ANSWER: the final values of u s w z, in that order, separated by spaces.

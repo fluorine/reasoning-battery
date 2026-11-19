@@ -1,0 +1,41 @@
+I traced the program by hand, applying modulo 1000 after every assignment.
+
+**Initial values:** u=11, s=15, w=16, z=47
+
+**First loop (4 times).** Every pass ends with w = z + s = 47 + 15 = 62.
+- Pass 1: w = 16·3 = 48, then u = 47 − 48 = −1 → **999**, then w = 55, then w = 62.
+- Pass 2: w = 62·3 = 186, then u = 47 − 186 = −139 → **861**, then w = 62.
+- Passes 3 and 4 repeat pass 2, so u = 861 and w = 62.
+
+**Updating z.** z = 15 + 15 = 30, then z = 62 + 37 = **99**.
+
+**First if.** s = 15 is not > 240, so the else block runs: u = 861 + 861 = 1722 → **722**.
+
+**Next line.** z = 722·4 = 2888 → **888**.
+
+**Second if.** s = 15 is odd, so the else block runs: z = 888·5 = 4440 → **440**.
+
+**Third if.** w = 62 is not > 729, so the else block runs:
+- s = 15 + 15 = **30**
+- u = 722·5 = 3610 → **610**
+- z = 440 − 610 = −170 → **830**
+
+**Updating w.**
+- w = 610 + 830 = 1440 → 440
+- w = 830 + 440 = 1270 → 270
+- w = 270 + 830 = 1100 → **100**
+
+**Next line.** u = 610 + 99 = **709**.
+
+**Second loop (3 times).** The second line overwrites the first each time, so u = 30·3 = **90**.
+
+**Final updates.**
+- s = 100 − 90 = 10, then s = 100 + 28 = 128 (this overwrites the 10)
+- w = 90 − 100 = −10 → **990**
+- s = 90 + 990 = 1080 → **80**
+
+**Last if.** u = 90 is not > 633, so the else block runs: s = 990 + 80 = 1070 → **70**.
+
+**Final values:** u=90, s=70, w=990, z=830
+
+ANSWER: 90 70 990 830

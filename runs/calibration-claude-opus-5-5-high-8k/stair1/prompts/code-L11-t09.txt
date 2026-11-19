@@ -1,0 +1,112 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+y = 46
+v = 22
+q = 42
+u = 31
+if u < q:
+    y = u * 7
+    y = q + 45
+else:
+    q = u + v
+    u = y + 81
+if v is even:
+    u = u * 8
+    v = u + 55
+    u = u + 75
+    q = q + u
+else:
+    v = q + 92
+    v = q + v
+repeat 2 times:
+    u = u + 6
+y = v + 33
+q = v + y
+u = v + y
+if u < v:
+    q = y + q
+else:
+    y = y * 3
+    q = u + y
+    q = q - y
+v = q - u
+if y > 130:
+    y = q - u
+    repeat 2 times:
+        q = q + q
+        y = y + v
+else:
+    y = q - u
+    y = q - q
+u = q + 46
+q = y + 55
+y = u + 97
+repeat 3 times:
+    u = u - y
+v = y * 5
+y = y + y
+u = q - v
+y = y + 28
+repeat 3 times:
+    y = y * 8
+    q = y * 6
+repeat 4 times:
+    y = q * 6
+    y = v + v
+    v = y + 78
+y = y + 41
+v = y + v
+repeat 2 times:
+    if v < u:
+        u = q + 30
+    else:
+        v = y - q
+if u > 151:
+    v = q + q
+    v = v - u
+    u = v * 3
+    v = v + y
+    y = v * 8
+else:
+    q = v + 91
+y = y + q
+if u < v:
+    v = q + 19
+else:
+    repeat 2 times:
+        q = y + q
+        v = v - u
+    v = v * 2
+y = u + v
+repeat 4 times:
+    if u < v:
+        y = u * 3
+        q = v * 7
+    else:
+        y = y + 9
+if u > 268:
+    q = v - y
+    v = v - v
+else:
+    y = v + 16
+    y = y + 16
+repeat 2 times:
+    y = v + 95
+    q = u * 6
+y = u + 11
+u = y + 87
+y = y + 65
+q = y + v
+repeat 3 times:
+    q = v + 80
+u = y * 9
+
+Answer format: ANSWER: the final values of y v q u, in that order, separated by spaces.

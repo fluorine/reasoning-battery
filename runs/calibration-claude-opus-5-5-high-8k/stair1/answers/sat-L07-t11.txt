@@ -1,0 +1,31 @@
+I fixed the most one-sided variables first, then followed the clauses that forced values. I checked the final assignment against every clause.
+
+**Step 1 – initial choices.** These variables appear mostly with one sign, so I fixed them that way: x43=F, x42=T, x13=F, x46=F, x3=F, x38=F, x32=F, x47=T.
+
+**Step 2 – forced consequences.** Each value below is forced by the listed clause once earlier values are fixed:
+- (13 3 37) gives x37=T.
+- (2 3 46) gives x2=T.
+- (-2 10 -37) gives x10=T.
+- (17 -10 -47) gives x17=T.
+- (46 -10 9) gives x9=T.
+- (-9 -42 -45) gives x45=F.
+- (-9 -7 -42) gives x7=F.
+- (43 -17 -19) gives x19=F.
+- (44 3 19) gives x44=T.
+- (18 -9 19) gives x18=T.
+- (46 43 -41) gives x41=F.
+- (41 -37 40) gives x40=T.
+
+**Step 3 – choosing x14=F.** This forces:
+- (4 46 14) gives x4=T.
+- (-40 -21 -4) gives x21=F.
+- (39 -9 -4) gives x39=T.
+- (34 -2 21) gives x34=T.
+- (3 33 21) gives x33=T.
+- (12 19 -34) gives x12=T.
+- (41 25 -12) gives x25=T.
+
+**Step 4 – choosing x1.** Setting x1=F leads to a conflict:
+- (-16 1 -39) forces x16=F.
+- (21 16 15) then forces x15=T.
+- (-18 1 -15)

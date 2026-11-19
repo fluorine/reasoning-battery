@@ -1,0 +1,23 @@
+The product is **19060289000528197328411022**. I split each number at the millionth place and multiplied the parts by hand.
+
+**Split:**
+- A = 6488041131194 = 6488041·10⁶ + 131194
+- B = 2937757115763 = 2937757·10⁶ + 115763
+
+**Partial products:**
+- 6488041 × 2937757 = 19,060,287,864,037
+- 6488041 × 115763 = 751,075,090,283
+- 131194 × 2937757 = 385,416,091,858
+- 131194 × 115763 = 15,187,411,022
+
+**Middle term:** 751,075,090,283 + 385,416,091,858 = 1,136,491,182,141
+
+**Combine:** product = 19,060,287,864,037·10¹² + 1,136,491,182,141·10⁶ + 15,187,411,022
+- 19,060,287,864,037,000,000,000,000
+- \+ 1,136,491,182,141,000,000
+- \+ 15,187,411,022
+- = 19,060,289,000,528,197,328,411,022
+
+**Check (casting out nines):** B's digits sum to 63, so B ≡ 0 (mod 9) and the product must also be ≡ 0. The result's digits sum to 90, which is ≡ 0, so this check passes. The first partial product also passes its own mod-9 check (both sides ≡ 7).
+
+ANSWER: 19060289000528197328411022

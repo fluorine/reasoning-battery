@@ -1,0 +1,37 @@
+I found an assignment by setting variables one at a time, following the clauses each choice forced, and backtracking once.
+
+**Starting choices** (variables that appear mostly negated were set FALSE): x34, x37, x33, x30, x24, x18 and x2 are FALSE.
+- (34 19 37) forces x19 = T.
+
+**Setting x25 = T forces a chain:**
+- (2 -25 -11) gives x11 = F.
+- (-4 -25 2) gives x4 = F.
+- (11 -25 -23) gives x23 = F.
+- (23 11 1) gives x1 = T.
+- (30 -1 -35) gives x35 = F.
+- (-19 35 -20) gives x20 = F.
+- (34 20 17) gives x17 = T.
+- (24 -17 9) gives x9 = T.
+- (-9 15 2) gives x15 = T.
+- (-36 11 -15) gives x36 = F.
+- (18 20 -16) gives x16 = F.
+
+**Choosing x13:**
+- Trying x13 = F leads to a contradiction:
+  - (13 35 7) forces x7 = T, then (13 -7 -10) forces x10 = F.
+  - (20 10 -14) forces x14 = F, (-19 32 14) forces x32 = T, and (10 -12 -32) forces x12 = F.
+  - (21 12 35) then needs x21 = T, but (-21 -7 23) needs x21 = F.
+- So x13 = T. This forces:
+  - (21 -13 -1) gives x21 = T.
+  - (36 -13 10) gives x10 = T.
+  - (-13 18 -12) gives x12 = F.
+  - (-21 -7 23) gives x7 = F.
+  - (7 23 -6) gives x6 = F.
+
+**Remaining free choices:**
+- x28 = F, x26 = F, x5 = F, x8 = F, x3 = F, x29 = F, x27 = F, x22 = F, x14 = F.
+- x31 = T, x32 = T.
+
+I checked all 155 clauses against the final assignment, and each one has at least one true literal.
+
+ANSWER: 1 -2 -3 -4 -5 -6 -7 -8 9 10 -11 -12 13 -14 15 -16 17 -18 19 -20 21 -22 -23 -24 25 -26 -27 -28 -29 -30 31 32 -33 -34 -35 -36 -37

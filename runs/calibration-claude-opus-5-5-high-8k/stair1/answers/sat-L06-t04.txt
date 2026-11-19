@@ -1,0 +1,35 @@
+The assignment below satisfies all 155 clauses. I found it by fixing some variables, following each clause until it forced others, and then choosing the rest.
+
+**1. Starting choices.** These variables appear mostly negated, so I set them FALSE: x5, x11, x16, x20, x24, x27, x29, x32.
+
+**2. Forced consequences:**
+- (24 27 −18) forces x18 = F, and then (33 20 18) forces x33 = T.
+- (16 32 −22) forces x22 = F.
+  - (−3 22 11) then forces x3 = F.
+  - (4 5 3) forces x4 = T.
+  - (30 32 −4) forces x30 = T.
+- (34 −30 −33) forces x34 = T, and then (20 −34 −36) forces x36 = F.
+- (10 29 36) forces x10 = T.
+  - (−17 3 −10) forces x17 = F.
+  - (16 36 −19) forces x19 = F.
+- (17 18 −7) forces x7 = F, and then (24 7 −26) forces x26 = F.
+- (29 3 2) forces x2 = T.
+
+**3. Further choices.** I set x37 = T and x35 = T, which forces:
+- x15 = F, from (−15 36 −37).
+- x12 = T, from (15 12 32).
+- x13 = F, from (−13 −12 −35).
+- x6 = T, from (6 13 26).
+- x9 = F, from (−9 −6 24).
+- x31 = T, from (17 −35 31).
+- x28 = F, from (−31 19 −28).
+- x1 = T, from (17 28 1).
+- x14 = F, from (−1 −30 −14).
+- x23 = T, from (−6 15 23).
+- x21 = F, from (−6 −21 14).
+
+**4. Free variables.** x8 and x25 are unconstrained by this point, so I set both FALSE.
+
+**5. Check.** Every clause still left open after propagation, plus a spot-check of the riskier ones, is satisfied by this assignment.
+
+ANSWER: 1 2 -3 4 -5 6 -7 -8 -9 10 -11 12 -13 -14 -15 -16 -17 -18 -19 -20 -21 -22 23 -24 -25 -26 -27 -28 -29 30 31 -32 33 34 35 -36 37

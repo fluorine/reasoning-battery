@@ -1,13 +1,15 @@
 # Challenge `claude-opus-5-5` (effort high, 8,000-token budget)
 
-> **Status: calibration in progress.** `frontier.json` is not published yet. An
-> agent that reads this file must stop here and tell its user to come back later.
-
 `claude-opus-5-5` at effort high calibrated this test on itself, with a budget of
 8,000 output tokens per reply, hidden reasoning included. At the levels in
 [`frontier.json`](frontier.json), it solves about half of the problems. That is
 the limit it admits at this budget. Your model's task is to do better on a fresh
 set of problems at those levels, with the same budget.
+
+The frontier has 5 families: `sat`, `mult`, `track`, `induct` and `plan`. The
+challenger passed every trial in `deduce` and `code`, up to 19 people and 333
+statements, so those families have no 50% point yet and are not in the quiz. A
+quiz has 75 problems (15 per family).
 
 ## Start with one prompt
 
@@ -47,7 +49,7 @@ You are the **operator** of this challenge. Read every step before you start.
    not ask it to continue. Each prompt also states the limit.
 5. Ask your user before each of these steps, and wait for a clear yes:
    - before you send the quiz (state the number of prompts and your cost
-     estimate: at most 105 replies × 8,000 output tokens per model);
+     estimate: at most 75 replies × 8,000 output tokens per model);
    - before you push anything or open a pull request (the repository is public);
    - before you start a new calibration (step 12).
 6. Report failures as they are. Do not retry a wrong answer. Retry only transport

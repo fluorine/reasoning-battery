@@ -1,0 +1,11 @@
+Tracing the program step by step:
+
+1. **Initial values:** u = 35, y = 39, t = 27, s = 12.
+2. **First `if`:** the test is u < s, which is 35 < 12. That is false, so the `else` block runs.
+   - u = t − u = 27 − 35 = −8, stored as **992**.
+3. **`repeat 2 times`:** u = 992 is even, so each pass runs y = s × 2 = **24**. u does not change inside the loop, so both passes do the same thing.
+4. **Last line:** u = s − y = 12 − 24 = −12, stored as **988**.
+
+**Final values:** u = 988, y = 24, t = 27, s = 12.
+
+ANSWER: 988 24 27 12

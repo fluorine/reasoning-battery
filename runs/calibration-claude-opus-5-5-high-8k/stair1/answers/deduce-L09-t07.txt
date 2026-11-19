@@ -1,0 +1,18 @@
+Kit and Ivy are fixed first, then Dev and Hal, then the rest.
+
+1. **Tea:** Clue 11 puts Tea in seat 5.
+2. **Kit and Ivy:** By clue 2, Kit is in seat 2 or seat 8. Clue 8 needs Ivy exactly 9 seats from Kit. Seat 8 gives seat 17 or seat -1, so it fails. Kit is in seat 2 and Ivy is in seat 11.
+3. **Dev and Hal:** Clue 6 allows the seat pairs (1,10), (2,11) or (3,12). Seats 2 and 11 are taken, so the pair is (1,10) or (3,12).
+4. **Placing Hal:** By clues 10 and 7, Ben is right of Tea (after seat 5) and left of Hal. So Hal is in seat 10 or 12, and Dev is in seat 1 or 3.
+5. **Hal in seat 12 fails:** Max must sit next to Hal (clue 9), but seat 11 is Ivy's.
+6. **So Hal is in seat 10 and Dev in seat 1.**
+   - Max must be in seat 9, since seat 11 is taken (clue 9).
+   - Sol must then be in seat 8, next to Max (clue 3).
+7. **Remaining seats 3, 4, 6, 7 and 12:**
+   - Fay is in seat 4 or 6 (clue 5).
+   - Ben is in seat 6 or 7 (between Tea and Hal).
+   - Jon and Oto sit side by side with Jon on the left (clues 1 and 4). That means seats 3–4 or 6–7.
+   - If Jon and Oto took seats 6 and 7, Ben would have no seat, so they are in seats 3 and 4.
+   - That puts Fay in seat 6, Ben in seat 7 and Gus in seat 12.
+
+ANSWER: Dev Kit Jon Oto Tea Fay Ben Sol Max Hal Ivy Gus

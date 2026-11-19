@@ -1,0 +1,13 @@
+{
+  "id": "plan-L06-t12",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": true,
+  "costUsd": null,
+  "costEstimateUsd": 0.186,
+  "durationMs": 78436,
+  "outputTokens": 8000,
+  "thinkingTokens": null,
+  "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "redacted": false
+}

@@ -1,0 +1,17 @@
+Final sequence: F A E L K H D I C J B G. I tracked the line by hand after every one of the 46 operations; the key checkpoints are below.
+
+- After op 1 (rotate 7): H I J K L A B C D E F G
+- After op 8 (rotate 9): G L I J H K A C E D F B
+- After op 17 (rotate 9): K G B A D C I F H J E L
+- After op 24 (reverse 3 12): E G H F C I K L J D A B
+- After op 28 (rotate 9): C F H K L J D A B E G I
+- After op 33 (rotate 8): L D A B J C I G F H K E
+- Ops 35 and 36 cancel each other out.
+- After op 38 (rotate 6): D A B J C I G H F K E L
+- Ops 39 and 41 (rotate 11 on 12 items) each shift every item one place right.
+- After op 42 (rotate 2): D G B J C I A H F K E L
+- After op 44 (rotate 8): F K E L D H A I C J B G
+- Op 45 swaps positions 7 and 2 (A and K), giving F A E L D H K I C J B G.
+- Op 46 reverses positions 5–7 (D H K becomes K H D).
+
+ANSWER: F A E L K H D I C J B G

@@ -1,0 +1,36 @@
+The product is **493954095899738726370440438488783989871336310408168852163716430092**. I computed it by hand, splitting each number into 3-digit groups, and verified it with two independent residue checks.
+
+**1. Split into base-1000 groups** (most significant first):
+
+- A = 655 | 215 | 055 | 245 | 838 | 648 | 407 | 926 | 455 | 829 | 359
+- B = 753 | 880 | 870 | 021 | 226 | 347 | 162 | 963 | 876 | 913 | 588
+
+**2. Column sums.** I formed every group-by-group product and summed each column. Columns are indexed from the least significant group, so c₀ is the rightmost column and c₂₀ the leftmost.
+
+| k | cₖ | k | cₖ | k | cₖ |
+|---|---|---|---|---|---|
+| 0 | 211092 | 7 | 2371533 | 14 | 1804061 |
+| 1 | 815219 | 8 | 2433962 | 15 | 1715564 |
+| 2 | 1338901 | 9 | 2700435 | 16 | 1047009 |
+| 3 | 2031824 | 10 | 2733287 | 17 | 433690 |
+| 4 | 2339819 | 11 | 3155048 | 18 | 800465 |
+| 5 | 2260827 | 12 | 2589331 | 19 | 738295 |
+| 6 | 2775145 | 13 | 2376846 | 20 | 493215 |
+
+**3. Carry in base 1000.** Each column keeps its last three digits and passes the rest to the next column. This gives the groups:
+
+493 954 095 899 738 726 370 440 438 488 783 989 871 336 310 408 168 852 163 716 430 092
+
+**4. Checks:**
+
+- **Size:** 6.55215 × 7.53881 ≈ 49.395, so the product is about 4.94 × 10⁶⁵. That means 66 digits, which matches.
+- **Mod 999** (sum of the 3-digit groups):
+  - A ≡ 637 and B ≡ 605.
+  - 637 × 605 = 385385 ≡ 770.
+  - The result's groups sum to 11759 ≡ 770. ✓
+- **Mod 1001** (alternating sum of the 3-digit groups):
+  - A ≡ −94 and B ≡ 351.
+  - −94 × 351 = −32994 ≡ 39.
+  - The result's alternating sum is 2041 ≡ 39. ✓
+
+ANSWER: 493954095899738726370440438488783989871336310408168852163716430092

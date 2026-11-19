@@ -1,0 +1,21 @@
+The answer is the 8-move sequence 5 2 1 5 6 10 14 15. I found it by cycling the four top-left tiles, then sliding the empty cell down and right to the corner.
+
+The empty cell starts at row 2, column 2. Tiles 2, 5 and 1 around it are in the wrong order, and 6, 10, 14 and 15 are each one step from their goal spots.
+
+1. Move **5** down. The empty cell is now at row 1, column 2.
+   Row 1: 2 . 3 4 / Row 2: 1 5 7 8
+2. Move **2** right. The empty cell is now at the top-left corner.
+   Row 1: . 2 3 4
+3. Move **1** up. Row 1 is now finished.
+   Row 1: 1 2 3 4 / Row 2: . 5 7 8
+4. Move **5** left. Row 2: 5 . 7 8
+5. Move **6** up. Row 2 is now finished.
+   Row 2: 5 6 7 8 / Row 3: 9 . 11 12
+6. Move **10** up. Row 3 is now finished.
+   Row 3: 9 10 11 12 / Row 4: 13 . 14 15
+7. Move **14** left. Row 4: 13 14 . 15
+8. Move **15** left. Row 4: 13 14 15 .
+
+This matches the goal.
+
+ANSWER: 5 2 1 5 6 10 14 15

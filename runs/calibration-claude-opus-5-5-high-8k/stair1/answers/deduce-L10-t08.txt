@@ -1,0 +1,32 @@
+The arrangement is Hal, Ivy, Oto, Fay, Jon, Pia, Tea, Ben, Sol, Quin, Gus, Eli, Dev.
+
+**Fixed seats and direct consequences**
+- Clue 5 puts Gus in seat 11, and clue 7 puts Pia in seat 6.
+- By clue 12, Quin is in seat 10 or 12.
+- By clue 1, Oto is in seat 3 or 9.
+- By clue 8, Jon is in seat 5 or 7.
+- By clues 4 and 10, (Fay, Eli) is one of (1,9), (2,10), (4,12) or (5,13). The pair (3,11) is excluded because Gus is in 11.
+
+**Quin cannot be in seat 12**
+- Sol would have to be in seat 13, because seat 11 is Gus (clue 6).
+- Ben would then need seat 12 to sit next to Sol (clue 3), but Quin is there.
+
+**So Quin is in seat 10**
+- Sol must be in seat 9 and Ben in seat 8 (clues 6 and 3).
+- With seat 9 taken, Oto is in seat 3.
+- With seats 9 and 10 taken, Fay and Eli are at (4,12) or (5,13).
+
+**Testing (5,13)**
+- Fay is in 5, Eli in 13 and Dev in 12 (clue 2).
+- Jon must then be in seat 7.
+- Tea has no free seat to the right of Jon, which breaks clue 9.
+
+**Testing (4,12)**
+- Fay is in 4, Eli in 12 and Dev in 13 (clue 2).
+- Ivy must be next to Oto (clue 11); seat 4 is taken, so Ivy is in seat 2.
+- Hal, Jon and Tea fill seats 1, 5 and 7.
+- If Jon were in 7, Tea would have no seat to his right. So Jon is in 5, Tea in 7 and Hal in 1.
+
+This is the only arrangement that satisfies every clue.
+
+ANSWER: Hal Ivy Oto Fay Jon Pia Tea Ben Sol Quin Gus Eli Dev

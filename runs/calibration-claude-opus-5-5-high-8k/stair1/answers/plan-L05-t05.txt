@@ -1,0 +1,15 @@
+I tracked where the empty cell goes after each move.
+
+1. **Fix the right column.** Empty is at row 3, column 4. Slide **12** down and **8** right, which puts both in their goal cells. Then slide **6** up, so the empty is at the centre.
+2. **Cycle the bottom and left edges.** Slide **7** up, **11** right, **14** right, **13** down, **9** down, **5** down, **1** left and **2** up. The empty travels round to row 2, column 2, and the grid is:
+   ```
+    1  2  3  4
+    5  .  6  8
+    9 10  7 12
+   13 14 11 15
+   ```
+3. **Finish.** Slide **6** left, **7** up, **11** up and **15** left. This reaches the goal grid with the empty in the bottom-right corner.
+
+Each move slides a tile that is next to the empty cell, and the total is 15 moves.
+
+ANSWER: 12 8 6 7 11 14 13 9 5 1 2 6 7 11 15

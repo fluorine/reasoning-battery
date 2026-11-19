@@ -1,0 +1,29 @@
+The assignment below satisfies all 71 clauses. I found it by fixing a few variables and propagating the consequences through the clauses.
+
+**Step 1 – Set x2 = F.** Two clauses then constrain x5:
+- (-5 2 -3) requires ¬x5 or ¬x3.
+- (2 3 -5) requires x3 or ¬x5.
+- If x5 were true, x3 would have to be both false and true. So **x5 = F**.
+
+**Step 2 – Set x3 = F.**
+- (5 11 3) forces **x11 = T**.
+- (2 3 16) forces **x16 = T**.
+
+**Step 3 – Set x10 = T.**
+- (-8 2 -10) forces **x8 = F**.
+- With x8 false and x11 true, (8 9 -11) forces **x9 = T**.
+- With x8 false and x9 true, (-9 8 14) forces **x14 = T**.
+- With x9 and x11 true, (13 -9 -11) forces **x13 = T**.
+
+**Step 4 – Fill in the free variables.** The remaining unsatisfied clauses are:
+- (4 -9 1), (12 -7 4), (6 4 7), (1 6 7) and (-14 4 12).
+- (-9 -15 -7), (17 2 -7), (-12 17 -16) and (-15 -11 -17).
+- (-14 -6 -12) and (17 -14 4).
+
+Choosing x1 = T, x4 = T, x6 = F, x7 = F, x12 = F, x15 = F and x17 = F satisfies all of them. I then re-checked every clause, including those already satisfied in earlier steps, against the full assignment.
+
+**Final assignment:**
+- True: x1, x4, x9, x10, x11, x13, x14, x16
+- False: x2, x3, x5, x6, x7, x8, x12, x15, x17
+
+ANSWER: 1 -2 -3 4 -5 -6 -7 -8 9 10 11 -12 13 14 -15 16 -17

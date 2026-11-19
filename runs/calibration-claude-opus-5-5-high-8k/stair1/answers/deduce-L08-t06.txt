@@ -1,0 +1,28 @@
+The solution is unique: **Quin, Fay, Tea, Pia, Oto, Lea, Kit, Dev, Ana, Ivy, Rui**.
+
+**Fixed seats:** Kit is in seat 7 (clue 6) and Ana is in seat 9 (clue 8).
+
+**Fay and Ivy (clue 5):** They sit 8 apart, so they could be in seats {1,9}, {2,10} or {3,11}. Seat 9 is Ana's, so {1,9} is out. Fay must be left of Tea (clue 1), so Fay cannot be in seat 11. That leaves three cases.
+
+**Case A: Fay 10, Ivy 2.**
+- Tea must be in seat 11.
+- Oto is 3 seats from Fay (clue 9), so Oto would be in seat 7 or seat 13.
+- Seat 7 is Kit's and seat 13 does not exist, so this case fails.
+
+**Case B: Fay 3, Ivy 11.**
+- Rui sits next to Ivy (clue 7), so Rui is in seat 10.
+- Oto is 3 seats from Fay, so Oto is in seat 6 (seat 0 does not exist).
+- Dev must be right of Kit (clue 4), and the only free seat right of 7 is seat 8.
+- Lea must be right of Oto (clue 2), but seats 7 to 11 are all taken. This case fails.
+
+**Case C: Fay 2, Ivy 10.**
+- Rui sits next to Ivy, and seat 9 is Ana's, so Rui is in seat 11.
+- Dev must be right of Kit, so Dev is in seat 8.
+- Oto is 3 seats from Fay, so Oto is in seat 5.
+- Lea must be right of Oto, and seat 6 is the only free seat that works.
+- Pia sits next to Oto (clue 3). Seat 6 is Lea's, so Pia is in seat 4.
+- Tea and Quin fill seats 1 and 3. Tea must be right of Fay, so Tea is in seat 3 and Quin is in seat 1.
+
+All nine clues hold in Case C, and it is the only case that works.
+
+ANSWER: Quin Fay Tea Pia Oto Lea Kit Dev Ana Ivy Rui

@@ -1,0 +1,30 @@
+**Fixed seats**
+- Clues 10, 8 and 5 give Max in 1, Jon in 7 and Sol in 13.
+- Clue 11 puts Oto in seat 8, seven seats from Max.
+- Clue 7 puts Ben next to Jon, in seat 6 or 8. Seat 8 is taken, so Ben is in 6.
+- Clue 4 puts Tea in seat 4 or 10.
+- Clue 9 puts Rui in seat 14, 15 or 16.
+- Clue 16 puts Dev in seats 2–5.
+- Clues 1 and 3 put Gus after seat 6, with Pia after Gus.
+
+**Case: Tea in 10.** Eli must be in 11, since seat 9 is banned. The free seats are 2, 3, 4, 5, 9, 12, 14, 15 and 16. The only pairs 7 apart are 2–9, 5–12 and 9–16. Hal–Ana and Kit–Quin need two disjoint pairs:
+- If they take {2,9} and {5,12}: Dev and Fay must sit in seats 3 and 4. Fay then cannot be 3 seats from Ana. This fails.
+- If they take {5,12} and {9,16}: only seats 14 and 15 are left after seat 6. Gus, Pia and Rui need three such seats. This fails.
+
+So Tea is in seat 4, and Eli is in seat 3 or 5.
+
+**Case: Eli in 5.** The 7-apart pairs are 2–9, 3–10 and 9–16.
+- Taking {2,9} and {3,10} leaves no seat for Dev.
+- Taking {3,10} and {9,16} puts Dev in 2. Fay must sit in 11, 12, 14 or 15 and be 3 seats from Ana. That forces Ana to 9 and Hal to 16. Hal would then not be left of Pia. This fails.
+
+**Case: Eli in 3.** The 7-apart pairs are 2–9, 5–12 and 9–16.
+- Taking {2,9} and {5,12} leaves no seat for Dev.
+- So the pairs are {5,12} and {9,16}, and Dev is in 2.
+- If Hal–Ana took {9,16}, then Hal must be 9 and Ana 16 (Hal is left of Pia). Fay would need seat 13, which is Sol's. So Hal–Ana take {5,12}, and Kit–Quin take {9,16}.
+- Quin must be left of Sol, so Quin is 9 and Kit is 16.
+- Fay is 3 seats from Ana. This forces Ana to 12 and Fay to 15, so Hal is 5.
+- Seats 10, 11 and 14 remain. Rui takes 14, Gus takes 10 and Pia takes 11.
+
+This is the only arrangement that satisfies every clue.
+
+ANSWER: Max Dev Eli Tea Hal Ben Jon Oto Quin Gus Pia Ana Sol Rui Fay Kit

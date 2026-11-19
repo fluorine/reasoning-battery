@@ -1,0 +1,16 @@
+Tracing the program step by step:
+
+1. **Start:** w = 14, v = 0, y = 5, u = 21.
+2. **First if:** w < y is false (14 < 5), so the else block runs.
+   - The loop adds y to w four times: w goes 19, 24, 29, 34.
+   - Each pass sets v = y + u = 5 + 21 = 26.
+3. **y = y + 13:** y = 18.
+4. **w = w * 2:** w = 68.
+5. **w = u - w:** 21 − 68 = −47, stored as 953.
+6. **Second if:** 953 is odd, so the else block runs.
+   - y = 18 + 25 = 43.
+   - u = 21 + 43 = 64.
+   - v = 26 + 26 = 52.
+7. **u = v + 58:** u = 52 + 58 = 110.
+
+ANSWER: 953 52 43 110

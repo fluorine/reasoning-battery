@@ -1,0 +1,13 @@
+{
+  "id": "deduce-L07-t05",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.038043999999999994,
+  "costEstimateUsd": null,
+  "durationMs": 15098,
+  "outputTokens": 1375,
+  "thinkingTokens": 636,
+  "rawSha256": "fade96f7614e3af67c5f19db566042f62434fd3b4f3d3a98417014a66b304d33",
+  "redacted": false
+}

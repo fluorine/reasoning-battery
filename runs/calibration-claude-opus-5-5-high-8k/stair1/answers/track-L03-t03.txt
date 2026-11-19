@@ -1,0 +1,26 @@
+I tracked the sequence after each operation, with position 1 as the leftmost item.
+
+| Step | Operation | Result |
+|---|---|---|
+| 0 | start | A B C D E F G H I J K L |
+| 1 | swap 3 12 | A B L D E F G H I J K C |
+| 2 | swap 8 1 | H B L D E F G A I J K C |
+| 3 | rotate 2 | L D E F G A I J K C H B |
+| 4 | swap 5 4 | L D E G F A I J K C H B |
+| 5 | reverse 5 10 | L D E G C K J I A F H B |
+| 6 | reverse 10 12 | L D E G C K J I A B H F |
+| 7 | rotate 6 | J I A B H F L D E G C K |
+| 8 | reverse 4 9 | J I A E D L F H B G C K |
+| 9 | rotate 4 | D L F H B G C K J I A E |
+| 10 | reverse 2 6 | D G B H F L C K J I A E |
+| 11 | reverse 6 7 | D G B H F C L K J I A E |
+| 12 | swap 3 1 | B G D H F C L K J I A E |
+| 13 | rotate 2 | D H F C L K J I A E B G |
+| 14 | swap 4 3 | D H C F L K J I A E B G |
+| 15 | rotate 1 | H C F L K J I A E B G D |
+| 16 | rotate 9 | B G D H C F L K J I A E |
+| 17 | swap 1 6 | F G D H C B L K J I A E |
+| 18 | reverse 8 10 | F G D H C B L I J K A E |
+| 19 | reverse 1 12 | E A K J I L B C H D G F |
+
+ANSWER: E A K J I L B C H D G F

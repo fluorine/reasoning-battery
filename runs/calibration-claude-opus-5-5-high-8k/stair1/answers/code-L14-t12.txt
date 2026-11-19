@@ -1,0 +1,56 @@
+Final values: q = 760, z = 596, w = 0, y = 964. All arithmetic below is mod 1000.
+
+**Start:** q=7, z=19, w=16, y=36.
+
+1. **First loop:** w = q − q = 0, and y stays 36. Then y = z + q = 26.
+2. **Doubling loop:** z goes 38, 76, 152. q is set to 178, then to 152.
+3. **Repeat 4:** z = 52 and q = 131.
+4. **Repeat 2:** y = 0 − 131 = 869. Then w = 131 and q = 0.
+5. q = 961, w = 936. z = 52 is not > 565, so q = 2·869 = 738.
+6. y = 936 − 738 = 198. y is not > 728, so w = 488.
+7. z = 290, y = 363, q = 800, z = 887, q = 875, w = 449.
+8. w is odd, so y = 0. The repeat-3 loop gives y = 903.
+9. w = 449 is not > 513, so: w = 984, z = 859, q = 806, y = 224.
+10. q = 947. The repeat-4 loop ends with q = 988.
+11. z = 731. The repeat-4 loop gives y = 148 and w = 743.
+12. z < w, so y = 719. Then q = 269, z = 12, q = 738, w = 157.
+13. The repeat-3 loop sets y, w and q to 0. Then w = 0.
+14. q < y is false (0 < 0), so z = 12 and w = 0. Then q = 36.
+15. z is not > 463, so y = 24.
+16. **Repeat 2:** first pass gives q=976, z=988, w=12. Second pass gives q=988, z=976, w=0.
+17. z > 674 and w is even, so w = 964 and q = 988.
+18. y = 117, then y = 976.
+19. w > 456, so y = 12, w = 928, then w = 856.
+20. The repeat-3 loop gives y = 976. Then w = 964.
+21. q > 337, so q = 952. Then q = 12.
+22. y is even, so q = 928 and w = 820.
+23. q = 808, w = 784.
+24. q < y (808 < 976), so w = 760 and z = 809.
+25. z = 836, w = 922, q = 140, then q = 524.
+26. w is even, so w = 784, then w = 568.
+27. **Repeat 4:** z = 564, q = 428. Then q = 53, then q = 384.
+28. **Repeat 2:** y = 840, z = 952. Then y = 384.
+29. **Repeat 4:** ends with q = 952, w = 74.
+30. **Repeat 3:** ends with w = 336, z = 0. Then q = 952.
+31. q > 418, so z = 720 and q = 600.
+32. **Repeat 4:** z = 376. Then z = 8, then z = 376.
+33. y is not > 661, so y = 256, w = 128, y = 273.
+34. q = 673. The repeat-3 loop ends with q = 760, y = 136.
+35. y < q, so z = 624, y = 992, q = 232, w = 104.
+36. z = 112, q = 336.
+37. **Repeat 2:** q = 448, y = 768.
+38. q = 144, w = 864, q = 256, z = 976.
+39. q is even, so z = 208, z = 48, w = 912, q = 0, q = 862.
+40. z = 890. The repeat-4 loop sets y = 0. Then z = 670.
+41. The repeat-3 loop gives y = 186. Then y = 856.
+42. q = 30, y = 60, q = 30, z = 760, y = 90, w = 118.
+43. w is not > 668, so w = 472, then w = 502.
+44. **Repeat 3:** q = 30 is not > 298, so y = 532 each time.
+45. q = 0, then q = 570.
+46. y < w is false. y < z is true, so y = 72.
+47. y = 320, then y = 4.
+48. **Repeat 4:** z = 760 is even, so w = 0 each time. q ends at 996.
+49. q is even, so the repeat-4 loop runs: y = 4 − 3040 = 964, and q = 760.
+50. z = 760 + 760 = 520, then z = 520 + 76 = 596.
+
+ANSWER: 760 596 0 964

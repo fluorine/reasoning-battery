@@ -1,0 +1,19 @@
+The rule is **prefix; mul 9; addindex; addindex; add 2**. It reproduces all six examples.
+
+**Finding the pattern**
+
+1. Examples 2 and 3 have the same first two inputs (0, 1), the same input total (37) and the same last output (9). That suggested a running sum (prefix), since equal totals give equal final prefix values.
+2. Where the two inputs differ, the change in the prefix sums is +1, −2, −2, −4, 0, 0 at positions 2 to 7. The change in the outputs is −1, +2, +2, +4, 0, 0. So the output moves opposite to the prefix sum.
+3. In example 2, adding each output to its prefix sum P gives 2, 4, 6, 8, 0, 2, 4, 6. That is 2 + 2i (mod 10), where i is the position starting at 0.
+4. So the output is −P + 2i + 2 (mod 10):
+   - **prefix** gives P.
+   - **mul 9** gives −P.
+   - **addindex** twice adds 2i.
+   - **add 2** adds the constant.
+
+**Checks on other examples**
+
+- Example 1: the prefix sums are 9 6 8 2 0 7 9 2. Negated, they are 1 4 2 8 0 3 1 8. Adding 2i + 2 gives 3 8 8 6 0 5 5 4, which matches. ✓
+- Example 4: the prefix sums are 6 3 2 9 8 7 2 8. Negated, they are 4 7 8 1 2 3 8 2. Adding 2i + 2 gives 6 1 4 9 2 5 2 8, which matches. ✓
+
+ANSWER: prefix; mul 9; addindex; addindex; add 2

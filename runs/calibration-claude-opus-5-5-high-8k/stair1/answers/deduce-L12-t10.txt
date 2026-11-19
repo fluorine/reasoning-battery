@@ -1,0 +1,33 @@
+Fixed seats first: Ivy is in seat 1 (clue 9) and Quin is in seat 10 (clue 4).
+
+**Sol and Pia.** Sol is 6 seats from Quin (clue 8), so Sol is in seat 4, because seat 16 doesn't exist. Pia sits next to Quin (clue 7), so Pia is in seat 9 or 11.
+
+**Tea and Max.** Tea is next to Max and to the left of Max (clues 10 and 12), so Max = Tea + 1.
+
+**Oto's neighbours.** Oto sits next to both Gus and Cai (clues 1 and 5), so Gus and Cai fill both of Oto's neighbouring seats. Rui is next to Gus on his other side (clue 15).
+
+**Placing Oto.** Oto is exactly 7 seats from Tea (clue 14). Checking each possible Tea seat:
+
+- **Tea 2:** Oto would be in 9, but seat 10 is Quin, so Oto lacks two free neighbours. Fails.
+- **Tea 3:** Max would be in 4, which is Sol's seat. Fails.
+- **Tea 5:** Oto is in 12, so Gus and Cai take 11 and 13, which forces Pia into 9. If Gus were in 11, Rui would have no free seat beside him, so Gus is in 13. Kit must then be in 9 or 15 (clue 13), but 9 is Pia and 15 is banned (clue 2). Fails.
+- **Tea 6:** Oto is in 13.
+  - If Gus is in 12 and Cai in 14, Dev has no valid seat (clue 3). Fails.
+  - If Gus is in 14 and Cai in 12, Kit would need seat 10 or 16. Fails.
+- **Tea 7:** Oto is in 14.
+  - If Gus is in 13, then Cai is in 15 and Dev in 11. Kit would need seat 11 or 17. Fails.
+  - If Gus is in 15, then Rui must be in 14, which is Oto's seat. Fails.
+- **Tea 8:** Oto would be in 1 or 15, and neither has two neighbouring seats free for Gus and Cai. Fails.
+- **Tea 9:** Max would be in 10, which is Quin's seat. Fails.
+- **Tea 11:** Oto would be in 4 (Sol's seat) or 18. Fails.
+- **Tea 12:** Oto is in 5, but seat 4 is Sol, so Oto lacks two free neighbours. Fails.
+- **Tea 13:** Max is in 14 and Oto is in 6. This is the only case left, worked through below.
+
+**Completing Tea 13.**
+- Hal must be to the right of Tea, so Hal is in 15.
+- If Gus were in 5, Rui would need seat 4 (Sol). So Gus is in 7 and Rui in 8, and Cai is in 5.
+- Dev is 4 from Cai, so Dev is in 9, and Pia is in 11.
+- Kit is 3 from Oto, so Kit is in 3 (seat 9 is taken).
+- Ana and Eli fill seats 2 and 12. Ana cannot sit next to Ivy (clue 6), so Ana is in 12 and Eli is in 2.
+
+ANSWER: Ivy Eli Kit Sol Cai Oto Gus Rui Dev Quin Pia Ana Tea Max Hal

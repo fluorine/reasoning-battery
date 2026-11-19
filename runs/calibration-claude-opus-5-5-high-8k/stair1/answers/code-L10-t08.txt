@@ -1,0 +1,61 @@
+Tracing the program by hand, with every result taken modulo 1000:
+
+**Setup**
+- Start: q=44, v=10, x=25, z=46.
+- q = 25+71 = 96.
+
+**First loop (4×)**
+- z flips each pass: 10−46 = 964, then 10−964 = 46, then 964, then 46.
+- x ends as q+64 = 160.
+
+**After the first loop**
+- x = z−z = 0.
+- q = 46+87 = 133.
+- The 3× loop sets z = 133·7 = 931.
+
+**First if**
+- z = 931 is odd, so the else branch runs: x = 10−133 = 877.
+- x = 877+78 = 955.
+
+**Loop (4×)**
+- v = 133·6 = 798.
+- z = 931+260 = 191.
+
+**Straight-line block**
+- z = 955·6 = 730.
+- q = 730−955 = 775.
+- x = 736, then x = 775+53 = 828.
+
+**Loop (2×)**
+- Pass 1: z=732, x=603, q=507.
+- Pass 2: z=734, x=110, q=241.
+
+**Loop (4×)**
+- v = 734+43 = 777.
+- x = 777+20 = 797.
+
+**v and the next two ifs**
+- v = 734·4 = 936, then v = 797+90 = 887.
+- x = 797 is odd, so z = 734+50 = 784.
+- x is still odd, so q = 887·7 = 209.
+- q = 887+84 = 971.
+
+**Third if**
+- z = 784 > 667, so q = 784+971 = 755.
+- v = 887 is odd, so x = 784−887 = 897 and v = 887·6 = 322.
+
+**Loop (4×) and next lines**
+- v = 755−897 = 858.
+- q = 897+784 = 681.
+- v = 858−681 = 177.
+
+**Loop (4×)**
+- x = 681+18 = 699.
+- z = 177·8 = 416.
+
+**Final if**
+- z = 416 is not less than v = 177, so the else branch runs: v = 699+42 = 741.
+
+Final values: q=681, v=741, x=699, z=416.
+
+ANSWER: 681 741 699 416

@@ -1,0 +1,31 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+u = 35
+y = 39
+t = 27
+s = 12
+if u < s:
+    if t > 211:
+        u = t * 7
+        u = t + u
+        t = y + 56
+    else:
+        t = t * 8
+else:
+    u = t - u
+repeat 2 times:
+    if u is even:
+        y = s * 2
+    else:
+        t = u + 57
+u = s - y
+
+Answer format: ANSWER: the final values of u y t s, in that order, separated by spaces.

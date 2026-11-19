@@ -1,0 +1,32 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+A hidden rule maps a list of 8 digits to another list of 8 digits.
+The rule applies at most 7 operations from this library, in order.
+The same operation can occur more than once.
+
+- add c: add c to every element, modulo 10. c is 1 to 9.
+- sort: sort the list in ascending order.
+- mul c: multiply every element by c, modulo 10. c is 3, 7 or 9.
+- addindex: add its position to every element, modulo 10. The first position is 0.
+- reverse: reverse the order of the list.
+- rotate c: move the first c elements to the end, in the same order. c is 1 to 7.
+- pairswap: swap the elements at positions 1-2, 3-4, 5-6 and 7-8.
+- prefix: replace every element with the sum of it and all elements before it, modulo 10.
+- complement: replace every element x with 9 - x.
+
+Examples:
+[3 0 6 7 3 4 9 1] -> [7 6 9 3 3 2 7 2]
+[8 2 4 0 5 3 5 4] -> [5 3 6 9 9 9 4 0]
+[4 8 6 6 7 3 7 7] -> [7 5 1 6 9 1 9 7]
+[5 6 4 9 9 7 9 2] -> [9 8 4 1 3 5 2 0]
+[2 2 6 1 8 7 4 4] -> [7 5 8 2 1 1 7 3]
+[2 9 5 2 9 0 4 5] -> [9 8 2 5 4 4 9 5]
+
+Find a rule of at most 7 operations that reproduces every example.
+Any rule that reproduces every example is correct.
+
+Answer format: ANSWER: the operations in order, separated by semicolons. Example: ANSWER: add 3; reverse; rotate 2

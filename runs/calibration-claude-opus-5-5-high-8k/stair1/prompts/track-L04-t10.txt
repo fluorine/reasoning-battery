@@ -1,0 +1,46 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Start with this sequence (position 1 is the leftmost item):
+A B C D E F G H I J K L
+
+Apply these 30 operations in order:
+- swap i j: exchange the items at positions i and j.
+- reverse i j: reverse the items at positions i through j, inclusive.
+- rotate r: move the first r items to the end, in the same order.
+
+1. swap 6 9
+2. reverse 1 9
+3. swap 12 3
+4. rotate 11
+5. swap 4 2
+6. rotate 6
+7. rotate 3
+8. rotate 7
+9. rotate 3
+10. reverse 2 7
+11. swap 8 3
+12. swap 5 3
+13. reverse 6 9
+14. rotate 8
+15. rotate 5
+16. swap 12 4
+17. rotate 4
+18. rotate 3
+19. swap 5 9
+20. rotate 10
+21. swap 8 3
+22. swap 6 12
+23. rotate 7
+24. swap 11 2
+25. rotate 11
+26. rotate 5
+27. reverse 7 12
+28. reverse 4 11
+29. reverse 11 12
+30. swap 3 11
+
+Answer format: ANSWER: followed by the final 12 letters separated by spaces.

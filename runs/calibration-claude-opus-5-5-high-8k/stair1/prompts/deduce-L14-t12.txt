@@ -1,0 +1,30 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+17 people sit in a row of 17 seats, numbered 1 to 17 from left to right.
+Each seat holds exactly one person.
+People: Ana, Ben, Dev, Eli, Fay, Gus, Hal, Jon, Kit, Lea, Max, Noa, Pia, Quin, Rui, Sol, Tea
+
+Clues:
+1. Ben sits next to Hal.
+2. Quin and Gus sit exactly 3 seats apart.
+3. Ben sits somewhere to the left of Gus.
+4. Dev and Fay sit exactly 4 seats apart.
+5. Dev sits next to Gus.
+6. Dev and Rui sit exactly 2 seats apart.
+7. Sol sits in seat 15.
+8. Pia sits next to Rui.
+9. Quin and Ana sit exactly 10 seats apart.
+10. Max and Fay sit exactly 5 seats apart.
+11. Jon sits next to Quin.
+12. Tea sits next to Lea.
+13. Rui and Noa sit exactly 9 seats apart.
+14. Ben and Kit sit exactly 3 seats apart.
+15. Lea sits next to Noa.
+
+The clues have exactly one solution.
+
+Answer format: ANSWER: the names in seat order, from seat 1 to seat 17, separated by spaces.

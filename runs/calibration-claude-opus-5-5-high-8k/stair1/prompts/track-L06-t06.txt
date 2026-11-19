@@ -1,0 +1,88 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Start with this sequence (position 1 is the leftmost item):
+A B C D E F G H I J K L
+
+Apply these 72 operations in order:
+- swap i j: exchange the items at positions i and j.
+- reverse i j: reverse the items at positions i through j, inclusive.
+- rotate r: move the first r items to the end, in the same order.
+
+1. rotate 11
+2. swap 9 11
+3. swap 7 9
+4. rotate 4
+5. swap 1 4
+6. reverse 5 7
+7. rotate 10
+8. reverse 4 12
+9. swap 2 10
+10. reverse 1 5
+11. swap 4 5
+12. swap 6 3
+13. reverse 2 6
+14. swap 5 7
+15. rotate 1
+16. reverse 7 9
+17. swap 4 1
+18. reverse 8 10
+19. reverse 4 8
+20. reverse 8 12
+21. swap 2 11
+22. rotate 5
+23. reverse 4 12
+24. rotate 7
+25. swap 12 4
+26. rotate 8
+27. reverse 2 7
+28. rotate 10
+29. reverse 6 10
+30. rotate 3
+31. reverse 7 12
+32. rotate 2
+33. rotate 10
+34. rotate 4
+35. swap 12 6
+36. rotate 5
+37. reverse 2 9
+38. reverse 5 7
+39. swap 3 11
+40. rotate 11
+41. swap 12 7
+42. rotate 4
+43. rotate 7
+44. swap 6 9
+45. rotate 4
+46. swap 8 3
+47. swap 1 10
+48. rotate 1
+49. swap 1 3
+50. rotate 10
+51. rotate 2
+52. reverse 2 7
+53. rotate 4
+54. rotate 10
+55. rotate 4
+56. rotate 11
+57. reverse 5 8
+58. reverse 8 11
+59. rotate 6
+60. rotate 9
+61. swap 11 2
+62. swap 12 11
+63. rotate 11
+64. swap 1 6
+65. rotate 6
+66. reverse 3 6
+67. swap 1 3
+68. rotate 8
+69. rotate 3
+70. swap 5 10
+71. rotate 4
+72. reverse 11 12
+
+Answer format: ANSWER: followed by the final 12 letters separated by spaces.

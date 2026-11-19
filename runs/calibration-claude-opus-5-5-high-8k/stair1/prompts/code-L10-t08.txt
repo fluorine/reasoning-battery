@@ -1,0 +1,84 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+q = 44
+v = 10
+x = 25
+z = 46
+q = x + 71
+repeat 4 times:
+    x = v - z
+    z = v - z
+    x = x + 75
+    x = q + 64
+x = z - z
+q = z + 87
+repeat 3 times:
+    z = q * 7
+if z is even:
+    repeat 2 times:
+        z = x + x
+        z = x + 59
+    x = x * 3
+    x = z + 94
+else:
+    x = v - q
+x = x + 78
+repeat 4 times:
+    v = q * 6
+    z = z + 65
+z = x * 6
+q = z - x
+x = z + 6
+x = q + 53
+repeat 2 times:
+    z = z + 2
+    x = x + q
+    q = z + q
+repeat 4 times:
+    v = z + 43
+    x = v + 15
+    x = v + 20
+v = z * 4
+v = x + 90
+if x is even:
+    x = x + 93
+else:
+    z = z + 50
+if x is even:
+    z = q + z
+else:
+    q = v * 7
+q = v + 84
+if z > 667:
+    q = z + q
+    if v is even:
+        q = q + q
+    else:
+        x = z - v
+        v = v * 6
+else:
+    v = q * 3
+repeat 4 times:
+    v = q - x
+q = x + z
+v = v - q
+repeat 4 times:
+    z = z + 2
+    x = q + 18
+    z = v * 8
+if z < v:
+    q = x * 5
+    z = v * 5
+    x = v * 8
+else:
+    v = x + 42
+
+Answer format: ANSWER: the final values of q v x z, in that order, separated by spaces.

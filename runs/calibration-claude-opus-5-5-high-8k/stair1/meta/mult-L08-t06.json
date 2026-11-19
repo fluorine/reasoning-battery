@@ -1,0 +1,13 @@
+{
+  "id": "mult-L08-t06",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.153204,
+  "costEstimateUsd": null,
+  "durationMs": 60919,
+  "outputTokens": 7231,
+  "thinkingTokens": 6363,
+  "rawSha256": "d1df7d504e131145771226c6de61cc1e3bce8e406dc65c1ade6fb9846e4c790a",
+  "redacted": false
+}

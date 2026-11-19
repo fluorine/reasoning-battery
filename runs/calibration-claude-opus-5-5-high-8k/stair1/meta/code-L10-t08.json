@@ -1,0 +1,13 @@
+{
+  "id": "code-L10-t08",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.04048,
+  "costEstimateUsd": null,
+  "durationMs": 13228,
+  "outputTokens": 1366,
+  "thinkingTokens": 643,
+  "rawSha256": "6c56ed064ec691df14acdba2aa5f77833fe3fc7b6159d3d44d8c5e31c91da3d5",
+  "redacted": false
+}

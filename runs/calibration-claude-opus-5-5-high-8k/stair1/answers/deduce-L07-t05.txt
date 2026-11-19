@@ -1,0 +1,16 @@
+The arrangement is **Ben, Sol, Rui, Ivy, Pia, Gus, Oto, Fay, Hal, Eli**.
+
+**Step 1 – A fixed block of four.** Rui sits next to Sol (clue 1) and next to Ivy (clue 9), and Ivy is to Rui's right (clue 5). So Ivy is at Rui+1 and Sol is at Rui−1. Sol must also sit next to Ben (clue 7). Rui already takes one of Sol's neighbouring seats, so Ben is at Rui−2. This gives a consecutive block: **Ben, Sol, Rui, Ivy**.
+
+**Step 2 – Where the block can go.** Fay is in seat 8 (clue 2), so the block must fit in seats 1–7. Ben's seat can therefore be 1, 2, 3 or 4.
+
+- **Ben in seat 3:** Sol is in 4, so Gus would be in seat 0 or 8 (clue 3). Neither is possible.
+- **Ben in seat 4:** Sol is in 5, so Gus is in 1 or 9.
+  - Gus in 1 leaves no seat for Pia to his left (clue 6).
+  - Gus in 9 means Pia is in 1, 2 or 3. Eli would then be in 6, 7 or 8, which are all taken. This fails.
+- **Ben in seat 2:** Sol is in 3, so Gus is in 7. The open seats are 1, 6, 9 and 10. Pia must be left of Gus, so she is in 1 or 6. Eli is then in 6 or 1. Either way, Oto and Hal are left with seats 9 and 10. That breaks clue 4, because Oto must be left of Fay. This fails.
+- **Ben in seat 1:** Sol is in 2, so Gus is in 6. Pia must be left of Gus, and the only free seat there is 5. Eli is then in 10, five seats away. Oto must be left of Fay, so Oto takes 7 and Hal takes 9. All clues hold.
+
+That leaves exactly one arrangement.
+
+ANSWER: Ben Sol Rui Ivy Pia Gus Oto Fay Hal Eli

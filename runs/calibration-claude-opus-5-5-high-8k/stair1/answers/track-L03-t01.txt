@@ -1,0 +1,28 @@
+The final sequence is G F A E K B J C I H D L. Here is the sequence after each operation:
+
+| Step | Operation | Result |
+|---|---|---|
+| Start | — | A B C D E F G H I J K L |
+| 1 | reverse 1 10 | J I H G F E D C B A K L |
+| 2 | rotate 3 | G F E D C B A K L J I H |
+| 3 | reverse 4 7 | G F E A B C D K L J I H |
+| 4 | reverse 8 11 | G F E A B C D I J L K H |
+| 5 | rotate 2 | E A B C D I J L K H G F |
+| 6 | swap 2 9 | E K B C D I J L A H G F |
+| 7 | reverse 1 10 | H A L J I D C B K E G F |
+| 8 | rotate 6 | C B K E G F H A L J I D |
+| 9 | reverse 11 12 | C B K E G F H A L J D I |
+| 10 | rotate 3 | E G F H A L J D I C B K |
+| 11 | swap 10 9 | E G F H A L J D C I B K |
+| 12 | swap 4 5 | E G F A H L J D C I B K |
+| 13 | rotate 2 | F A H L J D C I B K E G |
+| 14 | swap 4 3 | F A L H J D C I B K E G |
+| 15 | reverse 3 11 | F A E K B I C D J H L G |
+| 16 | reverse 8 10 | F A E K B I C H J D L G |
+| 17 | swap 9 6 | F A E K B J C H I D L G |
+| 18 | rotate 11 | G F A E K B J C H I D L |
+| 19 | reverse 9 10 | G F A E K B J C I H D L |
+
+Step 18 moves the first 11 items to the end, which is the same as moving the last item to the front.
+
+ANSWER: G F A E K B J C I H D L

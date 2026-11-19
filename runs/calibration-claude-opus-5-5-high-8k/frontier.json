@@ -1,0 +1,103 @@
+{
+  "Kind": "staircase",
+  "Budget": 8000,
+  "Target": 0.5,
+  "Runs": [
+    "stair1"
+  ],
+  "Frontier": [
+    {
+      "Family": "induct",
+      "Level": 6,
+      "Difficulty": 6,
+      "Unit": "rule steps",
+      "D50": 6.0,
+      "D50Censor": 0,
+      "Rate": 0.5,
+      "RateHi": 0.85,
+      "Trials": 12.0,
+      "TokensPerItem": 5639.0,
+      "TokensPerSolved": 9666.0
+    },
+    {
+      "Family": "mult",
+      "Level": 8,
+      "Difficulty": 33,
+      "Unit": "digits",
+      "D50": 36.32,
+      "D50Censor": 0,
+      "Rate": 0.75,
+      "RateHi": 0.954,
+      "Trials": 12.0,
+      "TokensPerItem": 4971.0,
+      "TokensPerSolved": 6628.0
+    },
+    {
+      "Family": "plan",
+      "Level": 6,
+      "Difficulty": 22,
+      "Unit": "moves",
+      "D50": 20.64,
+      "D50Censor": 0,
+      "Rate": 0.4,
+      "RateHi": 0.769,
+      "Trials": 12.0,
+      "TokensPerItem": 5203.0,
+      "TokensPerSolved": 8920.0
+    },
+    {
+      "Family": "sat",
+      "Level": 6,
+      "Difficulty": 37,
+      "Unit": "variables",
+      "D50": 37.0,
+      "D50Censor": 0,
+      "Rate": 0.5,
+      "RateHi": 0.85,
+      "Trials": 12.0,
+      "TokensPerItem": 6182.0,
+      "TokensPerSolved": 10598.0
+    },
+    {
+      "Family": "track",
+      "Level": 5,
+      "Difficulty": 46,
+      "Unit": "operations",
+      "D50": 40.71,
+      "D50Censor": 0,
+      "Rate": 0.4,
+      "RateHi": 0.769,
+      "Trials": 12.0,
+      "TokensPerItem": 2437.0,
+      "TokensPerSolved": 4178.0
+    }
+  ],
+  "Uncalibrated": [
+    {
+      "Family": "code",
+      "Level": 15,
+      "Difficulty": 333,
+      "Unit": "statements",
+      "D50": 332.57,
+      "D50Censor": 1,
+      "Rate": null,
+      "RateHi": 1.0,
+      "Trials": 12.0,
+      "TokensPerItem": 1382.0,
+      "TokensPerSolved": 1382.0
+    },
+    {
+      "Family": "deduce",
+      "Level": 16,
+      "Difficulty": 19,
+      "Unit": "people",
+      "D50": 18.69,
+      "D50Censor": 1,
+      "Rate": null,
+      "RateHi": 1.0,
+      "Trials": 12.0,
+      "TokensPerItem": 1653.0,
+      "TokensPerSolved": 1653.0
+    }
+  ]
+}

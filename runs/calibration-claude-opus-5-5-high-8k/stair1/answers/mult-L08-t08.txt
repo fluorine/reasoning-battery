@@ -1,0 +1,25 @@
+The product was computed by hand using 3-digit blocks (base 1000). It was then checked two ways: the result matches the product of the inputs' residues mod 9 and mod 1001.
+
+**Setup.** Split each number into 3-digit groups, least significant first:
+
+- A = 114955763565998035809594316499183
+  - a₀…a₁₀ = 183, 499, 316, 594, 809, 035, 998, 565, 763, 955, 114
+- B = 194201242355271071532352963837448
+  - b₀…b₁₀ = 448, 837, 963, 352, 532, 071, 271, 355, 242, 201, 194
+
+**Convolution.** For each position k, compute c_k = Σ_{i+j=k} aᵢ·bⱼ. Then carry each c_k into position k+1, keeping c_k mod 1000 as the digit group.
+
+| k | c_k | + carry in | group (mod 1000) | carry out |
+|---|---|---|---|---|
+| 0 | 81984 | 81984 | 984 | 81 |
+| 1 | 376723 | 376804 | 804 | 376 |
+| 2 | 735460 | 735836 | 836 | 735 |
+| 3 | 1075557 | 1076292 | 292 | 1076 |
+| 4 | 1436922 | 1437998 | 998 | 1437 |
+| 5 | 1654528 | 1655965 | 965 | 1655 |
+| 6 | 1717688 | 1719343 | 343 | 1719 |
+| 7 | 1945557 | 1947276 | 276 | 1947 |
+| 8 | 2567752 | 2569699 | 699 | 2569 |
+| 9 | 2468616 | 2471185 | 185 | 2471 |
+| 10 | 2959859 | 2962330 | 330 | 2962 |
+| 11 | 2255847 | 2258809 |

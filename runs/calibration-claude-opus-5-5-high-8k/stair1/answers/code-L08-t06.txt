@@ -1,0 +1,41 @@
+I traced the program step by step, reducing every result modulo 1000.
+
+**Setup**
+- Start: q = 34, r = 16, v = 5, x = 17.
+- q = 34 − 17 = 17.
+- x = 17 + 16 = 33.
+
+**First repeat (2 times)**
+- Pass 1: r = 16 − 33 = −17 → 983. Then q = 983 + 36 = 1019 → 19. Then r = 19 + 5 = 24.
+- Pass 2: r = 24 − 33 = −9 → 991. Then q = 991 + 36 = 1027 → 27. Then r = 27 + 5 = 32.
+
+**After the loop**
+- v = 5 − 32 = −27 → 973.
+- x = 32 − 973 = −941 → 59.
+
+**First if (is q > 417?)**
+- q = 27, so the condition is false and the else block runs: v = 59 × 6 = 354.
+
+**Next three assignments**
+- v = 32 × 3 = 96.
+- x = 27 × 9 = 243.
+- r = 27 + 79 = 106.
+
+**Second repeat (4 times)**
+- r stays 106, so r > 281 is false every time and q = q × 6 runs four times.
+- q goes 27 → 162 → 972 → 5832 → 832 → 4992 → 992.
+
+**After the loop**
+- r = 992 × 8 = 7936 → 936.
+
+**Second if (is x > 635?)**
+- x = 243, so the condition is false and the else block runs:
+  - r = 96 × 5 = 480.
+  - v = 243 + 96 = 339.
+  - r = 992 + 243 = 1235 → 235.
+
+**Final assignments**
+- x = 235 + 992 = 1227 → 227.
+- r = 339 × 6 = 2034 → 34.
+
+ANSWER: 992 34 339 227

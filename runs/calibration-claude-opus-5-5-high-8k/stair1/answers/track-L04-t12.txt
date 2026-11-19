@@ -1,0 +1,37 @@
+I applied each operation in order. Positions are 1-based, and "rotate r" moves the first r items to the end.
+
+| Step | Operation | Result |
+|---|---|---|
+| 0 | start | A B C D E F G H I J K L |
+| 1 | reverse 5 8 | A B C D H G F E I J K L |
+| 2 | swap 5 6 | A B C D G H F E I J K L |
+| 3 | swap 8 7 | A B C D G H E F I J K L |
+| 4 | reverse 2 6 | A H G D C B E F I J K L |
+| 5 | swap 3 8 | A H F D C B E G I J K L |
+| 6 | rotate 5 | B E G I J K L A H F D C |
+| 7 | reverse 9 12 | B E G I J K L A C D F H |
+| 8 | swap 4 2 | B I G E J K L A C D F H |
+| 9 | reverse 11 12 | B I G E J K L A C D H F |
+| 10 | reverse 6 8 | B I G E J A L K C D H F |
+| 11 | rotate 7 | K C D H F B I G E J A L |
+| 12 | reverse 5 8 | K C D H G I B F E J A L |
+| 13 | swap 8 3 | K C F H G I B D E J A L |
+| 14 | rotate 11 | L K C F H G I B D E J A |
+| 15 | swap 4 12 | L K C A H G I B D E J F |
+| 16 | rotate 4 | H G I B D E J F L K C A |
+| 17 | reverse 1 2 | G H I B D E J F L K C A |
+| 18 | swap 11 3 | G H C B D E J F L K I A |
+| 19 | rotate 11 | A G H C B D E J F L K I |
+| 20 | reverse 7 8 | A G H C B D J E F L K I |
+| 21 | swap 4 11 | A G H K B D J E F L C I |
+| 22 | swap 4 10 | A G H L B D J E F K C I |
+| 23 | reverse 4 10 | A G H K F E J D B L C I |
+| 24 | rotate 8 | B L C I A G H K F E J D |
+| 25 | rotate 10 | J D B L C I A G H K F E |
+| 26 | swap 12 6 | J D B L C E A G H K F I |
+| 27 | reverse 6 11 | J D B L C F K H G A E I |
+| 28 | reverse 1 7 | K F C L B D J H G A E I |
+| 29 | rotate 1 | F C L B D J H G A E I K |
+| 30 | rotate 2 | L B D J H G A E I K F C |
+
+ANSWER: L B D J H G A E I K F C

@@ -1,0 +1,34 @@
+Final sequence: H G F A J D K C E B I L. Each line below shows the sequence after that operation.
+
+1. rotate 8: I J K L A B C D E F G H
+2. swap 5 11: I J K L G B C D E F A H
+3. swap 11 3: I J A L G B C D E F K H
+4. reverse 3 5: I J G L A B C D E F K H
+5. swap 1 4: L J G I A B C D E F K H
+6. swap 4 2: L I G J A B C D E F K H
+7. rotate 8: E F K H L I G J A B C D
+8. swap 3 5: E F L H K I G J A B C D
+9. rotate 11: D E F L H K I G J A B C
+10. rotate 5: K I G J A B C D E F L H
+11. rotate 5: B C D E F L H K I G J A
+12. rotate 1: C D E F L H K I G J A B
+13. rotate 6: K I G J A B C D E F L H
+14. swap 5 1: A I G J K B C D E F L H
+15. reverse 7 12: A I G J K B H L F E D C
+16. rotate 5: B H L F E D C A I G J K
+17. reverse 4 10: B H L G I A C D E F J K
+18. swap 7 12: B H L G I A K D E F J C
+19. reverse 6 10: B H L G I F E D K A J C
+20. swap 2 5: B I L G H F E D K A J C
+21. reverse 4 12: B I L C J A K D E F H G
+22. reverse 9 10: B I L C J A K D F E H G
+23. reverse 6 9: B I L C J F D K A E H G
+24. reverse 5 8: B I L C K D F J A E H G
+25. reverse 8 9: B I L C K D F A J E H G
+26. reverse 4 9: B I L J A F D K C E H G
+27. reverse 4 11: B I L H E C K D F A J G
+28. swap 11 9: B I L H E C K D J A F G
+29. reverse 5 12: B I L H G F A J D K C E
+30. rotate 3: H G F A J D K C E B I L
+
+ANSWER: H G F A J D K C E B I L

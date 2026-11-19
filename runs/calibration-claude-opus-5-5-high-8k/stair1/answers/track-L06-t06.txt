@@ -1,0 +1,76 @@
+I applied the 72 operations in order, tracking the sequence after each one. Positions run left to right starting at 1. "rotate r" moves the first r items to the end.
+
+1. rotate 11: L A B C D E F G H I J K
+2. swap 9 11: L A B C D E F G J I H K
+3. swap 7 9: L A B C D E J G F I H K
+4. rotate 4: D E J G F I H K L A B C
+5. swap 1 4: G E J D F I H K L A B C
+6. reverse 5 7: G E J D H I F K L A B C
+7. rotate 10: B C G E J D H I F K L A
+8. reverse 4 12: B C G A L K F I H D J E
+9. swap 2 10: B D G A L K F I H C J E
+10. reverse 1 5: L A G D B K F I H C J E
+11. swap 4 5: L A G B D K F I H C J E
+12. swap 6 3: L A K B D G F I H C J E
+13. reverse 2 6: L G D B K A F I H C J E
+14. swap 5 7: L G D B F A K I H C J E
+15. rotate 1: G D B F A K I H C J E L
+16. reverse 7 9: G D B F A K C H I J E L
+17. swap 4 1: F D B G A K C H I J E L
+18. reverse 8 10: F D B G A K C J I H E L
+19. reverse 4 8: F D B J C K A G I H E L
+20. reverse 8 12: F D B J C K A L E H I G
+21. swap 2 11: F I B J C K A L E H D G
+22. rotate 5: K A L E H D G F I B J C
+23. reverse 4 12: K A L C J B I F G D H E
+24. rotate 7: F G D H E K A L C J B I
+25. swap 12 4: F G D I E K A L C J B H
+26. rotate 8: C J B H F G D I E K A L
+27. reverse 2 7: C D G F H B J I E K A L
+28. rotate 10: A L C D G F H B J I E K
+29. reverse 6 10: A L C D G I J B H F E K
+30. rotate 3: D G I J B H F E K A L C
+31. reverse 7 12: D G I J B H C L A K E F
+32. rotate 2: I J B H C L A K E F D G
+33. rotate 10: D G I J B H C L A K E F
+34. rotate 4: B H C L A K E F D G I J
+35. swap 12 6: B H C L A J E F D G I K
+36. rotate 5: J E F D G I K B H C L A
+37. reverse 2 9: J H B K I G D F E C L A
+38. reverse 5 7: J H B K D G I F E C L A
+39. swap 3 11: J H L K D G I F E C B A
+40. rotate 11: A J H L K D G I F E C B
+41. swap 12 7: A J H L K D B I F E C G
+42. rotate 4: K D B I F E C G A J H L
+43. rotate 7: G A J H L K D B I F E C
+44. swap 6 9: G A J H L I D B K F E C
+45. rotate 4: L I D B K F E C G A J H
+46. swap 8 3: L I C B K F E D G A J H
+47. swap 1 10: A I C B K F E D G L J H
+48. rotate 1: I C B K F E D G L J H A
+49. swap 1 3: B C I K F E D G L J H A
+50. rotate 10: H A B C I K F E D G L J
+51. rotate 2: B C I K F E D G L J H A
+52. reverse 2 7: B D E F K I C G L J H A
+53. rotate 4: K I C G L J H A B D E F
+54. rotate 10: E F K I C G L J H A B D
+55. rotate 4: C G L J H A B D E F K I
+56. rotate 11: I C G L J H A B D E F K
+57. reverse 5 8: I C G L B A H J D E F K
+58. reverse 8 11: I C G L B A H F E D J K
+59. rotate 6: H F E D J K I C G L B A
+60. rotate 9: L B A H F E D J K I C G
+61. swap 11 2: L C A H F E D J K I B G
+62. swap 12 11: L C A H F E D J K I G B
+63. rotate 11: B L C A H F E D J K I G
+64. swap 1 6: F L C A H B E D J K I G
+65. rotate 6: E D J K I G F L C A H B
+66. reverse 3 6: E D G I K J F L C A H B
+67. swap 1 3: G D E I K J F L C A H B
+68. rotate 8: C A H B G D E I K J F L
+69. rotate 3: B G D E I K J F L C A H
+70. swap 5 10: B G D E C K J F L I A H
+71. rotate 4: C K J F L I A H B G D E
+72. reverse 11 12: C K J F L I A H B G E D
+
+ANSWER: C K J F L I A H B G E D

@@ -1,0 +1,60 @@
+The program ends with y = 535, x = 392, s = 896, v = 870. All arithmetic below is modulo 1000.
+
+**Opening loops**
+- The first loop sets s = 26 − 13 = 13.
+- The second loop gives x = 415, v = 640, y = 0.
+- s becomes 68, then 640 × 6 = 840. x stays 415 + 0 = 415.
+- The test 415 < 0 is false, so x = 0 × 3 = 0.
+- v = 640 − 840 = 800, then v = 833. s = 833 + 840 = 673.
+
+**Loop x = y − v, v = v × 9 (4 times)**
+- x goes 167, 503, 527, 743.
+- v goes 497, 473, 257, 313.
+- The test 0 < 313 is true and 0 > 403 is false, so y = 673 − 0 = 673.
+- y = 313 + 673 = 986, then y = 673 + 673 = 346.
+- s = 320. v = 743 + 346 = 89.
+
+**Branch v < x (89 < 743, true)**
+- s = 415, v = 415 + 346 = 761.
+- The 3-step loop gives x: 397, 51, 705 and leaves s = 585.
+- y = 783. v = 761 − 585 = 176, then v = 783 + 176 = 959.
+- x = 585 − 705 = 880.
+
+**Middle loops**
+- The 3-step loop gives v = 465 and y = 783 + 69 = 852.
+- In the 4-step loop, x = 880 > 508 every time, so y = 880 − 465 = 415.
+- The test 415 < 585 is true, so y = 465 + 38 = 503.
+- The 2-step loop ends with v = 24, s = 497.
+- v = 503 × 3 = 509.
+- The 4-step loop ends with s = 976, x = 527.
+- y = 583, then y = 509 + 976 = 485. v = 0, x = 485, v = 970.
+- The 3-step loop gives x = 928 and y = 54. Then y = 976 + 47 = 23.
+
+**Branch "v is even" (970, true)**
+- s = 928 − 970 = 958. x = 928 + 958 = 886. v = 983. y = 886 + 958 = 844.
+- y = 983 + 983 = 966.
+- The test 958 < 983 is true, so s = 886 + 958 = 844.
+- y = 966 is even and v = 983 is odd, so y = 844 + 966 = 810.
+- Doubling 3 times gives y: 620, 240, 480.
+
+**Loop of 2**
+- Step 1: y = 366. The test 886 < 366 is false, so x = 869.
+- Step 2: y = 235. The test 869 < 235 is false, so x = 852.
+- v = 235 + 235 = 470.
+
+**Loop of 4 (s × 7 = 908)**
+- y goes 322, 409, 496, 583.
+- x goes 908, 908, then 404 (470 < 496), then 987 (470 < 583).
+
+**Closing steps**
+- s = 987 − 583 = 404. x = 0. v = 470 − 0 = 470.
+- The test 0 > 619 is false, so x = 404, s = 404 × 7 = 828, y = 470 + 65 = 535.
+- v = 404 − 535 = 869, then v = 828 + 404 = 232. x = 232 − 828 = 404.
+- The test 232 < 535 is true, so the last loop runs.
+
+**Final loop (4 times)**
+- v goes 555, 920, 745, 870.
+- x ends each step as 77, 442, 267, 392.
+- s = 828 + 68 = 896.
+
+ANSWER: 535 392 896 870

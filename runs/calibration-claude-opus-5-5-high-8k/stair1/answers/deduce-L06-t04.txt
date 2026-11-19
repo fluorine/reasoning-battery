@@ -1,0 +1,35 @@
+Seats 1–9: Quin, Tea, Eli, Pia, Kit, Noa, Ben, Cai, Lea.
+
+**Ben's possible seats.** Clue 5 puts Tea and Ben 5 apart. So the pair takes seats (1,6), (2,7), (3,8) or (4,9), in either order. Clue 7 puts Noa left of Ben, so Ben cannot be in seat 1.
+
+**Case Tea = 1, Ben = 6.**
+- Clue 4 gives Kit = 4, and clue 1 gives Lea = 8.
+- The free seats are 2, 3, 5, 7 and 9. Noa must be left of Ben, so Noa is in 2, 3 or 5.
+- Noa = 2 needs Pia = 4, which Kit holds.
+- Noa = 3 needs Pia = 5. Eli must then sit in 4 or 6, and both are taken.
+- Noa = 5 with Pia = 3 forces Eli = 2. Quin would then need seat 1, which Tea holds.
+- Noa = 5 with Pia = 7 needs Eli in 6 or 8, and both are taken.
+- This case fails.
+
+**Case Tea = 2, Ben = 7.**
+- Clue 4 gives Kit = 5.
+- Clue 1 gives Lea = 1 or 9. Lea = 1 is impossible because Noa must be to her left, so Lea = 9.
+- The free seats are 1, 3, 4, 6 and 8, for Cai, Eli, Noa, Pia and Quin.
+- Noa = 1 with Pia = 3 forces Eli = 4. No free seat is left of Eli for Quin, so this fails.
+- Noa = 3 with Pia = 1 needs Eli in seat 2, which Tea holds.
+- Noa = 4 with Pia = 6 needs Eli in 5 or 7, and both are taken.
+- Noa = 6 with Pia = 4 forces Eli = 3 and Quin = 1, leaving Cai in seat 8. This works.
+
+The puzzle states there is exactly one solution, so I did not check the remaining Tea/Ben placements.
+
+**Check of every clue:**
+1. Lea (9) and Kit (5) are 4 apart. ✓
+2. Noa (6) and Pia (4) are 2 apart. ✓
+3. Quin (1) is left of Eli (3). ✓
+4. Kit (5) and Tea (2) are 3 apart. ✓
+5. Tea (2) and Ben (7) are 5 apart. ✓
+6. Eli (3) is next to Pia (4). ✓
+7. Noa (6) is left of Ben (7). ✓
+8. Noa (6) is left of Lea (9). ✓
+
+ANSWER: Quin Tea Eli Pia Kit Noa Ben Cai Lea

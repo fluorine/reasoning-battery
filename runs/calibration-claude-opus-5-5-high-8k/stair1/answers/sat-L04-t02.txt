@@ -1,0 +1,23 @@
+I fixed some variables by choice and let the clauses force the rest, then checked the final assignment against every clause.
+
+1. **Choose x5 = TRUE.** It appears positively in many clauses. Each clause containing ¬x5 now needs one of its other two literals.
+2. **Choose x21 = FALSE.** Most clauses containing x21 have it negated, so those are satisfied.
+3. **Choose x3 = FALSE.** The clause (−5 3 −4) then forces x4 = FALSE.
+4. **Chain of forced values:**
+   - (8 4 3) forces x8 = TRUE.
+   - (−5 1 −8) forces x1 = TRUE.
+   - (3 20 −8) forces x20 = TRUE.
+   - (19 3 2) and (19 −5 −2) together force x19 = TRUE.
+5. **Choose x14 = FALSE.**
+   - (21 14 7) forces x7 = TRUE.
+   - (14 3 11) forces x11 = TRUE.
+   - (14 4 −13) forces x13 = FALSE.
+   - (12 −1 −7) forces x12 = TRUE.
+   - (−8 13 22) forces x22 = TRUE.
+6. **Choose x18 = TRUE.** The clause (−12 −18 −10) then forces x10 = FALSE.
+7. **Choose x2 = TRUE.** This settles (2 −6 −1) and (2 −9 14).
+8. **Remaining variables:** after these steps every clause is satisfied, so x6, x9, x15, x16 and x17 can take any value. I set them all to FALSE.
+
+**Result:** x1, x2, x5, x7, x8, x11, x12, x18, x19, x20 and x22 are TRUE. All other variables are FALSE.
+
+ANSWER: 1 2 -3 -4 5 -6 7 8 -9 -10 11 12 -13 -14 -15 -16 -17 18 19 20 -21 22

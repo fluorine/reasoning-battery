@@ -1,0 +1,79 @@
+I applied each operation to the sequence in order and recorded the state after each step. "Rotate r" moves the first r items to the end, so rotate 11 is the same as moving the last item to the front.
+
+| Step | Operation | Sequence after |
+|---|---|---|
+| start | | A B C D E F G H I J K L |
+| 1 | rotate 10 | K L A B C D E F G H I J |
+| 2 | rotate 3 | B C D E F G H I J K L A |
+| 3 | swap 2 1 | C B D E F G H I J K L A |
+| 4 | reverse 7 9 | C B D E F G J I H K L A |
+| 5 | reverse 8 10 | C B D E F G J K H I L A |
+| 6 | swap 7 5 | C B D E J G F K H I L A |
+| 7 | reverse 1 6 | G J E D B C F K H I L A |
+| 8 | rotate 11 | A G J E D B C F K H I L |
+| 9 | swap 9 5 | A G J E K B C F D H I L |
+| 10 | reverse 11 12 | A G J E K B C F D H L I |
+| 11 | rotate 10 | L I A G J E K B C F D H |
+| 12 | reverse 5 11 | L I A G D F C B K E J H |
+| 13 | rotate 7 | B K E J H L I A G D F C |
+| 14 | swap 11 4 | B K E F H L I A G D J C |
+| 15 | swap 7 9 | B K E F H L G A I D J C |
+| 16 | reverse 5 9 | B K E F I A G L H D J C |
+| 17 | swap 3 2 | B E K F I A G L H D J C |
+| 18 | reverse 1 12 | C J D H L G A I F K E B |
+| 19 | rotate 4 | L G A I F K E B C J D H |
+| 20 | reverse 4 6 | L G A K F I E B C J D H |
+| 21 | rotate 9 | J D H L G A K F I E B C |
+| 22 | rotate 10 | B C J D H L G A K F I E |
+| 23 | rotate 3 | D H L G A K F I E B C J |
+| 24 | reverse 4 10 | D H L B E I F K A G C J |
+| 25 | swap 12 10 | D H L B E I F K A J C G |
+| 26 | rotate 11 | G D H L B E I F K A J C |
+| 27 | rotate 8 | K A J C G D H L B E I F |
+| 28 | swap 4 6 | K A J D G C H L B E I F |
+| 29 | rotate 4 | G C H L B E I F K A J D |
+| 30 | reverse 8 10 | G C H L B E I A K F J D |
+| 31 | swap 4 5 | G C H B L E I A K F J D |
+| 32 | reverse 9 12 | G C H B L E I A D J F K |
+| 33 | swap 12 6 | G C H B L K I A D J F E |
+| 34 | reverse 10 11 | G C H B L K I A D F J E |
+| 35 | rotate 6 | I A D F J E G C H B L K |
+| 36 | reverse 4 6 | I A D E J F G C H B L K |
+| 37 | swap 9 5 | I A D E H F G C J B L K |
+| 38 | reverse 5 7 | I A D E G F H C J B L K |
+| 39 | reverse 2 6 | I F G E D A H C J B L K |
+| 40 | rotate 11 | K I F G E D A H C J B L |
+| 41 | rotate 8 | C J B L K I F G E D A H |
+| 42 | rotate 3 | L K I F G E D A H C J B |
+| 43 | swap 7 9 | L K I F G E H A D C J B |
+| 44 | reverse 9 12 | L K I F G E H A B J C D |
+| 45 | reverse 10 11 | L K I F G E H A B C J D |
+| 46 | swap 5 4 | L K I G F E H A B C J D |
+| 47 | swap 6 9 | L K I G F B H A E C J D |
+| 48 | reverse 11 12 | L K I G F B H A E C D J |
+| 49 | reverse 1 10 | C E A H B F G I K L D J |
+| 50 | swap 2 9 | C K A H B F G I E L D J |
+| 51 | swap 10 5 | C K A H L F G I E B D J |
+| 52 | reverse 11 12 | C K A H L F G I E B J D |
+| 53 | rotate 9 | B J D C K A H L F G I E |
+| 54 | rotate 7 | H L F G I E B J D C K A |
+| 55 | reverse 5 11 | H L F G K C D J B E I A |
+| 56 | rotate 6 | D J B E I A H L F G K C |
+| 57 | swap 10 12 | D J B E I A H L F C K G |
+| 58 | reverse 4 5 | D J B I E A H L F C K G |
+| 59 | rotate 6 | H L F C K G D J B I E A |
+| 60 | rotate 7 | J B I E A H L F C K G D |
+| 61 | swap 1 10 | K B I E A H L F C J G D |
+| 62 | swap 9 6 | K B I E A C L F H J G D |
+| 63 | rotate 5 | C L F H J G D K B I E A |
+| 64 | swap 4 1 | H L F C J G D K B I E A |
+| 65 | reverse 1 11 | E I B K D G J C F L H A |
+| 66 | rotate 1 | I B K D G J C F L H A E |
+| 67 | reverse 6 9 | I B K D G L F C J H A E |
+| 68 | swap 4 11 | I B K A G L F C J H D E |
+| 69 | rotate 8 | J H D E I B K A G L F C |
+| 70 | swap 4 11 | J H D F I B K A G L E C |
+| 71 | rotate 9 | L E C J H D F I B K A G |
+| 72 | reverse 3 6 | L E D H J C F I B K A G |
+
+ANSWER: L E D H J C F I B K A G

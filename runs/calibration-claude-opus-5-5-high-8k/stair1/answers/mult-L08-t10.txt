@@ -1,0 +1,33 @@
+The product is **215225235407300903749580656030467839583138758059591671527577609260**. I multiplied by hand in base 1000 and checked the result with three independent tests.
+
+**Method**
+
+Split each factor into eleven 3-digit groups, most significant first:
+
+- A = 629 | 244 | 052 | 238 | 763 | 574 | 939 | 147 | 825 | 743 | 740
+- B = 342 | 037 | 774 | 757 | 757 | 649 | 625 | 248 | 142 | 820 | 949
+
+For each position k = 0…20, sum every group product aᵢ·bⱼ with i + j = k:
+
+| k | sum | k | sum | k | sum |
+|---|---|---|---|---|---|
+| 0 | 215118 | 7 | 1629290 | 14 | 2922573 |
+| 1 | 106721 | 8 | 2363276 | 15 | 2484815 |
+| 2 | 513658 | 9 | 2751011 | 16 | 1775565 |
+| 3 | 748329 | 10 | 3454033 | 17 | 1105029 |
+| 4 | 970861 | 11 | 2803643 | 18 | 1497265 |
+| 5 | 1041044 | 12 | 2937220 | 19 | 1311907 |
+| 6 | 1703949 | 13 | 2915833 | 20 | 702260 |
+
+Then carry in base 1000, starting from k = 20 and working up. Each step keeps the last three digits and passes the rest up as the carry.
+
+This gives the groups:
+215225 | 235 | 407 | 300 | 903 | 749 | 580 | 656 | 030 | 467 | 839 | 583 | 138 | 758 | 059 | 591 | 671 | 527 | 577 | 609 | 260
+
+**Checks**
+
+- **Magnitude:** 6.29244 × 3.42038 ≈ 21.5225, so the product should be about 2.15225 × 10⁶⁵, which has 66 digits. The result matches.
+- **Mod 9:** The digit sums give A ≡ 8 and B ≡ 7, so the product should be ≡ 56 ≡ 2. The result's digit sum is 290, which is ≡ 2.
+- **Mod 1001:** Because 1000 ≡ −1 (mod 1001), the alternating sum of 3-digit groups gives the remainder. For A this sum is 2002 ≡ 0, so the product must also be ≡ 0. For the result it is 214214 = 1001 × 214, which is ≡ 0.
+
+ANSWER: 215225235407300903749580656030467839583138758059591671527577609260

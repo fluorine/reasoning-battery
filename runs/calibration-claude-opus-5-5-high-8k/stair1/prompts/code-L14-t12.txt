@@ -1,0 +1,282 @@
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to 8,000 tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+
+Run this program by hand. All values are integers from 0 to 999.
+Every assignment stores its result modulo 1000. For example, -3 is stored as 997 and 1204 as 204.
+"repeat k times:" runs its indented block k times. "if ... else" runs exactly one of its two blocks.
+
+q = 7
+z = 19
+w = 16
+y = 36
+repeat 4 times:
+    w = q - q
+    y = y - w
+y = z + q
+repeat 3 times:
+    z = z + z
+q = z + y
+q = z + w
+repeat 4 times:
+    z = y * 2
+    q = y + y
+    q = q + 79
+repeat 2 times:
+    y = w - q
+w = w + q
+q = q - w
+q = y + 92
+w = y + 67
+if z > 565:
+    repeat 2 times:
+        w = q * 8
+    q = q - z
+    q = w + 90
+    z = y + 94
+else:
+    q = y + y
+y = w - q
+if y > 728:
+    z = w - w
+    w = y + 69
+else:
+    w = w * 8
+z = w - y
+y = z + 73
+q = q + 62
+z = q + 87
+q = y - w
+w = y + 86
+if w is even:
+    if q is even:
+        y = y * 6
+    else:
+        w = z + 15
+        w = y - q
+else:
+    y = q - q
+repeat 3 times:
+    y = q + 28
+if w > 513:
+    y = y * 5
+else:
+    w = z - y
+    z = q + w
+    q = y + y
+    y = y * 8
+q = q - z
+repeat 4 times:
+    q = z - q
+    q = w + 4
+z = z * 9
+repeat 4 times:
+    y = y + z
+    w = z - q
+if z < w:
+    y = q + z
+else:
+    if w is even:
+        q = q + q
+        z = q + 26
+    else:
+        q = y + 26
+        z = q + w
+q = q - y
+z = q + w
+q = y + 19
+w = y * 3
+repeat 3 times:
+    y = w - w
+    w = w - w
+    q = y - w
+w = q * 3
+if q < y:
+    w = z - y
+    y = z * 5
+else:
+    repeat 3 times:
+        z = q + 12
+        w = q + 75
+    w = z - z
+q = w + 36
+if z > 463:
+    w = q + 96
+else:
+    y = y + 24
+repeat 2 times:
+    q = q - w
+    q = w - y
+    z = q + z
+    w = y + z
+if z > 674:
+    if w is even:
+        w = q + z
+        q = w - z
+    else:
+        y = w * 8
+else:
+    w = q + 17
+y = y + 93
+y = q * 2
+if w > 456:
+    y = q - y
+    w = w + w
+    w = z * 6
+else:
+    z = q + w
+    y = z + 48
+repeat 3 times:
+    y = q * 2
+w = y + q
+if q > 337:
+    q = q + w
+else:
+    z = w + q
+q = w - q
+if y is even:
+    q = w + w
+    w = w * 5
+else:
+    y = y + q
+    w = w + 16
+q = y * 8
+w = y + q
+if q < y:
+    w = w + z
+    z = q + 1
+else:
+    if z > 788:
+        z = y * 2
+    else:
+        w = q + 48
+z = z + 27
+w = z + 86
+q = y - z
+q = z * 9
+if w is even:
+    w = y * 9
+    w = w * 2
+else:
+    w = z + 93
+repeat 4 times:
+    z = z - w
+    q = q + y
+q = y + 77
+q = z * 6
+repeat 2 times:
+    y = w * 5
+    z = q + w
+y = z - w
+repeat 4 times:
+    w = q - q
+    q = y * 4
+    q = z - w
+    w = w + 74
+repeat 3 times:
+    w = y + q
+    z = q - z
+q = q - z
+if q > 418:
+    z = y + w
+    q = z * 5
+else:
+    w = y + q
+repeat 4 times:
+    z = z - w
+z = z * 8
+z = y - z
+if y > 661:
+    w = w + 10
+    w = q + 1
+else:
+    y = z * 6
+    w = z * 3
+    y = y + 17
+q = y - q
+repeat 3 times:
+    q = y * 6
+    y = z + q
+if y < q:
+    z = q - y
+    y = w - y
+    q = y - q
+    w = q - w
+else:
+    z = q * 9
+z = w - y
+q = z * 3
+repeat 2 times:
+    q = z * 4
+    y = y - z
+q = y * 8
+w = q * 6
+q = z + q
+z = w + z
+if q is even:
+    z = z - y
+    z = q - z
+    w = z + w
+    q = z - z
+    q = y + 94
+else:
+    w = z * 2
+z = q + 28
+repeat 4 times:
+    y = w - w
+z = z * 3
+repeat 3 times:
+    y = z + 56
+    y = w - y
+y = y + z
+q = z * 9
+y = q * 2
+q = y - q
+z = z + 90
+y = q + y
+w = q - w
+if w > 668:
+    y = w - z
+    y = z * 8
+    q = z + q
+    y = w * 4
+else:
+    w = w * 4
+    w = w + q
+repeat 3 times:
+    if q > 298:
+        q = q - w
+    else:
+        y = q + w
+q = q - q
+q = w + 68
+if y < w:
+    if w is even:
+        w = y + y
+    else:
+        q = q * 9
+else:
+    if y < z:
+        y = w + q
+    else:
+        q = q * 7
+y = z * 7
+y = w + w
+repeat 4 times:
+    q = w - y
+    if z is even:
+        w = z - z
+    else:
+        y = y - z
+if q is even:
+    repeat 4 times:
+        y = y - z
+        q = z + w
+else:
+    y = z - w
+z = q + z
+z = z + 76
+
+Answer format: ANSWER: the final values of q z w y, in that order, separated by spaces.

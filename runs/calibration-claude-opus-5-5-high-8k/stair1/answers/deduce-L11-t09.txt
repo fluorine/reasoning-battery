@@ -1,0 +1,35 @@
+The arrangement is Pia, Rui, Ivy, Fay, Eli, Max, Dev, Ana, Gus, Oto, Noa, Tea, Ben, Quin. It follows from placing Ana first, because Ana is tied to the most other people.
+
+**Step 1 – Place Ana.** Quin and Rui are both exactly 6 seats from Ana (clues 3 and 7). So one sits at Ana−6 and the other at Ana+6. That only fits if Ana is in seat 7 or seat 8.
+
+**Step 2 – Place the Eli–Max–Dev–Ana chain.** Dev sits next to both Ana and Max (clues 2 and 8), and Max sits next to Eli (clue 1). So these four form a chain in a row: Eli–Max–Dev–Ana, or the reverse.
+
+**Case A: Ana in seat 7.**
+- Dev must be in seat 6, because seat 8 would force Max into seat 9, which is Gus's seat (clue 6).
+- That gives Max in 5 and Eli in 4.
+- Quin and Rui take seats 1 and 13.
+- Ivy must sit left of Gus (clue 10), so Ivy can only be in seat 2, 3 or 8.
+- Ivy in 8 fails because both neighbours (7 and 9) are taken, so Fay cannot sit next to her (clue 5).
+- Ivy in 2 or 3 fails because every seat 2 away from her is taken, so Pia has nowhere to sit (clue 9).
+- So Case A is impossible.
+
+**Case B: Ana in seat 8.**
+- Dev is in 7, Max in 6 and Eli in 5.
+- Quin and Rui take seats 2 and 14.
+
+*If Quin is in 2 and Rui in 14:*
+- Ivy and Fay need two adjacent free seats left of Gus. The only pair is seats 3 and 4.
+- Ben must sit next to Quin (clue 12), so Ben takes seat 1.
+- Pia then needs a seat 2 away from Ivy, and none is free. This fails.
+
+*If Quin is in 14 and Rui in 2:*
+- Ben sits next to Quin, so Ben is in seat 13.
+- Ivy and Fay again must use seats 3 and 4.
+- Ivy in 4 fails, because seats 2 and 6 are both taken, leaving no place for Pia.
+- So Ivy is in 3, Fay is in 4, and Pia is in 1.
+- Noa is 7 seats from Fay (clue 11), so Noa is in seat 11.
+- Oto and Tea fill seats 10 and 12. Oto cannot sit next to Ben in 13 (clue 4), so Oto is in 10 and Tea is in 12.
+
+This is the only arrangement that satisfies every clue.
+
+ANSWER: Pia Rui Ivy Fay Eli Max Dev Ana Gus Oto Noa Tea Ben Quin

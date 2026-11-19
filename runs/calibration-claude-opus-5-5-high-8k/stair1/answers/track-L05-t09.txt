@@ -1,0 +1,53 @@
+I applied the 46 operations one by one, tracking the full sequence after each step. "rotate 11" and "rotate 10" are the same as moving the last 1 or 2 items to the front.
+
+| Step | Operation | Sequence after the step |
+|---|---|---|
+| start | – | A B C D E F G H I J K L |
+| 1 | rotate 5 | F G H I J K L A B C D E |
+| 2 | reverse 7 8 | F G H I J K A L B C D E |
+| 3 | reverse 2 8 | F L A K J I H G B C D E |
+| 4 | reverse 4 8 | F L A G H I J K B C D E |
+| 5 | reverse 1 11 | D C B K J I H G A L F E |
+| 6 | rotate 1 | C B K J I H G A L F E D |
+| 7 | reverse 6 9 | C B K J I L A G H F E D |
+| 8 | reverse 6 7 | C B K J I A L G H F E D |
+| 9 | reverse 9 11 | C B K J I A L G E F H D |
+| 10 | reverse 2 5 | C I J K B A L G E F H D |
+| 11 | swap 5 7 | C I J K L A B G E F H D |
+| 12 | reverse 4 6 | C I J A L K B G E F H D |
+| 13 | reverse 6 9 | C I J A L E G B K F H D |
+| 14 | swap 10 3 | C I F A L E G B K J H D |
+| 15 | rotate 4 | L E G B K J H D C I F A |
+| 16 | swap 5 9 | L E G B C J H D K I F A |
+| 17 | reverse 5 9 | L E G B K D H J C I F A |
+| 18 | swap 7 6 | L E G B K H D J C I F A |
+| 19 | reverse 7 10 | L E G B K H I C J D F A |
+| 20 | rotate 11 | A L E G B K H I C J D F |
+| 21 | rotate 10 | D F A L E G B K H I C J |
+| 22 | rotate 7 | B K H I C J D F A L E G |
+| 23 | reverse 11 12 | B K H I C J D F A L G E |
+| 24 | swap 10 9 | B K H I C J D F L A G E |
+| 25 | swap 12 5 | B K H I E J D F L A G C |
+| 26 | swap 8 9 | B K H I E J D L F A G C |
+| 27 | swap 7 3 | B K D I E J H L F A G C |
+| 28 | rotate 1 | K D I E J H L F A G C B |
+| 29 | swap 4 1 | E D I K J H L F A G C B |
+| 30 | rotate 11 | B E D I K J H L F A G C |
+| 31 | rotate 11 | C B E D I K J H L F A G |
+| 32 | rotate 1 | B E D I K J H L F A G C |
+| 33 | rotate 5 | J H L F A G C B E D I K |
+| 34 | reverse 7 10 | J H L F A G D E B C I K |
+| 35 | swap 3 8 | J H E F A G D L B C I K |
+| 36 | rotate 11 | K J H E F A G D L B C I |
+| 37 | swap 8 1 | D J H E F A G K L B C I |
+| 38 | swap 7 2 | D G H E F A J K L B C I |
+| 39 | swap 11 10 | D G H E F A J K L C B I |
+| 40 | reverse 11 12 | D G H E F A J K L C I B |
+| 41 | swap 12 10 | D G H E F A J K L B I C |
+| 42 | rotate 7 | J K L B I C D G H E F A |
+| 43 | rotate 11 | A J K L B I C D G H E F |
+| 44 | reverse 3 10 | A J H G D C I B L K E F |
+| 45 | rotate 6 | I B L K E F A J H G D C |
+| 46 | reverse 9 11 | I B L K E F A J D G H C |
+
+ANSWER: I B L K E F A J D G H C

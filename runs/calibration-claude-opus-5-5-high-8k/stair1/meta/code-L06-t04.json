@@ -1,0 +1,13 @@
+{
+  "id": "code-L06-t04",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.018272,
+  "costEstimateUsd": null,
+  "durationMs": 5602,
+  "outputTokens": 400,
+  "thinkingTokens": 105,
+  "rawSha256": "07e78bd6d1f23b8762e2f8f065084502bb9ba0f203210501a4d42fd368aa40c4",
+  "redacted": false
+}

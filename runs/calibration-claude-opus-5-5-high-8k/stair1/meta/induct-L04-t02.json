@@ -1,0 +1,13 @@
+{
+  "id": "induct-L04-t02",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.146576,
+  "costEstimateUsd": null,
+  "durationMs": 64865,
+  "outputTokens": 6684,
+  "thinkingTokens": 5758,
+  "rawSha256": "5c16eabd79569a95dc96ddb2ed341edb568b9debc82b5b55ac8458e31b17071a",
+  "redacted": false
+}

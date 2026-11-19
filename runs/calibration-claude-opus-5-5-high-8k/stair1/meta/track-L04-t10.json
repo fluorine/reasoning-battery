@@ -1,0 +1,13 @@
+{
+  "id": "track-L04-t10",
+  "model": "claude-opus-5-5",
+  "budget": 8000,
+  "cutAtBudget": false,
+  "costUsd": 0.048032000000000005,
+  "costEstimateUsd": null,
+  "durationMs": 14711,
+  "outputTokens": 1836,
+  "thinkingTokens": 980,
+  "rawSha256": "43d353f98a4ad2a870f24f8eb277e602309a415a8f3e73a735bab526ffc48eb5",
+  "redacted": false
+}
