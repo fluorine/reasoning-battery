@@ -1,18 +1,23 @@
 #requires -Version 7.0
-# Runs ladder prompts through headless Claude Code with every tool disabled.
+# Runs battery prompts through headless Claude Code with every tool disabled.
 # Resumable. Exits after each spending chunk so the operator can check usage.
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory)][string]$LadderDir,
+    # Problem directory with config.json and prompts/. Not used with -Staircase.
+    [string]$LadderDir,
     [Parameter(Mandatory)][string[]]$RunDir,
-    # Ladder runs need the seed to grade between levels. -All does not.
+    # Ladder and staircase runs grade between replies, so they need the seed.
     [string]$SeedFile,
     # Run every prompt in a quiz with no stopping rule.
     [switch]$All,
+    # Each RunDir is a staircase run made with ladder.ps1 -Mode Staircase.
+    [switch]$Staircase,
     [string]$Model = 'claude-opus-5-5',
     [ValidateSet('low', 'medium', 'high', 'xhigh', 'max')][string]$Effort = 'high',
-    [ValidateRange(1, 16)][int]$Parallel = 6,
-    [double]$ChunkUsd = 10,
+    # Output tokens per reply. Default: the Budget in config.json.
+    [ValidateRange(-1, 1000000)][int]$Budget = -1,
+    [ValidateRange(1, 16)][int]$Parallel = 7,
+    [double]$ChunkUsd = 4,
     [ValidateRange(1, 5)][int]$StopAfter = 2,
     [double]$Ceiling = 0.10,
     [int]$TimeoutMinutes = 40,
@@ -24,11 +29,24 @@ $ErrorActionPreference = 'Stop'
 
 $ladderScript = Join-Path $PSScriptRoot '..\ladder.ps1'
 $claude = (Get-Command claude).Source
-if (-not $All -and -not $SeedFile) { throw 'SeedFile is required for a ladder run.' }
-$seed = if ($SeedFile) { (Get-Content -LiteralPath $SeedFile -Raw).Trim() }
-$cfg = Get-Content -LiteralPath (Join-Path $LadderDir 'config.json') -Raw | ConvertFrom-Json
-$promptDir = Join-Path $LadderDir 'prompts'
 $RunDir = @($RunDir -split ',' | Where-Object { $_ })
+if (-not $All -and -not $SeedFile) { throw 'SeedFile is required for a ladder or staircase run.' }
+if (-not $Staircase -and -not $LadderDir) { throw 'LadderDir is required.' }
+$seed = if ($SeedFile) { (Get-Content -LiteralPath $SeedFile -Raw).Trim() }
+$cfgFile = if ($Staircase) { Join-Path $RunDir[0] 'config.json' } else { Join-Path $LadderDir 'config.json' }
+if (-not (Test-Path -LiteralPath $cfgFile)) {
+    throw "No $cfgFile. For a staircase, run ladder.ps1 -Mode Staircase first."
+}
+$cfg = Get-Content -LiteralPath $cfgFile -Raw | ConvertFrom-Json
+$cfgBudget = if ($cfg.PSObject.Properties['Budget']) { [int]$cfg.Budget } else { 0 }
+if ($Budget -lt 0) { $Budget = $cfgBudget }
+elseif ($Budget -ne $cfgBudget) {
+    throw "The prompts state a budget of $cfgBudget tokens, not $Budget."
+}
+# Prompts with no stated budget keep the earlier 64,000-token cap.
+$cap = if ($Budget -gt 0) { $Budget } else { 64000 }
+# A cut reply has no cost report. This estimate errs high.
+$cutCostUsd = 0.01 + 2.2e-5 * $cap
 # A directory with no CLAUDE.md, settings or git repo above it.
 $neutral = Join-Path $env:TEMP 'battery-neutral'
 New-Item -ItemType Directory -Force $neutral | Out-Null
@@ -37,7 +55,9 @@ foreach ($r in $RunDir) {
     foreach ($sub in 'answers', 'meta') {
         New-Item -ItemType Directory -Force (Join-Path $r $sub) | Out-Null
     }
-    Copy-Item -LiteralPath (Join-Path $LadderDir 'config.json') -Destination $r -Force
+    if (-not $Staircase) {
+        Copy-Item -LiteralPath (Join-Path $LadderDir 'config.json') -Destination $r -Force
+    }
 }
 
 function Get-NextLevel([string]$Run, [string]$Family, $Results) {
@@ -55,30 +75,30 @@ function Get-NextLevel([string]$Run, [string]$Family, $Results) {
 }
 
 function Get-Pending([hashtable]$Skip) {
-    if ($All) {
-        foreach ($r in $RunDir) {
-            $items = foreach ($p in Get-ChildItem -LiteralPath $promptDir -Filter *.txt) {
-                $id = $p.BaseName
-                if (-not (Test-Path (Join-Path $r "answers\$id.txt")) -and -not $Skip["$r|$id"]) {
-                    [pscustomobject]@{ Run = $r; Id = $id }
-                }
-            }
-            if ($items) { return @($items) }
-        }
-        return @()
-    }
     # Finish one run before the next, so a budget stop leaves whole runs.
     foreach ($r in $RunDir) {
-        pwsh -NoProfile -File $ladderScript -Mode Verify -Seed $seed -Dir $r | Out-Null
-        $results = @(Import-Csv -LiteralPath (Join-Path $r 'results.csv'))
-        $items = foreach ($family in $cfg.Families) {
-            $level = Get-NextLevel $r $family $results
-            if ($null -eq $level) { continue }
-            foreach ($i in 1..$cfg.PerLevel) {
-                $id = '{0}-L{1:d2}-{2}' -f $family, $level, $i
-                if (-not (Test-Path (Join-Path $r "answers\$id.txt")) -and -not $Skip["$r|$id"]) {
-                    [pscustomobject]@{ Run = $r; Id = $id }
-                }
+        $ids = if ($All) {
+            Get-ChildItem -LiteralPath $promptDir -Filter *.txt | ForEach-Object BaseName
+        }
+        elseif ($Staircase) {
+            # ladder.ps1 grades the replies so far and writes the next prompts.
+            $out = pwsh -NoProfile -File $ladderScript -Mode Staircase -Seed $seed -Dir $r
+            if ($LASTEXITCODE -ne 0) { throw "Staircase failed for ${r}:`n$($out -join "`n")" }
+            $out | Where-Object { $_ -match '^PENDING (\S+)$' } | ForEach-Object { $Matches[1] }
+        }
+        else {
+            pwsh -NoProfile -File $ladderScript -Mode Verify -Seed $seed -Dir $r | Out-Null
+            $results = @(Import-Csv -LiteralPath (Join-Path $r 'results.csv'))
+            foreach ($family in $cfg.Families) {
+                $level = Get-NextLevel $r $family $results
+                if ($null -eq $level) { continue }
+                foreach ($i in 1..$cfg.PerLevel) { '{0}-L{1:d2}-{2}' -f $family, $level, $i }
+            }
+        }
+        $prompts = if ($Staircase) { Join-Path $r 'prompts' } else { $promptDir }
+        $items = foreach ($id in $ids) {
+            if (-not (Test-Path (Join-Path $r "answers\$id.txt")) -and -not $Skip["$r|$id"]) {
+                [pscustomobject]@{ Run = $r; Id = $id; Prompt = Join-Path $prompts "$id.txt" }
             }
         }
         if ($items) { return @($items) }
@@ -86,82 +106,156 @@ function Get-Pending([hashtable]$Skip) {
     @()
 }
 
+$promptDir = if ($LadderDir) { Join-Path $LadderDir 'prompts' }
 $argLine = ('-p --model {0} --effort {1} --tools "" --strict-mcp-config --setting-sources "" ' +
-    '--no-session-persistence --output-format json --system-prompt "{2}"') -f
+    '--no-session-persistence --output-format stream-json --verbose --system-prompt "{2}"') -f
     $Model, $Effort, $SystemPrompt.Replace('"', '\"')
-$env:CLAUDE_CODE_MAX_OUTPUT_TOKENS = '64000'
+# Caps one API call. Claude Code then continues in a new call: see Test-Cut.
+$env:CLAUDE_CODE_MAX_OUTPUT_TOKENS = "$cap"
+
+$runOne = {
+    param($Item, $Claude, $ArgLine, $Neutral, $TimeoutMinutes, $Cap, $CutCostUsd, $Model)
+    Set-StrictMode -Version Latest
+    $ErrorActionPreference = 'Stop'
+    $limitText = 'Output token limit hit'
+
+    function Read-Events([string]$Path) {
+        if (-not (Test-Path -LiteralPath $Path)) { return @() }
+        # The writer still holds the file open.
+        $fs = [IO.File]::Open($Path, 'Open', 'Read', 'ReadWrite')
+        try { $text = [IO.StreamReader]::new($fs).ReadToEnd() } finally { $fs.Dispose() }
+        foreach ($line in $text -split "`n") {
+            if (-not $line.Trim()) { continue }
+            try { $line | ConvertFrom-Json -Depth 30 } catch { }
+        }
+    }
+    # A cut reply keeps the text written before the cap and is graded as it is.
+    function Test-Cut($Events) {
+        foreach ($e in $Events) {
+            if ($e.type -eq 'user' -and ($e | ConvertTo-Json -Depth 30 -Compress) -match $limitText) {
+                return $true
+            }
+        }
+        $false
+    }
+
+    $res = $null
+    $err = ''
+    $cost = 0.0
+    for ($attempt = 1; $attempt -le 3 -and -not $res; $attempt++) {
+        $tmp = Join-Path $env:TEMP ("battery-{0}" -f [guid]::NewGuid().ToString('n'))
+        $started = Get-Date
+        $p = Start-Process -FilePath $Claude -ArgumentList $ArgLine `
+            -RedirectStandardInput $Item.Prompt -RedirectStandardOutput "$tmp.out" `
+            -RedirectStandardError "$tmp.err" -WorkingDirectory $Neutral -NoNewWindow -PassThru
+        $cut = $false
+        $timedOut = $false
+        while (-not $p.WaitForExit(1500)) {
+            if (Test-Cut @(Read-Events "$tmp.out")) { $cut = $true; break }
+            if (((Get-Date) - $started).TotalMinutes -gt $TimeoutMinutes) { $timedOut = $true; break }
+        }
+        if ($cut -or $timedOut) { try { $p.Kill($true) } catch { } ; $p.WaitForExit() }
+        $events = @(Read-Events "$tmp.out")
+        if (-not $cut) { $cut = Test-Cut $events }
+        $final = @($events | Where-Object type -EQ 'result') | Select-Object -Last 1
+        if ($cut) {
+            # Keep only the text of the first call, before the limit message.
+            $text = foreach ($e in $events) {
+                if ($e.type -eq 'user') { break }
+                if ($e.type -eq 'assistant') {
+                    foreach ($c in @($e.message.content)) { if ($c.type -eq 'text') { $c.text } }
+                }
+            }
+            $cost += $CutCostUsd
+            $res = [pscustomobject]@{
+                Text = ($text -join ''); Cut = $true; CostUsd = $null; EstimateUsd = $CutCostUsd
+                OutputTokens = $Cap; ThinkingTokens = $null; Model = $Model
+                DurationMs = [int]((Get-Date) - $started).TotalMilliseconds
+            }
+        }
+        elseif ($timedOut) { $err = 'timeout' }
+        elseif (-not $final) { $err = 'no result event: ' + (Get-Content "$tmp.err" -Raw) }
+        else {
+            $cost += [double]$final.total_cost_usd
+            if ($final.is_error) { $err = "$($final.result)" }
+            else {
+                $res = [pscustomobject]@{
+                    Text = [string]$final.result; Cut = $false; CostUsd = [double]$final.total_cost_usd
+                    EstimateUsd = $null; OutputTokens = $final.usage.output_tokens
+                    ThinkingTokens = $final.usage.output_tokens_details.thinking_tokens
+                    Model = ($final.modelUsage.PSObject.Properties.Name -join ',')
+                    DurationMs = $final.duration_ms
+                }
+            }
+        }
+        Remove-Item "$tmp.out", "$tmp.err" -ErrorAction SilentlyContinue
+        if (-not $res -and $attempt -lt 3) { Start-Sleep -Seconds (60 * $attempt) }
+    }
+    if ($res) {
+        $raw = $res.Text
+        # Email addresses are personal data: the replies are published.
+        $clean = [regex]::Replace($raw, '[\w.+-]+@[\w-]+(\.[\w-]+)+', '[redacted-email]')
+        $sha = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData(
+                [Text.Encoding]::UTF8.GetBytes($raw))).ToLowerInvariant()
+        [ordered]@{
+            id = $Item.Id; model = $res.Model; budget = $Cap; cutAtBudget = $res.Cut
+            costUsd = $res.CostUsd; costEstimateUsd = $res.EstimateUsd; durationMs = $res.DurationMs
+            outputTokens = $res.OutputTokens; thinkingTokens = $res.ThinkingTokens
+            rawSha256 = $sha; redacted = $clean -ne $raw
+        } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Item.Run "meta\$($Item.Id).json") -Encoding utf8NoBOM
+        # The answer file goes last: its presence marks the trial as done.
+        Set-Content -LiteralPath (Join-Path $Item.Run "answers\$($Item.Id).txt") -Value $clean `
+            -Encoding utf8NoBOM -NoNewline
+    }
+    [pscustomobject]@{
+        Run = $Item.Run; Id = $Item.Id; Ok = [bool]$res; Cut = $res -and $res.Cut
+        Tokens = if ($res) { $res.OutputTokens } else { 0 }; Cost = $cost; Error = $err
+    }
+}
 
 $spent = 0.0
 $skip = @{}
+$running = @{}
+$stopping = $false
 while ($true) {
-    $pending = Get-Pending $skip
-    if (-not $pending) {
-        'STATUS: DONE'
-        break
-    }
-    $wave = $pending | Select-Object -First $Parallel
-    $out = $wave | ForEach-Object -ThrottleLimit $Parallel -Parallel {
-        $item = $_
-        $prompt = Join-Path $using:promptDir "$($item.Id).txt"
-        $res = $null
-        $err = ''
-        $cost = 0.0
-        for ($attempt = 1; $attempt -le 3 -and -not $res; $attempt++) {
-            $tmp = Join-Path $env:TEMP ("battery-{0}" -f [guid]::NewGuid().ToString('n'))
-            $p = Start-Process -FilePath $using:claude -ArgumentList $using:argLine `
-                -RedirectStandardInput $prompt -RedirectStandardOutput "$tmp.out" `
-                -RedirectStandardError "$tmp.err" -WorkingDirectory $using:neutral `
-                -NoNewWindow -PassThru
-            if (-not $p.WaitForExit($using:TimeoutMinutes * 60000)) {
-                $p.Kill($true)
-                $err = 'timeout'
-            }
-            else {
-                try {
-                    $j = Get-Content -LiteralPath "$tmp.out" -Raw | ConvertFrom-Json
-                    $cost += [double]$j.total_cost_usd
-                    if ($j.is_error) { $err = "$($j.result)" } else { $res = $j }
-                }
-                catch { $err = 'unreadable output: ' + (Get-Content "$tmp.err" -Raw) }
-            }
-            Remove-Item "$tmp.out", "$tmp.err" -ErrorAction SilentlyContinue
-            if (-not $res -and $attempt -lt 3) { Start-Sleep -Seconds (60 * $attempt) }
+    if (-not $stopping) {
+        foreach ($item in Get-Pending $skip) {
+            $key = "$($item.Run)|$($item.Id)"
+            if ($running.ContainsKey($key) -or $running.Count -ge $Parallel) { continue }
+            $running[$key] = Start-ThreadJob -ScriptBlock $runOne -ArgumentList $item, $claude, $argLine,
+                $neutral, $TimeoutMinutes, $cap, $cutCostUsd, $Model
         }
-        $metaPath = Join-Path $item.Run "meta\$($item.Id).json"
-        if ($res) {
-            $raw = [string]$res.result
-            # Email addresses are personal data: the replies are published.
-            $clean = [regex]::Replace($raw, '[\w.+-]+@[\w-]+(\.[\w-]+)+', '[redacted-email]')
-            $sha = [Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData(
-                    [System.Text.Encoding]::UTF8.GetBytes($raw))).ToLowerInvariant()
-            Set-Content -LiteralPath (Join-Path $item.Run "answers\$($item.Id).txt") -Value $clean `
-                -Encoding utf8NoBOM -NoNewline
-            [ordered]@{
-                id = $item.Id; model = ($res.modelUsage.PSObject.Properties.Name -join ',')
-                costUsd = $cost; durationMs = $res.duration_ms
-                outputTokens = $res.usage.output_tokens
-                thinkingTokens = $res.usage.output_tokens_details.thinking_tokens
-                rawSha256 = $sha; redacted = $clean -ne $raw
-            } | ConvertTo-Json | Set-Content -LiteralPath $metaPath -Encoding utf8NoBOM
-        }
-        [pscustomobject]@{ Run = $item.Run; Id = $item.Id; Ok = [bool]$res; Cost = $cost; Error = $err }
     }
-    foreach ($o in $out) {
+    if ($running.Count -eq 0) { break }
+    $finished = Wait-Job -Job @($running.Values) -Any
+    foreach ($key in @($running.Keys)) {
+        $job = $running[$key]
+        if ($job.State -notin 'Completed', 'Failed') { continue }
+        $running.Remove($key)
+        $o = Receive-Job $job -ErrorAction Continue | Select-Object -Last 1
+        Remove-Job $job
+        if (-not $o) { $skip[$key] = $true; "ERROR $key`: job failed"; continue }
         $spent += $o.Cost
         if (-not $o.Ok) {
-            $skip["$($o.Run)|$($o.Id)"] = $true
+            $skip[$key] = $true
             "ERROR $($o.Id) in $(Split-Path $o.Run -Leaf): $($o.Error)"
         }
+        else {
+            '{0:HH:mm} {1,-16} {2,6} tokens{3}  chunk spend {4:n2} USD' -f (Get-Date), $o.Id, $o.Tokens,
+            $(if ($o.Cut) { ' (cut at budget)' } else { '' }), $spent
+        }
     }
-    '{0:HH:mm} wave of {1} done, chunk spend {2:n2} USD' -f (Get-Date), @($wave).Count, $spent
-    if ($spent -ge $ChunkUsd) {
-        'STATUS: CHUNK'
-        break
-    }
+    if ($spent -ge $ChunkUsd) { $stopping = $true }
 }
+if ($stopping) { 'STATUS: CHUNK' }
+elseif ($skip.Count) { "STATUS: ERRORS ($($skip.Count) items failed, run again to retry)" }
+else { 'STATUS: DONE' }
 foreach ($r in $RunDir) {
-    $n = @(Get-ChildItem (Join-Path $r 'answers') -File).Count
-    $c = (Get-ChildItem (Join-Path $r 'meta') -File | ForEach-Object {
-            (Get-Content $_.FullName -Raw | ConvertFrom-Json).costUsd } | Measure-Object -Sum).Sum
-    '{0}: {1} replies, total {2:n2} USD' -f (Split-Path $r -Leaf), $n, $c
+    $metas = @(Get-ChildItem (Join-Path $r 'meta') -File | ForEach-Object {
+            Get-Content $_.FullName -Raw | ConvertFrom-Json })
+    $c = ($metas | ForEach-Object {
+            if ($_.PSObject.Properties['costUsd'] -and $null -ne $_.costUsd) { $_.costUsd }
+            elseif ($_.PSObject.Properties['costEstimateUsd']) { $_.costEstimateUsd } } |
+        Measure-Object -Sum).Sum
+    '{0}: {1} replies, total {2:n2} USD (cut replies estimated)' -f (Split-Path $r -Leaf), $metas.Count, $c
 }

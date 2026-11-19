@@ -3,7 +3,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)]
-    [ValidateSet('Generate', 'Key', 'Verify', 'Compare',
+    [ValidateSet('Generate', 'Key', 'Verify', 'Compare', 'Staircase',
         'Calibrate', 'Quiz', 'Superiority', 'Scan', 'Bundle', 'Import', 'CheckPrompts',
         'Report', 'Check')]
     [string]$Mode,
@@ -13,6 +13,12 @@ param(
     [string[]]$Families = @('sat', 'mult', 'track', 'induct', 'deduce', 'code', 'plan'),
     [ValidateRange(2, 30)][int]$MaxLevel = 10,
     [ValidateRange(1, 50)][int]$PerLevel = 5,
+    # Output tokens per reply, hidden reasoning included. 0 = no stated limit.
+    [ValidateRange(0, 1000000)][int]$Budget = 8000,
+    [ValidateRange(1, 30)][int]$Start = 3,
+    [ValidateRange(1, 200)][int]$Trials = 12,
+    # Test only: Key answers wrongly above this level, so a staircase turns.
+    [ValidateRange(0, 100)][int]$KeyUpTo = 0,
     [string]$Frontier,
     [ValidateRange(0.0, 0.5)][double]$Ceiling = 0.10,
     [ValidateRange(1, 200)][int]$PerFamily = 15,
@@ -48,11 +54,26 @@ if ($unknown) { throw "Unknown family: $($unknown -join ', '). Use: $($Scale.Key
 $Tokens = [string[]]('A'..'L')
 $ModelNames = '(?i)\b(claude|opus|sonnet|haiku|fable|anthropic|gpt|chatgpt|openai|' +
     'gemini|google|deepmind|llama|meta|mistral|grok|xai|deepseek|qwen)\b'
-$Rules = @'
+# Published unbudgeted prompts use this text. Do not change it.
+$OpenRules = @'
 Rules: no tools, no code execution, no outside help. Reason as long as you need.
 End your reply with the answer line in the exact format below.
 Only the LAST line that starts with "ANSWER:" is graded.
 '@
+
+function Get-Rules([int]$Tokens) {
+    if ($Tokens -le 0) { return $OpenRules }
+    # Invariant culture: the prompt text must not change with the OS locale.
+    $n = $Tokens.ToString('N0', [cultureinfo]::InvariantCulture)
+    @"
+Rules: no tools, no code execution, no outside help.
+Your whole reply, including any hidden reasoning, is limited to $n tokens.
+A reply that reaches the limit is cut off there. Leave room for the answer line.
+End your reply with the answer line in the exact format below.
+Only the LAST line that starts with "ANSWER:" is graded.
+"@
+}
+$Rules = $OpenRules
 
 function Get-Difficulty([string]$Family, [int]$Level) {
     $s = $Scale[$Family]
@@ -208,7 +229,34 @@ function New-Instance([string]$Family, [int]$Level, [string]$Key, [string]$Id) {
     $inst
 }
 
+# Each trial's level follows from the grades of the trials before it, so a
+# published run can be checked against the rule. Stops a family at the first
+# trial with no answer file, unless OnPending supplies one.
+function Get-StairWalk([scriptblock]$OnPending) {
+    foreach ($family in $Stair.Families) {
+        $level = [int]$Stair.Start
+        foreach ($t in 1..[int]$Stair.Trials) {
+            $id = '{0}-L{1:d2}-t{2:d2}' -f $family, $level, $t
+            $inst = New-Instance $family $level "$($Stair.Run)|$id" $id
+            $inst.Trial = $t
+            $path = Join-Path $Dir "answers/$id.txt"
+            if (-not (Test-Path -LiteralPath $path) -and
+                -not ($OnPending -and (& $OnPending $inst $path))) {
+                $inst.Pending = $true
+                $inst
+                break
+            }
+            $answer = Read-AnswerLine $path
+            $inst.Pass = $null -ne $answer -and [bool](Test-Answer $inst $answer)
+            $inst.Pending = $false
+            $inst
+            $level = if ($inst.Pass) { $level + 1 } else { [math]::Max(1, $level - 1) }
+        }
+    }
+}
+
 function Get-Instances {
+    if ($Stair) { return Get-StairWalk }
     if ($Quiz) {
         foreach ($f in $Quiz) {
             foreach ($i in 1..$PerFamily) {
@@ -271,13 +319,60 @@ function Read-AnswerLine([string]$Path) {
 }
 
 function Save-Config {
-    $cfg = if ($Quiz) {
-        @{ Kind = 'quiz'; Frontier = $Quiz; PerFamily = $PerFamily; Ceiling = $QuizCeiling }
+    $cfg = if ($Stair) { $Stair }
+    elseif ($Quiz) {
+        [ordered]@{
+            Kind = 'quiz'; Frontier = $Quiz; PerFamily = $PerFamily; Ceiling = $QuizCeiling
+            Budget = $Budget
+        }
     }
     else {
-        @{ Kind = 'ladder'; Families = $Families; MaxLevel = $MaxLevel; PerLevel = $PerLevel }
+        [ordered]@{
+            Kind = 'ladder'; Families = $Families; MaxLevel = $MaxLevel; PerLevel = $PerLevel
+            Budget = $Budget
+        }
     }
     $cfg | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $Dir 'config.json')
+}
+
+function Get-Prop($Object, [string]$Name, $Default = $null) {
+    if ($null -ne $Object -and $Object.PSObject.Properties[$Name] -and
+        $null -ne $Object.$Name) { return $Object.$Name }
+    $Default
+}
+
+# Output tokens from meta/<id>.json. Null when no reply has metadata.
+function Get-TokenStats([string]$Path, $Rows) {
+    $sum = 0.0
+    $items = 0
+    $solved = 0
+    foreach ($r in $Rows) {
+        $meta = Join-Path $Path "meta/$($r.Id).json"
+        if (-not (Test-Path -LiteralPath $meta)) { continue }
+        $m = Get-Content -LiteralPath $meta -Raw | ConvertFrom-Json
+        $sum += [double](Get-Prop $m 'outputTokens' 0)
+        $items++
+        if ("$($r.Pass)" -eq 'True') { $solved++ }
+    }
+    if ($items -eq 0) { return $null }
+    [ordered]@{
+        Items = $items; Solved = $solved; OutputTokens = [long]$sum
+        PerItem = [math]::Round($sum / $items)
+        PerSolved = if ($solved) { [math]::Round($sum / $solved) } else { $null }
+    }
+}
+
+function Format-Tokens($Value) {
+    if ($null -eq $Value) { return 'n/a' }
+    ([double]$Value).ToString('N0', [cultureinfo]::InvariantCulture)
+}
+
+function Get-WilsonUpper([double]$Rate, [double]$N) {
+    if ($N -le 0) { return 1.0 }
+    $z = 1.96
+    $c = $Rate + $z * $z / (2 * $N)
+    $s = $z * [math]::Sqrt($Rate * (1 - $Rate) / $N + $z * $z / (4 * $N * $N))
+    [math]::Min(1.0, ($c + $s) / (1 + $z * $z / $N))
 }
 
 function Get-BaselineDirs {
@@ -326,31 +421,52 @@ function Format-D50([double]$Value, [int]$Censor) {
 }
 
 $Quiz = $null
+$Stair = $null
 $QuizCeiling = $Ceiling
-if ($Mode -in 'Generate', 'Key', 'Verify', 'Quiz', 'CheckPrompts' -and -not $Seed) {
+if ($Mode -in 'Generate', 'Key', 'Verify', 'Quiz', 'CheckPrompts', 'Staircase' -and -not $Seed) {
     throw 'Seed is required.'
 }
 $cfgPath = Join-Path $Dir 'config.json'
-if ($Mode -in 'Verify', 'CheckPrompts' -and (Test-Path -LiteralPath $cfgPath)) {
+if ($Mode -eq 'Bundle' -and -not (Test-Path -LiteralPath $cfgPath) -and
+    -not $PSBoundParameters.ContainsKey('Budget')) { $Budget = 0 }
+if ($Mode -in 'Verify', 'CheckPrompts', 'Staircase', 'Key', 'Bundle' -and
+    (Test-Path -LiteralPath $cfgPath)) {
     $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
-    if ($cfg.Kind -eq 'quiz') {
-        $Quiz = @($cfg.Frontier)
-        $PerFamily = $cfg.PerFamily
-        $QuizCeiling = $cfg.Ceiling
+    # An old config has no Budget: its prompts state no limit.
+    $Budget = [int](Get-Prop $cfg 'Budget' 0)
+    switch ($cfg.Kind) {
+        'quiz' {
+            $Quiz = @($cfg.Frontier)
+            $PerFamily = $cfg.PerFamily
+            $QuizCeiling = Get-Prop $cfg 'Ceiling'
+        }
+        'staircase' { $Stair = $cfg }
+        default {
+            $Families = [string[]]$cfg.Families
+            $MaxLevel = $cfg.MaxLevel
+            $PerLevel = $cfg.PerLevel
+        }
     }
-    else {
-        $Families = [string[]]$cfg.Families
-        $MaxLevel = $cfg.MaxLevel
-        $PerLevel = $cfg.PerLevel
+}
+elseif ($Mode -eq 'Staircase') {
+    $Stair = [pscustomobject][ordered]@{
+        Kind = 'staircase'; Families = $Families; Start = $Start; Trials = $Trials
+        Budget = $Budget; Run = Split-Path $Dir -Leaf
     }
 }
 if ($Mode -in 'Quiz', 'Key' -and $Frontier) {
     $front = Get-Content -LiteralPath $Frontier -Raw | ConvertFrom-Json
     $Quiz = @($front.Frontier)
-    $QuizCeiling = $front.Ceiling
+    $QuizCeiling = Get-Prop $front 'Ceiling'
+    $fb = [int](Get-Prop $front 'Budget' 0)
+    if ($PSBoundParameters.ContainsKey('Budget') -and $Budget -ne $fb) {
+        throw "The frontier was calibrated with a budget of $fb tokens. Use the same budget."
+    }
+    $Budget = $fb
     if ($Mode -eq 'Key' -and $front.PSObject.Properties['PerFamily']) { $PerFamily = $front.PerFamily }
 }
 if ($Mode -eq 'Quiz' -and -not $Quiz) { throw 'Frontier is required: run Calibrate first.' }
+$Rules = Get-Rules $Budget
 
 switch ($Mode) {
     { $_ -in 'Generate', 'Quiz' } {
@@ -377,15 +493,54 @@ switch ($Mode) {
         }
         New-Item -ItemType Directory -Force $answerDir | Out-Null
         Save-Config
+        if ($Stair) {
+            $write = {
+                param($inst, $path)
+                $a = if ($KeyUpTo -le 0 -or $inst.Level -le $KeyUpTo) { $inst.Key } else { 'none' }
+                Set-Content -LiteralPath $path -Value "ANSWER: $a" -Encoding utf8NoBOM
+                $true
+            }
+            $n = @(Get-StairWalk $write).Count
+            "Wrote $n staircase answers to $answerDir"
+            return
+        }
         foreach ($inst in Get-Instances) {
             $path = Join-Path $answerDir "$($inst.Id).txt"
             Set-Content -LiteralPath $path -Value "ANSWER: $($inst.Key)" -Encoding utf8NoBOM
         }
         "Wrote reference answers to $answerDir"
     }
+    'Staircase' {
+        foreach ($sub in 'prompts', 'answers') {
+            New-Item -ItemType Directory -Force (Join-Path $Dir $sub) | Out-Null
+        }
+        if (-not (Test-Path -LiteralPath $cfgPath)) { Save-Config }
+        $done = 0
+        $pending = foreach ($inst in Get-StairWalk) {
+            $path = Join-Path $Dir "prompts/$($inst.Id).txt"
+            if (-not (Test-Path -LiteralPath $path)) {
+                if ($inst.Prompt -match $ModelNames) {
+                    throw "Prompt $($inst.Id) names a model or vendor: '$($Matches[0])'."
+                }
+                Set-Content -LiteralPath $path -Value $inst.Prompt -Encoding utf8NoBOM
+            }
+            if ($inst.Pending) { $inst.Id } else { $done++ }
+        }
+        foreach ($id in $pending) { "PENDING $id" }
+        $total = @($Stair.Families).Count * [int]$Stair.Trials
+        'Trials done: {0} of {1}. Seed SHA-256: {2}' -f $done, $total, (Get-Sha256Hex $Seed)
+    }
     'Verify' {
         $answerDir = Join-Path $Dir 'answers'
         $rows = foreach ($inst in Get-Instances) {
+            if ($Stair) {
+                if ($inst.Pending) { continue }
+                [pscustomobject]@{
+                    Id = $inst.Id; Family = $inst.Family; Level = $inst.Level
+                    Difficulty = $inst.Difficulty; Trial = $inst.Trial; Pass = $inst.Pass
+                }
+                continue
+            }
             $answer = Read-AnswerLine (Join-Path $answerDir "$($inst.Id).txt")
             $pass = $null -ne $answer -and [bool](Test-Answer $inst $answer)
             [pscustomobject]@{
@@ -393,6 +548,7 @@ switch ($Mode) {
                 Difficulty = $inst.Difficulty; Pass = $pass
             }
         }
+        if (-not $rows) { throw "No graded replies in $answerDir." }
         $rows | Export-Csv -LiteralPath (Join-Path $Dir 'results.csv') -NoTypeInformation
         if ($Quiz) {
             foreach ($g in $rows | Group-Object Family) {
@@ -469,7 +625,85 @@ switch ($Mode) {
         else { 'VERDICT: not shown' }
     }
     'Calibrate' {
-        $runs = @(Get-BaselineDirs | ForEach-Object { Get-Curves $_ })
+        $dirs = @(Get-BaselineDirs)
+        $cfgs = @($dirs | ForEach-Object {
+                Get-Content -LiteralPath (Join-Path $_ 'config.json') -Raw | ConvertFrom-Json })
+        if ($cfgs[0].Kind -eq 'staircase') {
+            if (@($cfgs | Where-Object Kind -NE 'staircase').Count) {
+                throw 'Do not mix staircase and ladder runs.'
+            }
+            $bud = @($cfgs | ForEach-Object { [int](Get-Prop $_ 'Budget' 0) } | Sort-Object -Unique)
+            if ($bud.Count -ne 1) { throw "The runs have different budgets: $($bud -join ', ')." }
+            $rows = @(foreach ($d in $dirs) {
+                    foreach ($r in Import-Csv -LiteralPath (Join-Path $d 'results.csv')) {
+                        $r | Add-Member -NotePropertyName Dir -NotePropertyValue $d -PassThru
+                    } })
+            $front = foreach ($fam in $rows | Group-Object Family) {
+                $family = $fam.Name
+                $levels = @($fam.Group | Group-Object { [int]$_.Level } | Sort-Object { [int]$_.Name })
+                $L = [int[]]@($levels | ForEach-Object { [int]$_.Name })
+                $D = [double[]]@($levels | ForEach-Object { [double]$_.Group[0].Difficulty })
+                $ok = [int[]]@($levels | ForEach-Object { @($_.Group | Where-Object Pass -EQ 'True').Count })
+                $n = [int[]]@($levels | ForEach-Object { $_.Count })
+                $censor = 0
+                $d50 = if ($L.Count -ge 2) { [LadderGen.Stats]::D50($D, $ok, $n, [ref]$censor) }
+                else { $censor = if ($ok[0] / $n[0] -ge 0.5) { 1 } else { -1 }; $D[0] }
+                if ($censor -ne 0) {
+                    Write-Warning "${family}: the 50% point is outside the levels that the staircase visited. Run more trials."
+                }
+                # The level whose difficulty is nearest to d50 on a log scale.
+                $level = 1..30 | Sort-Object {
+                    [math]::Abs([math]::Log((Get-Difficulty $family $_) / $d50)) } | Select-Object -First 1
+                $fit = [LadderGen.Stats]::Monotone($ok, $n)
+                $i = [array]::IndexOf($L, $level)
+                $rate = $null
+                $hi = 1.0
+                if ($i -ge 0) {
+                    $rate = $fit[$i]
+                    # The bound uses the count pooled by the isotonic fit.
+                    $pooled = 0
+                    for ($j = 0; $j -lt $L.Count; $j++) {
+                        if ([math]::Abs($fit[$j] - $rate) -lt 1e-9) { $pooled += $n[$j] }
+                    }
+                    $hi = Get-WilsonUpper $rate $pooled
+                }
+                else {
+                    Write-Warning "${family}: level $level was not visited. Its challenger rate is unknown (bound set to 100%)."
+                }
+                $tok = $null
+                foreach ($d in $dirs) {
+                    $t = Get-TokenStats $d @($fam.Group | Where-Object Dir -EQ $d)
+                    if ($t) {
+                        if (-not $tok) { $tok = @{ Sum = 0.0; Items = 0; Solved = 0 } }
+                        $tok.Sum += $t.OutputTokens; $tok.Items += $t.Items; $tok.Solved += $t.Solved
+                    }
+                }
+                [ordered]@{
+                    Family = $family; Level = $level; Difficulty = Get-Difficulty $family $level
+                    Unit = $Scale[$family].Unit; D50 = [math]::Round($d50, 2); D50Censor = $censor
+                    Rate = if ($null -ne $rate) { [math]::Round($rate, 3) } else { $null }
+                    RateHi = [math]::Round($hi, 3); Trials = ($n | Measure-Object -Sum).Sum
+                    TokensPerItem = if ($tok) { [math]::Round($tok.Sum / $tok.Items) } else { $null }
+                    TokensPerSolved = if ($tok -and $tok.Solved) { [math]::Round($tok.Sum / $tok.Solved) } else { $null }
+                }
+            }
+            New-Item -ItemType Directory -Force $Dir | Out-Null
+            $out = Join-Path $Dir 'frontier.json'
+            [ordered]@{
+                Kind = 'staircase'; Budget = $bud[0]; Target = 0.5
+                Runs = @($dirs | ForEach-Object { Split-Path $_ -Leaf }); Frontier = @($front)
+            } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $out
+            foreach ($f in $front) {
+                $r = if ($null -ne $f.Rate) { ([double]$f.Rate).ToString('p0') } else { 'n/a' }
+                ('{0,-7} level {1,2} = {2,4} {3,-11} d50 {4,7}  fit {5,4} (95% upper {6:p0})  ' +
+                    'tokens per item {7}, per solved {8}') -f $f.Family, $f.Level, $f.Difficulty, $f.Unit,
+                (Format-D50 $f.D50 $f.D50Censor), $r, $f.RateHi, (Format-Tokens $f.TokensPerItem),
+                (Format-Tokens $f.TokensPerSolved)
+            }
+            "Wrote $out"
+            return
+        }
+        $runs = @($dirs | ForEach-Object { Get-Curves $_ })
         $front = foreach ($family in $runs[0].Keys) {
             if (@($runs | Where-Object { -not $_.Contains($family) }).Count) { continue }
             $levels = $runs[0][$family]
@@ -505,7 +739,15 @@ switch ($Mode) {
         $cfgQ = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
         if ($cfgQ.Kind -ne 'quiz') { throw 'Dir must be a graded quiz directory.' }
         $cand = @(Import-Csv -LiteralPath (Join-Path $Dir 'results.csv'))
-        $ceil = [double]$cfgQ.Ceiling
+        $ceil = Get-Prop $cfgQ 'Ceiling'
+        # Uncontrolled: assume the top of the challenger's calibration CI.
+        $bound = @{}
+        foreach ($f in $cfgQ.Frontier) {
+            $h = Get-Prop $f 'RateHi'
+            if ($null -ne $h) { $bound[$f.Family] = [double]$h }
+        }
+        $assume = if ($bound.Count) { 'bound' } else { 'ceiling' }
+        if ($assume -eq 'ceiling') { $ceil = [double]$(if ($null -ne $ceil) { $ceil } else { 0.10 }) }
         $controlled = [bool]$BaselineDir
         $chal = @{}
         if ($controlled) {
@@ -520,7 +762,7 @@ switch ($Mode) {
             if ($chal.Count -ne $cand.Count) { throw 'The quiz directories hold different items.' }
         }
         else {
-            # No control run: assume the baseline scores the ceiling, its worst case.
+            # No control: the assumed score is subtracted later.
             foreach ($r in $cand) { $chal[$r.Id] = $false }
         }
 
@@ -541,7 +783,14 @@ switch ($Mode) {
             $lo, $hi = Get-CiBounds ([LadderGen.Stats]::BootPairedDiff($a, $b, 2000, $bootSeed++))
             $ra = @($a | Where-Object { $_ }).Count / $a.Count
             $rb = @($b | Where-Object { $_ }).Count / $b.Count
-            if (-not $controlled) { $rb = $ceil; $lo -= $ceil; $hi -= $ceil }
+            if (-not $controlled) {
+                $rb = if ($assume -eq 'ceiling') { $ceil } else {
+                    ($rows | ForEach-Object {
+                            if (-not $bound.ContainsKey($_.Family)) { throw "No bound for $($_.Family)." }
+                            $bound[$_.Family] } | Measure-Object -Average).Average
+                }
+                $lo -= $rb; $hi -= $rb
+            }
             [pscustomobject]@{
                 Label = $g[0]; N = $a.Count; Baseline = $rb; Candidate = $ra
                 Points = ($ra - $rb) * 100; Lo = $lo * 100; Hi = $hi * 100
@@ -549,8 +798,12 @@ switch ($Mode) {
             }
         }
         'Superiority = candidate success - baseline success on the frontier quiz, in points.'
-        if (-not $controlled) {
+        if (-not $controlled -and $assume -eq 'ceiling') {
             'UNCONTROLLED: no baseline run on this quiz. Baseline set to the {0:p0} ceiling.' -f $ceil
+        }
+        elseif (-not $controlled) {
+            ('UNCONTROLLED: no baseline run on this quiz. Baseline set to the upper end of ' +
+                'its calibration 95% CI in each family, a conservative value.')
         }
         foreach ($x in $result) {
             $beyond = if ([double]::IsNaN($x.Beyond)) { 'n/a' } else { $x.Beyond.ToString('p0') }
@@ -561,7 +814,8 @@ switch ($Mode) {
         $all = $result[-1]
         $verdict = if ($all.Lo -gt 0) { 'superior' } else { 'not shown' }
         [ordered]@{
-            Controlled = $controlled; Ceiling = $ceil; Verdict = $verdict
+            Controlled = $controlled; Assumed = $(if ($controlled) { 'none' } else { $assume })
+            Ceiling = $ceil; Verdict = $verdict
             Rows = @($result | ForEach-Object {
                     [ordered]@{
                         Label = $_.Label; N = $_.N
@@ -570,10 +824,24 @@ switch ($Mode) {
                         Hi = [math]::Round($_.Hi, 1)
                     } })
         } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Dir 'superiority.json')
-        if ($controlled -and $all.Baseline -gt $ceil) {
+        if ($controlled -and $assume -eq 'ceiling' -and $all.Baseline -gt $ceil) {
             Write-Warning ((
                     'Baseline scored {0:p0} on this quiz, above the {1:p0} ceiling. ' +
                     'Calibrate again with more problems per level.') -f $all.Baseline, $ceil)
+        }
+        if ($controlled -and $assume -eq 'bound') {
+            foreach ($x in $result | Where-Object { $_.Label -ne 'OVERALL' }) {
+                if ($x.Baseline -gt $bound[$x.Label]) {
+                    Write-Warning ((
+                            '{0}: baseline scored {1:p0}, above the upper end of its calibration ' +
+                            '({2:p0}). The frontier is easier for it than calibrated. ' +
+                            'Sharpen the calibration with more trials.') -f $x.Label, $x.Baseline,
+                        $bound[$x.Label])
+                }
+            }
+        }
+        if ($controlled -and $all.Baseline -ge 0.9) {
+            Write-Warning 'Baseline is near 100%. The quiz cannot show a gain.'
         }
         foreach ($x in $result | Where-Object { $_.Label -ne 'OVERALL' -and $_.Candidate -ge 0.9 }) {
             Write-Warning "$($x.Label): candidate is near 100%. Its superiority there is a lower bound."
@@ -632,7 +900,11 @@ How to answer:
    starts with "ANSWER:" is graded.
 4. Answer as many problems as you can, in any order. A problem with no answer
    counts as wrong. If you stop early, the next message will ask you to continue.
+$(if ($Budget -gt 0) { @"
+5. Each problem states a token limit. Keep your work on each problem, including
+   any hidden reasoning, within that limit.
 
+"@ })
 "@)
         foreach ($p in $prompts) {
             $text = Get-Content -LiteralPath $p.FullName -Raw
@@ -651,6 +923,7 @@ How to answer:
     'CheckPrompts' {
         $bad = 0
         $n = 0
+        $seen = @{}
         foreach ($inst in Get-Instances) {
             $n++
             $path = Join-Path $Dir "prompts/$($inst.Id).txt"
@@ -660,6 +933,13 @@ How to answer:
                 ((Get-Content -LiteralPath $path -Raw) -replace '\r\n', "`n").TrimEnd()
             }
             if ($have -cne $want) { $bad++; "MISMATCH $($inst.Id)" }
+            $seen[$inst.Id] = $true
+        }
+        if ($Stair) {
+            # A prompt off the path: a trial was skipped or resampled.
+            foreach ($p in Get-ChildItem -LiteralPath (Join-Path $Dir 'prompts') -Filter *.txt) {
+                if (-not $seen.ContainsKey($p.BaseName)) { $bad++; "EXTRA $($p.BaseName)" }
+            }
         }
         'Checked {0} prompts against the seed. Mismatches: {1}.' -f $n, $bad
     }
@@ -716,16 +996,39 @@ How to answer:
         $all = $sj.Rows[-1]
         $leaf = Split-Path (Resolve-Path -LiteralPath $Dir) -Leaf
         $date = if ($leaf -match '\d{4}-\d{2}-\d{2}') { $Matches[0] } else { Get-Date -Format 'yyyy-MM-dd' }
-        $control = if ($hasBase) { 'yes' } else { 'ceiling' }
+        $control = if ($hasBase) { 'yes' } else { Get-Prop $sj 'Assumed' 'ceiling' }
+        $quizCfg = Get-Content -LiteralPath (Join-Path $Dir 'quiz/config.json') -Raw | ConvertFrom-Json
+        $tokens = [ordered]@{}
+        foreach ($s in $sides) {
+            $side = if ($s -eq $cand) { 'Candidate' } else { 'Baseline' }
+            $tokens[$side] = Get-TokenStats $s @(Import-Csv -LiteralPath (Join-Path $s 'results.csv'))
+        }
+        $perSolved = foreach ($side in 'Baseline', 'Candidate') {
+            if ($tokens.Contains($side) -and $tokens[$side]) { Format-Tokens $tokens[$side].PerSolved }
+            else { 'n/a' }
+        }
         $row = ('| {0} | `{1}` | `{2}` | {3} | {4} | {5} | {6:p0} | {7:p0} | {8:+0;-0;0} | ' +
-            '{9:+0;-0;0} to {10:+0;-0;0} | {11} | 0 | [folder](runs/{12}/) |') -f $date, $Challenger,
+            '{9:+0;-0;0} to {10:+0;-0;0} | {13} | {11} | 0 | [folder](runs/{12}/) |') -f $date, $Challenger,
             $Challenged, $Settings, $Operator, $control, [double]$all.Baseline, [double]$all.Candidate,
-            [double]$all.Points, [double]$all.Lo, [double]$all.Hi, $sj.Verdict, $leaf
+            [double]$all.Points, [double]$all.Lo, [double]$all.Hi, $sj.Verdict, $leaf, ($perSolved -join ' / ')
         [ordered]@{
             Date = $date; Challenger = $Challenger; Challenged = $Challenged; Settings = $Settings
-            Operator = $Operator; Control = $control; SeedSha256 = (Get-Sha256Hex $seedText)
-            Verdict = $sj.Verdict; Rows = $sj.Rows
+            Operator = $Operator; Control = $control; Budget = [int](Get-Prop $quizCfg 'Budget' 0)
+            SeedSha256 = (Get-Sha256Hex $seedText); Verdict = $sj.Verdict; Rows = $sj.Rows
+            Tokens = $tokens
         } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $Dir 'result.json')
+        $tokLines = foreach ($side in $tokens.Keys) {
+            $t = $tokens[$side]
+            if ($t) {
+                '| Output tokens, {0} | {1} per item, {2} per solved item ({3} items) |' -f $side.ToLower(),
+                    (Format-Tokens $t.PerItem), (Format-Tokens $t.PerSolved), $t.Items
+            }
+            else { '| Output tokens, {0} | n/a (no meta/ files) |' -f $side.ToLower() }
+        }
+        $budgetText = if ($quizCfg.PSObject.Properties['Budget'] -and [int]$quizCfg.Budget -gt 0) {
+            '{0} tokens per reply' -f (Format-Tokens $quizCfg.Budget)
+        }
+        else { 'none stated' }
         $md = @"
 # Result
 
@@ -737,8 +1040,10 @@ How to answer:
 | Settings | $Settings |
 | Operator | $Operator |
 | Control | $control |
+| Budget | $budgetText |
 | Seed SHA-256 | ``$(Get-Sha256Hex $seedText)`` |
 | Verdict | $($sj.Verdict) |
+$($tokLines -join "`n")
 
 ## Superiority
 
@@ -778,23 +1083,46 @@ $row
             Add-Step 'Seed matches commitment' ($commit -match $hash) $hash
 
             $isQuiz = Test-Path -LiteralPath (Join-Path $Dir 'quiz')
-            $problemDir = Join-Path $Dir $(if ($isQuiz) { 'quiz' } else { 'ladder' })
-            $cp = Invoke-Self 'CheckPrompts', '-Seed', $seedText, '-Dir', $problemDir
-            Add-Step 'Prompts match seed' ($cp.Text -match 'Mismatches: 0\.') ($cp.Text -split "`n")[-1]
+            # A staircase run holds its own prompts: the path depends on grades.
+            $stairs = @(Get-ChildItem -LiteralPath $Dir -Directory -Filter 'stair*' | ForEach-Object Name)
+            $problemDirs = @(if ($isQuiz) { Join-Path $Dir 'quiz' }
+                elseif ($stairs) { $stairs | ForEach-Object { Join-Path $Dir $_ } }
+                else { Join-Path $Dir 'ladder' })
+            foreach ($pd in $problemDirs) {
+                $cp = Invoke-Self 'CheckPrompts', '-Seed', $seedText, '-Dir', $pd
+                $label = if ($stairs) { "Prompts match seed: $(Split-Path $pd -Leaf)" } else { 'Prompts match seed' }
+                Add-Step $label ($cp.Ok -and $cp.Text -match 'Mismatches: 0\.') ($cp.Text -split "`n")[-1]
+            }
 
             $sides = if ($isQuiz) {
                 @('candidate', 'baseline') | Where-Object {
                     Test-Path -LiteralPath (Join-Path $Dir "$_/answers") }
             }
+            elseif ($stairs) { $stairs }
             else {
-                Get-ChildItem -LiteralPath $Dir -Directory -Filter 'base*' | ForEach-Object Name
+                Get-ChildItem -LiteralPath $Dir -Directory | Where-Object Name -Match '^(base|pilot)' |
+                    ForEach-Object Name
             }
             foreach ($s in $sides) {
                 $copy = Join-Path $tmp $s
                 New-Item -ItemType Directory $copy | Out-Null
                 Copy-Item -LiteralPath (Join-Path $Dir "$s/answers") -Destination $copy -Recurse
-                Copy-Item -LiteralPath (Join-Path $problemDir 'config.json') -Destination $copy
+                $metaDir = Join-Path $Dir "$s/meta"
+                if (Test-Path -LiteralPath $metaDir) { Copy-Item -LiteralPath $metaDir -Destination $copy -Recurse }
+                $cfgFrom = if ($stairs) { Join-Path $Dir "$s/config.json" }
+                else { Join-Path $problemDirs[0] 'config.json' }
+                Copy-Item -LiteralPath $cfgFrom -Destination $copy
                 $v = Invoke-Self 'Verify', '-Seed', $seedText, '-Dir', $copy
+                if ($stairs) {
+                    $walked = @{}
+                    foreach ($r in Import-Csv -LiteralPath (Join-Path $copy 'results.csv')) { $walked[$r.Id] = $true }
+                    $off = @(Get-ChildItem -LiteralPath (Join-Path $copy 'answers') -File |
+                            Where-Object { -not $walked.ContainsKey($_.BaseName) }).Count
+                    $sc = Get-Content -LiteralPath $cfgFrom -Raw | ConvertFrom-Json
+                    $want = @($sc.Families).Count * [int]$sc.Trials
+                    $pathText = '{0} of {1} trials on the path, {2} replies off it' -f $walked.Count, $want, $off
+                    Add-Step "Staircase follows rule: $s" ($v.Ok -and $off -eq 0) $pathText
+                }
                 $mine = @{}
                 foreach ($r in Import-Csv -LiteralPath (Join-Path $copy 'results.csv')) { $mine[$r.Id] = $r.Pass }
                 $theirsPath = Join-Path $Dir "$s/results.csv"
@@ -835,7 +1163,12 @@ $row
                 $pubPath = Join-Path $Dir 'frontier.json'
                 $ok = $false
                 $detail = 'frontier.json missing'
-                if ($c.Ok -and (Test-Path -LiteralPath $pubPath)) {
+                $stopped = Join-Path $Dir 'STOPPED.md'
+                if (-not (Test-Path -LiteralPath $pubPath) -and (Test-Path -LiteralPath $stopped)) {
+                    $ok = $true
+                    $detail = 'none: the run was stopped (STOPPED.md)'
+                }
+                elseif ($c.Ok -and (Test-Path -LiteralPath $pubPath)) {
                     $key = { param($f) (@($f.Frontier) | Sort-Object Family |
                                 ForEach-Object { "$($_.Family)=$($_.Level)" }) -join ' ' }
                     $mineF = & $key (Get-Content -LiteralPath (Join-Path $cal 'frontier.json') -Raw | ConvertFrom-Json)
