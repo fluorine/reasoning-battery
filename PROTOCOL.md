@@ -7,16 +7,25 @@ cheap, solving is hard and checking is cheap. So a generator can make problems
 harder than the model that wrote it can solve. Each run uses a fresh secret seed, so
 no answer exists anywhere before the run.
 
+Every reply has the same fixed **token budget**: 8,000 output tokens, hidden
+reasoning included. The prompt states it, and the runner enforces it. So the test
+measures reasoning capacity at a fixed budget ("intelligence per token"), and the
+cost of a run has an upper limit.
+
 The test has two stages:
 
-1. **Calibrate.** Find the level at which the generating model solves 0–10% of the
-   problems in each family. This is its frontier.
+1. **Calibrate.** A staircase finds the level at which the generating model solves
+   about 50% of the problems in each family, at the budget. This is its frontier.
 2. **Quiz.** Build a new set of problems at that frontier. The generating model runs it
-   again blind, as a control. The candidate model runs the same quiz.
+   again blind, as a control. The candidate model runs the same quiz, with the same
+   budget.
 
 **Superiority = candidate success − generating-model success on the quiz, in
-percentage points.** Example: the generating model scores 7% and the candidate scores
-60%. The candidate is superior by 53 points.
+percentage points.** Example: the generating model scores 48% and the candidate scores
+80%. The candidate is superior by 32 points.
+
+The frontier is at 50%, not near 0%, because a trial near 50% tells the most about
+where the limit is, and because a quiz at 50% can show a gain and also a loss.
 
 ## Provenance
 
@@ -24,7 +33,7 @@ percentage points.** Example: the generating model scores 7% and the candidate s
 |---|---|
 | Generating model (baseline) | Claude Opus 5.5, model ID `claude-opus-5-5` |
 | Environment | Claude Code desktop app |
-| Date | 2026-11-18 |
+| Date | 2026-11-18 (design), 2026-11-19 (budgeted staircase) |
 
 Terms used in this document:
 
@@ -56,29 +65,69 @@ the level before it. There is no upper limit.
 
 ## Procedure
 
-### Stage 1 — Calibrate on the baseline
+### The token budget
 
-1. Generate the ladder with seed A:
+- Every prompt states the budget in its rules: "Your whole reply, including any
+  hidden reasoning, is limited to 8,000 tokens." `-Budget` sets it (default 8,000;
+  0 states no limit). `config.json` and `frontier.json` record it, and a quiz takes
+  the budget of its frontier.
+- The runner enforces the budget at the API or command-line level. A reply that
+  reaches it is cut there. The text before the cut is graded as it is, and the
+  runner does not ask the model to continue.
+- `tools/run-claude.ps1` sets `CLAUDE_CODE_MAX_OUTPUT_TOKENS`. That cap applies to
+  one API call, hidden reasoning included. When a call reaches it, Claude Code asks
+  the model to continue in a new call, so the runner stops the process at that
+  point. `meta/<id>.json` marks a cut reply with `cutAtBudget: true`.
+
+### Stage 1 — Calibrate on the baseline (staircase)
+
+1. Commit to a secret seed A: push its hash in `COMMITMENT.md`. Then start the
+   staircase. It writes `config.json` and the first prompt of each family:
 
    ```powershell
-   ./ladder.ps1 -Mode Generate -Seed '<seed A>' -Dir ./ladder
+   ./ladder.ps1 -Mode Staircase -Seed '<seed A>' -Dir ./stair1 -Budget 8000 -Trials 12 -Start 3
    ```
 
-2. Run the baseline on the ladder 3 times, into `./base1`, `./base2` and `./base3`.
-   Copy `ladder/config.json` into each directory. Grade each one:
+2. Run the baseline. The runner sends each pending prompt, saves the reply, then
+   runs `-Mode Staircase` again, which grades the reply and writes the next prompt
+   of that family:
 
    ```powershell
-   ./ladder.ps1 -Mode Verify -Seed '<seed A>' -Dir ./base1
+   ./tools/run-claude.ps1 -Staircase -RunDir ./stair1 -SeedFile <file with seed A> -Effort high -Budget 8000
    ```
 
-3. Find the frontier: the lowest level where every baseline run solves at most 10%.
+   The rules:
+   - Each family starts at level 3 (`-Start`).
+   - After a correct answer, the next trial is one level higher. After a wrong
+     answer, it is one level lower. The lowest level is 1. There is no highest
+     level.
+   - Each trial is a new problem. Its id names the family, the level and the trial,
+     for example `sat-L05-t07`.
+   - A family stops after 12 trials (`-Trials`).
+
+3. Find the frontier:
 
    ```powershell
-   ./ladder.ps1 -Mode Calibrate -Dir ./cal -BaselineDir ./base1, ./base2, ./base3
+   ./ladder.ps1 -Mode Calibrate -Dir ./cal -BaselineDir ./stair1
    ```
 
-   If a family warns "stays above 10%", raise `-MaxLevel`, then run stage 1 again for
-   that family.
+   For each family, it pools the trials per level, fits a monotone (isotonic)
+   success curve, and finds the difficulty where the curve crosses 50% (`d50`),
+   interpolated on a log scale. The frontier is the level whose difficulty is
+   nearest to `d50`. `frontier.json` also holds:
+   - `Rate`: the fitted success rate at that level;
+   - `RateHi`: the upper end of its 95% Wilson interval, over the trials that the
+     fit pools with that level;
+   - `TokensPerItem` and `TokensPerSolved`: output tokens per trial and per correct
+     trial.
+
+   More runs (`stair2`, `stair3`, each with its own `Run` name and so its own
+   problems) make the frontier more precise. `Calibrate` pools them.
+
+The earlier design ran a fixed ladder (every family × 10 levels × 5 problems, 3
+runs) and put the frontier at 0–10%. `-Mode Generate` and `-Mode Calibrate` on
+ladder runs still work. That design cost too much: see
+`runs/calibration-claude-opus-5-5-high/STOPPED.md`.
 
 ### Stage 2 — Blind quiz
 
@@ -93,7 +142,7 @@ the level before it. There is no upper limit.
 2. **Blind administration.** A neutral administrator, not the operator of either
    model, sends the prompts:
    - Tools, code execution, web and files off at the API level.
-   - The same neutral system prompt, or none. The same output and reasoning budget.
+   - The same neutral system prompt, or none. The same token budget, set at the API level.
    - One fresh conversation per prompt, in random order. No retries.
    - The administrator stores each model's replies under a random label (for example
      `set-k7q2`), not under the model name. It publishes the SHA-256 of the
@@ -117,10 +166,18 @@ the level before it. There is no upper limit.
    superiority in points with a paired-bootstrap 95% CI, and the share of the
    baseline's failures that the candidate solved.
 
-   - A warning appears if the baseline scores above 10% on the quiz itself. The
-     claim "the baseline solves 0–10%" then does not hold. Calibrate again.
+   - A warning appears if the baseline scores above `RateHi` in a family. The
+     frontier is then easier for it than the calibration says. Sharpen the
+     calibration with more trials.
    - A warning appears if the candidate is near 100% in a family. Its superiority is
      then only a lower bound. Build a second quiz at a higher level.
+   - Without a baseline control run, the baseline's score in each family is set to
+     `RateHi`, the upper end of its calibration CI. Its expected score is about
+     50%, so this choice makes an uncontrolled result conservative. The output says
+     `UNCONTROLLED`, and the README row says `bound`. (A quiz from an old 0–10%
+     ladder frontier uses its 10% ceiling instead, and says `ceiling`.)
+   - `-Mode Report` also gives the output tokens per item and per solved item for
+     each side, from `meta/<id>.json`.
 
 ### Results presented by the candidate's side
 

@@ -1,21 +1,27 @@
 # Reasoning battery
 
-**A model finds the edge of its own ability, then challenges another model, or a
-fresh instance of itself, to go past it. Anyone can check the result.**
+**A model finds the edge of its own ability at a fixed token budget, then
+challenges another model, or a fresh instance of itself, to go past it with the
+same budget. Anyone can check the result.**
 
 The idea is simple. A model cannot easily solve a problem harder than itself, but
 it can easily *build* one: choose the answer first, then construct a problem
 around it. Checking an answer is cheap even when finding it is hard. So a model can
 write tests that it fails itself.
 
-1. **Know your limits.** The **challenger** runs a ladder of problems that grow
-   harder without end, in seven families: logic, arithmetic, memory, induction,
-   deduction, code reading and planning. For each family, the calibration finds the
-   level where the challenger solves only 0–10%. That is the limit it admits.
-2. **Challenge.** A **challenged** model gets a fresh quiz at exactly those levels.
-   It can be a newer model, a rival model or a new instance of the challenger.
+1. **Know your limits.** The **challenger** gets problems that can grow harder
+   without end, in seven families: logic, arithmetic, memory, induction,
+   deduction, code reading and planning. Every reply has the same budget: 8,000
+   output tokens, hidden reasoning included. A staircase moves one level up after
+   each correct answer and one level down after each wrong one. It finds the level
+   where the challenger solves about half of the problems. That is the limit it
+   admits at this budget.
+2. **Challenge.** A **challenged** model gets a fresh quiz at exactly those levels,
+   with the same budget. It can be a newer model, a rival model or a new instance
+   of the challenger.
 3. **Measure.** **Superiority** = challenged success − challenger success on the
-   same quiz, in percentage points, with a 95% confidence interval.
+   same quiz, in percentage points, with a 95% confidence interval. The output
+   tokens per solved problem show the efficiency of each side.
 4. **Check.** A script, not a model, grades every answer, so no message in a reply
    can change a score. Each run commits to a secret seed before it starts. With the
    seed, anyone can rebuild every problem and grade every reply again.
@@ -23,13 +29,17 @@ write tests that it fails itself.
 A model that wins can become the next challenger. Each link in the chain shows how
 far one model went past the limit that the previous one admitted.
 
+The budget makes the comparison fair and the cost predictable: the test measures
+reasoning capacity per token, not who can think longest. A calibration costs at
+most 84 replies × 8,000 output tokens.
+
 ## Challenge a model with one prompt
 
 Give this line to a coding agent that has a shell and can call the model you want
 to test (for example Claude Code):
 
 ```text
-Read https://github.com/fluorine/reasoning-battery/blob/main/runs/calibration-claude-opus-5-5-high/CHALLENGE.md and follow it as the operator. The challenged model is <MODEL ID>, with <REASONING SETTING>.
+Read https://github.com/fluorine/reasoning-battery/blob/main/runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md and follow it as the operator. The challenged model is <MODEL ID>, with <REASONING SETTING>.
 ```
 
 The agent makes a fresh quiz, runs the challenged model on it without tools,
@@ -41,19 +51,23 @@ calibrate it as the next challenger.
 
 ### Calibrations (challengers)
 
-| Challenger | Effort | Date | Frontier: difficulty at 0–10% success | Status | Challenge it |
-|---|---|---|---|---|---|
-| `claude-opus-5-5` | high | 2026-11-18 | pending | in progress | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high/CHALLENGE.md) |
+| Challenger | Effort | Budget | Date | Frontier: level (difficulty) at about 50% success | Tokens per solved problem | Status | Challenge it |
+|---|---|---|---|---|---|---|---|
+| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | pending | pending | in progress | [CHALLENGE.md](runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md) |
+| `claude-opus-5-5` | high | none | 2026-11-18 | none | — | stopped for cost, replaced by the row above | [STOPPED.md](runs/calibration-claude-opus-5-5-high/STOPPED.md) |
 
 ### Challenges
 
-| Date | Challenger | Challenged | Settings | Operator | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Verdict | Checks | Evidence |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — | — | — | — | — |
+| Date | Challenger | Challenged | Settings | Operator | Control | Challenger on quiz | Challenged on quiz | Superiority | 95% CI | Tokens per solved (challenger / challenged) | Verdict | Checks | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — | — | — | — | — | — |
 
 - **Control** is `yes` when the challenger also ran the same quiz. It is
-  `ceiling` when it did not. The challenger's score is then set to 10%, its worst
-  case from calibration, which keeps the result conservative.
+  `bound` when it did not. The challenger's score in each family is then set to
+  the upper end of its calibration 95% CI, above its expected 50%, which keeps the
+  result conservative.
+- **Tokens per solved** is the output tokens of all replies, hidden reasoning
+  included, divided by the number of correct replies.
 - **Operator** is the agent or person who held the seed and ran the quiz.
 - **Checks** is the number of independent people who reproduced or replicated the
   result. See `VERIFICATIONS.md` in its folder.
@@ -114,6 +128,7 @@ One command checks a challenge folder or a calibration folder:
 | Seed matches commitment | The seed was fixed before the run. Also check with `git log` that `COMMITMENT.md` is older than every reply. |
 | Prompts match seed | Nobody picked or edited problems after the fact. |
 | Grades reproduce | Every published grade is what the checker gives. |
+| Staircase follows rule | Each calibration trial is at the level that the earlier grades give. No trial was skipped or run again. |
 | Superiority reproduces / Frontier reproduces | The headline numbers follow from the graded replies. |
 | Scan flagged N replies | Replies with hidden characters, model names or text for graders, for a human or other models to read. |
 
@@ -137,6 +152,8 @@ models and compare. See "Prompt this to repeat a test" in [PROMPTS.md](PROMPTS.m
 | `plan` | Planning | moves in a 4x4 sliding puzzle |
 
 - Every family has a difficulty scale with no upper limit.
+- Every prompt states the token budget, and the runner enforces it. A reply that
+  reaches the budget is cut there and graded as it is.
 - Where more than one answer is valid (`sat`, `induct`, `plan`), the checker
   accepts any valid answer.
 - Each run uses a secret seed. Its hash is published before the run, so nobody can
@@ -149,10 +166,11 @@ rules.
 
 | Mode | Does |
 |---|---|
-| `Generate` | Writes the calibration ladder: every family × every level. |
+| `Staircase` | Grades a staircase run so far and writes the next prompt of each family. |
+| `Generate` | Writes a fixed ladder: every family × every level (the earlier design). |
 | `Key` | Writes correct answers. Use it only to test the checker. |
 | `Verify` | Grades `answers/` and writes `results.csv`. |
-| `Calibrate` | Finds the 0–10% frontier from 1 or more ladder runs. Writes `frontier.json`. |
+| `Calibrate` | Finds the 50% frontier from 1 or more staircase runs (or the 0–10% frontier from ladder runs). Writes `frontier.json`. |
 | `Quiz` | Writes a quiz at the frontier, with opaque file names. |
 | `Bundle` | Writes the quiz as one self-contained `bundle.md`. |
 | `Import` | Splits one or more bundle replies into `answers/`. |
@@ -160,17 +178,19 @@ rules.
 | `Compare` | Compares two ladder runs by the difficulty at which each solves 50%. |
 | `CheckPrompts` | Confirms that published prompts match a seed. |
 | `Scan` | Flags replies with hidden characters, model names or text for graders. |
-| `Report` | Grades a challenge folder and writes `RESULT.md`, `result.json` and the README row. |
+| `Report` | Grades a challenge folder, counts tokens per item and per solved item, and writes `RESULT.md`, `result.json` and the README row. |
 | `Check` | Checks a published challenge or calibration folder end to end. Exit code 1 on any failure. |
 
 `tools/run-claude.ps1` runs prompts through headless Claude Code with every tool
-disabled. Other models need their own runner. The only contract is one reply per
+disabled and the token budget enforced. With `-Staircase`, it grades each reply
+and sends the next trial without waiting for the other families. Other models need their own runner. The only contract is one reply per
 file in `answers/<id>.txt`.
 
 ## Limits
 
-- The battery measures exact reasoning without tools. A win does not show that a
-  model is better at knowledge, judgment, writing or coding with tools.
+- The battery measures exact reasoning without tools, at one token budget. A win
+  does not show that a model is better at knowledge, judgment, writing or coding
+  with tools. A model that is weak at 8,000 tokens can be strong with more.
 - The generators are public. A lab can train on these families, which raises
   scores without a rise in general ability. A rise here that does not show in a
   new, unpublished family is a sign of that.
@@ -188,6 +208,6 @@ examples/             a worked example with a public seed (not a real result)
 PROTOCOL.md           full procedure and decision rules
 CONTRIBUTING.md       how to submit a calibration or a challenge
 runs/
-  calibration-<challenger>-<effort>/   ladder runs and frontier.json
+  calibration-<challenger>-<effort>-<budget>/   staircase runs and frontier.json
   challenge-<date>-<challenged>-vs-<challenger>/   quiz, replies and result
 ```

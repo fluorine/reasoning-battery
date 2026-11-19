@@ -107,23 +107,29 @@ and the pull request checklist below.
 Any model can become a challenger, and a model that wins a challenge is the natural
 next one. This is how the chain grows.
 
-1. Follow `PROTOCOL.md`, Stage 1: generate a ladder with a new secret seed, push
-   `COMMITMENT.md`, run the ladder 3 times, then run `-Mode Calibrate`.
-2. Use the folder layout for a calibration below.
-3. Copy `runs/calibration-claude-opus-5-5-high/CHALLENGE.md` into the new folder.
-   Replace the challenger name, effort and paths. Remove the status note when
-   `frontier.json` is in place.
-4. Add a row to the Calibrations table in the README.
+1. Follow `PROTOCOL.md`, Stage 1: make a new secret seed, push `COMMITMENT.md`,
+   start the staircase with `-Mode Staircase`, run it with the runner, then run
+   `-Mode Calibrate`. Use the 8,000-token budget, so that the new challenger is
+   comparable with the others.
+2. Cost: at most 7 families × 12 trials × 8,000 output tokens. Easy trials use
+   much less.
+3. Use the folder layout for a calibration below.
+4. Copy `runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md` into the new
+   folder. Replace the challenger name, effort and paths. Remove the status note
+   when `frontier.json` is in place.
+5. Add a row to the Calibrations table in the README, with the frontier level and
+   tokens per solved problem of each family.
 
-If a family shows "above scale" (the model passes every level), raise `-MaxLevel`
-for that family and run it again. Do not publish a frontier with a family above
-scale.
+If `Calibrate` warns that the 50% point is outside the visited levels, the
+staircase did not reach the model's limit in that family. Add trials (a second run,
+or a higher `-Start`) before you publish.
 
 ### 6. Sharpen a calibration
 
-A frontier from 3 runs of 5 problems per level is coarse. More runs make it more
-precise. Add `base4`, `base5` and so on to an existing calibration folder, with the
-same ladder, seed and settings, then run `-Mode Calibrate` over all the runs. If the
+A frontier from one staircase of 12 trials per family is coarse. More runs make it
+more precise. Add `stair2`, `stair3` and so on to an existing calibration folder,
+with the same seed, budget and settings (each run's name changes its problems),
+then run `-Mode Calibrate` over all the runs. If the
 frontier changes, say so in the pull request: challenges made with the old frontier
 stay valid, but new ones use the new file.
 
@@ -134,10 +140,13 @@ need their own runner. The contract:
 
 - One fresh session per prompt. The prompt file is the only user message.
 - Tools, code execution, web and file access off at the API level.
+- The token budget set at the API level, hidden reasoning included. A reply that
+  reaches it is cut there and graded as it is. Never ask the model to continue.
 - The reply text goes unchanged into `answers/<id>.txt`. Metadata (model, settings,
   tokens, cost, the SHA-256 of the raw reply) goes into `meta/<id>.json`.
 - Transport errors may be retried. Wrong answers may not.
-- `-All` runs a whole quiz. A ladder run also applies the stopping rule.
+- `-All` runs a whole quiz. `-Staircase` grades each reply with
+  `ladder.ps1 -Mode Staircase` and sends the next trial that it writes.
 
 Name it `tools/run-<provider>.ps1`, and document its settings at the top.
 
@@ -174,8 +183,8 @@ These apply to every run: challenges, calibrations and replications.
    API or app level for every model in the run. Do not rely on a prompt that asks
    the model not to use them.
 3. **Same conditions.** The challenger control and the challenged model get the
-   same delivery mode, the same system prompt (or none) and comparable reasoning
-   settings. Record the settings in `RESULT.md`.
+   same delivery mode, the same system prompt (or none), the same token budget and
+   comparable reasoning settings. Record the settings in `RESULT.md`.
 4. **No retries, no selection.** Each problem gets one attempt. A transport error
    (timeout, rate limit, server error) may be retried. A wrong answer may not.
 5. **Raw replies.** Commit each reply as the model returned it. The only allowed
@@ -207,13 +216,13 @@ replications/      replies from replications
 
 ### A calibration folder
 
-Name it `runs/calibration-<challenger>-<effort>/`.
+Name it `runs/calibration-<challenger>-<effort>-<budget>/`, for example
+`calibration-claude-opus-5-5-high-8k`.
 
 ```text
-COMMITMENT.md      seed hash, model, settings, date (pushed before the run)
+COMMITMENT.md      seed hash, model, settings, budget, date (pushed before the run)
 SEED.txt           the seed (added after the runs)
-ladder/            config.json and prompts/ from -Mode Generate
-base1/ base2/ …    answers/, meta/, results.csv for each run
+stair1/ stair2/ …  config.json, prompts/, answers/, meta/, results.csv per run
 frontier.json      output of -Mode Calibrate
 CHALLENGE.md       instructions for challengers
 VERIFICATIONS.md   checks by other people
@@ -224,10 +233,12 @@ VERIFICATIONS.md   checks by other people
 Add one row to the right table in `README.md`. For a challenge:
 
 ```markdown
-| 2026-12-01 | `claude-opus-5-5` (high) | `<challenged-model-id>` | per problem, <reasoning setting> | <operator> | yes | 6% | 58% | +52 | +43 to +61 | superior | 0 | [folder](runs/challenge-2026-12-01-<challenged>-vs-claude-opus-5-5/) |
+| 2026-12-01 | `claude-opus-5-5 (high, 8k)` | `<challenged-model-id>` | per problem, <reasoning setting>, 8k budget | <operator> | yes | 48% | 81% | +33 | +22 to +44 | 5,120 / 3,870 | superior | 0 | [folder](runs/challenge-2026-12-01-<challenged>-vs-claude-opus-5-5/) |
 ```
 
-- **Control:** `yes` with a challenger control run, `ceiling` without one.
+- **Control:** `yes` with a challenger control run, `bound` without one.
+- **Tokens per solved:** from `-Mode Report`. `n/a` when a side has no
+  `meta/` files.
 - **Verdict:** `superior` only when the lower CI bound is above 0. Otherwise
   `not shown`.
 - **Checks:** the number of rows in `VERIFICATIONS.md` with outcome

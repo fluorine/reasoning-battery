@@ -7,6 +7,11 @@ pushes anything or opens a pull request.
 
 The repository is public. Check what the agent wants to publish before you say yes.
 
+Every calibration and every challenge uses the same budget: 8,000 output tokens
+per reply, hidden reasoning included. The agent sets it from the instructions, so
+you do not add it to the prompt. The budget also limits the cost: a calibration is
+at most 84 replies, and a challenge at most 105 replies per model.
+
 ## Prompt this to challenge a model
 
 Test whether a model goes past the limit that a challenger admitted.
