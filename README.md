@@ -29,6 +29,41 @@ write tests that it fails itself.
 A model that wins can become the next challenger. Each link in the chain shows how
 far one model went past the limit that the previous one admitted.
 
+**The test is blind.** The model under test sees only the problem: the rules (no
+tools, the token budget) and the answer format. No prompt names a model, a
+challenger, a comparison or this repository, and the checker fails any published
+prompt that does. The challenger control and the challenged model get the same
+prompts and the same neutral system prompt.
+
+## Two uses of one machine
+
+| Use | Question it answers | Output |
+|---|---|---|
+| **Benchmark** (absolute) | How hard a problem can this model solve at this budget? | Per family: `d50`, the difficulty at which it solves 50% within the budget, and tokens per solved problem. A row in the benchmark leaderboard. |
+| **Challenge** (relative) | Does model B go past the limit that model A admits? | Superiority in points with a 95% CI. A row in the challenges table. |
+
+One staircase calibration gives both: a leaderboard row and a `CHALLENGE.md` that
+others can use to challenge that model.
+
+Why it works as a benchmark:
+
+- **No LLM judge, fully reproducible.** A script grades every reply. With the
+  revealed seed, anyone can rebuild every problem and grade every reply again.
+- **Contamination-resistant.** Each run uses a fresh secret seed, so no problem or
+  answer exists anywhere before the run.
+- **No ceiling.** Difficulty grows without limit, so a stronger model gets a
+  higher `d50` instead of a saturated 100%.
+- **Efficiency built in.** Every reply has the same token budget, and the tokens
+  per solved problem are part of the score.
+
+Its limits:
+
+- **Narrow.** It measures exact reasoning without tools, nothing else.
+- **Trainable.** The generators are public, so a lab can train on these families.
+  The defence is private and rotated families (see PROTOCOL.md).
+- **Comparable only at the same settings.** Compare `d50` values only at the same
+  budget and delivery mode.
+
 The budget makes the comparison fair and the cost predictable: the test measures
 reasoning capacity per token, not who can think longest. A calibration costs at
 most 84 replies × 8,000 output tokens.
@@ -48,6 +83,16 @@ it spends usage or publishes anything. If the challenged model wins, it offers t
 calibrate it as the next challenger.
 
 ## Results
+
+### Benchmark leaderboard
+
+`d50` is the difficulty at which the model solves 50% of the problems within the
+budget (higher is better). Tokens per solved problem is all output tokens, hidden
+reasoning included, divided by the correct replies (lower is better).
+
+| Model | Effort | Budget | Date | d50 per family | Tokens per solved problem | Checks | Evidence |
+|---|---|---|---|---|---|---|---|
+| `claude-opus-5-5` | high | 8,000 | 2026-11-19 | pending | pending | 0 | [folder](runs/calibration-claude-opus-5-5-high-8k/) |
 
 ### Calibrations (challengers)
 
@@ -82,6 +127,7 @@ one line to give a coding agent:
 
 | Prompt this to… | What happens |
 |---|---|
+| benchmark a model | A staircase calibration gives the model a leaderboard row and makes it a challenger. |
 | challenge a model | A fresh quiz runs against a published challenger. |
 | write a challenge for another model | Your model finds its own limit, then challenges another model to go past it. |
 | repeat a test | The same quiz runs again on the same models, to test whether a result was luck. |
@@ -101,7 +147,8 @@ Each challenger's `CHALLENGE.md` (linked in the table above) also holds the step
 to run the quiz by hand in a chat app, with the exact messages to send.
 
 The challenged model only ever sees problem text. It never sees the seed, the
-generator, the challenger's name or this repository.
+generator, the challenger's name or this repository, and nobody tells it what the
+test is, who set it, or that it is a challenge.
 
 ### Two ways to deliver the quiz
 
@@ -126,7 +173,7 @@ One command checks a challenge folder or a calibration folder:
 | Line | What it proves |
 |---|---|
 | Seed matches commitment | The seed was fixed before the run. Also check with `git log` that `COMMITMENT.md` is older than every reply. |
-| Prompts match seed | Nobody picked or edited problems after the fact. |
+| Prompts match seed | Nobody picked or edited problems after the fact, and no prompt names a model or mentions a test or a comparison. |
 | Grades reproduce | Every published grade is what the checker gives. |
 | Staircase follows rule | Each calibration trial is at the level that the earlier grades give. No trial was skipped or run again. |
 | Superiority reproduces / Frontier reproduces | The headline numbers follow from the graded replies. |

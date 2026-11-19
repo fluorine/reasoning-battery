@@ -45,6 +45,15 @@ Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, th
 Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "3. Audit replies for signals" sections, and audit the replies in runs/<result folder>. Quote anything that is not reasoning about the task or the answer line.
 ```
 
+## Prompt this to benchmark a model
+
+Gives the model a row in the benchmark leaderboard, and makes it a challenger that
+others can challenge later. The model sees only the problems.
+
+```text
+Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "5. Benchmark a model or calibrate a new challenger" sections, and benchmark <MODEL ID> at <REASONING SETTING>. Add its rows to the Benchmark leaderboard and the Calibrations table. Estimate the usage cost and ask me before you send any prompt.
+```
+
 ## Prompt this to write a challenge for another model
 
 Your model finds its own limit, then challenges another model, or a fresh instance
@@ -52,7 +61,7 @@ of itself, to go past it. The calibration stays in the repository, so anyone can
 challenge your model later.
 
 ```text
-Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "5. Calibrate a new challenger" sections, and calibrate <CHALLENGER MODEL ID> at <REASONING SETTING> as a new challenger. When its frontier.json and CHALLENGE.md are ready, follow that CHALLENGE.md as the operator to challenge <OTHER MODEL ID> with <ITS REASONING SETTING>. Estimate the usage cost and ask me before you send any prompt.
+Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "5. Benchmark a model or calibrate a new challenger" sections, and calibrate <CHALLENGER MODEL ID> at <REASONING SETTING> as a new challenger. When its frontier.json and CHALLENGE.md are ready, follow that CHALLENGE.md as the operator to challenge <OTHER MODEL ID> with <ITS REASONING SETTING>. Estimate the usage cost and ask me before you send any prompt.
 ```
 
 ## Prompt this to make a new challenger only
@@ -61,7 +70,7 @@ Calibrates a model so that others can challenge it later. The natural candidate 
 a model that just won a challenge.
 
 ```text
-Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "5. Calibrate a new challenger" sections, and calibrate <MODEL ID> at <REASONING SETTING> as a new challenger. Estimate the usage cost and ask me before you send any prompt.
+Read https://github.com/fluorine/reasoning-battery/blob/main/CONTRIBUTING.md, the "Rules for agents" and "5. Benchmark a model or calibrate a new challenger" sections, and calibrate <MODEL ID> at <REASONING SETTING> as a new challenger. Estimate the usage cost and ask me before you send any prompt.
 ```
 
 ## Prompt this to sharpen a calibration

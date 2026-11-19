@@ -32,7 +32,11 @@ You are the **operator** of this challenge. Read every step before you start.
 1. You never solve, check or hint at any problem. Only the challenged model
    answers, in fresh sessions that see the problem text and nothing else.
 2. Never show the seed, this repository, this file or any model name to the
-   challenged model.
+   challenged model. Keep the test blind: never tell it what the test is, who set
+   it, that it is a challenge, or that another model takes it. Send only the
+   prompt files, unchanged, with the neutral system prompt "You are a helpful
+   assistant." (or none). The challenger control gets the same prompts and the
+   same system prompt.
 3. Turn off tools, code execution, web search and file access for the challenged
    model at the API or command-line level. A prompt that asks the model not to use
    them is not enough.
@@ -154,7 +158,8 @@ an official result.
    result, publish the hash that `Quiz` prints first.
 
 2. Turn off tools, code execution, web search and file access in the chat app.
-   Start a new conversation. Attach or paste `my-quiz/bundle.md`, then send:
+   Start a new conversation. Do not tell the model what the test is, who set it,
+   or that it is a challenge. Send only the messages below. Attach or paste `my-quiz/bundle.md`, then send:
 
    ```text
    The attached file holds a set of independent problems. Follow the

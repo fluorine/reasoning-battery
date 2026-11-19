@@ -12,6 +12,24 @@ reasoning included. The prompt states it, and the runner enforces it. So the tes
 measures reasoning capacity at a fixed budget ("intelligence per token"), and the
 cost of a run has an upper limit.
 
+**The test is blind.** The model under test sees only the problem: the rules (no
+tools, the token budget) and the answer format. No prompt names a model, a
+challenger, a comparison or this repository. `Generate`, `Staircase`, `Quiz` and
+`Bundle` stop with an error if a prompt does, and `CheckPrompts` (so `Check` and
+the GitHub workflow) fails on a published prompt that does. The system prompt is
+neutral ("You are a helpful assistant.") and the same for every model.
+
+The battery has two uses. As a **benchmark**, a calibration gives a model an
+absolute score per family: `d50`, the difficulty at which it solves 50% within the
+budget, and its output tokens per solved problem. As a **challenge**, a quiz at one
+model's frontier shows whether another model goes past it. One calibration serves
+both. It works as a benchmark because a script grades every reply (no LLM judge),
+a fresh secret seed per run stops contamination, difficulty has no ceiling, and
+the fixed budget builds efficiency into the score. Its limits: it measures only
+exact reasoning without tools, its public generators can be trained on (the
+defence is private and rotated families), and `d50` values are comparable only at
+the same budget and delivery mode.
+
 The test has two stages:
 
 1. **Calibrate.** A staircase finds the level at which the generating model solves

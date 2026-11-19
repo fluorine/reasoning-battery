@@ -21,9 +21,14 @@ every task here.
    Models under test answer in fresh sessions that see only the problem text.
 3. Never show a secret seed, this repository or a challenger's name to a model
    under test.
-4. Before you publish, search every new file for personal data, such as your
+4. Keep the test blind. Never tell a model under test what the test is, who set
+   it, that it is a challenge or a benchmark, or that another model takes it. It
+   gets only the problem text, with a neutral system prompt ("You are a helpful
+   assistant.") or none. The challenger control and the challenged model get the
+   same prompts and the same system prompt.
+5. Before you publish, search every new file for personal data, such as your
    user's name and email address, and replace it with `[redacted]`.
-5. Report outcomes as they are, including failures and numbers that do not
+6. Report outcomes as they are, including failures and numbers that do not
    reproduce.
 
 ## Ways to contribute
@@ -34,7 +39,7 @@ every task here.
 | [Replicate a result](#2-replicate-a-result) | Hours | Yes | `VERIFICATIONS.md` in the result's folder |
 | [Audit replies for signals](#3-audit-replies-for-signals) | 1 hour | Optional | `VERIFICATIONS.md`, or an issue |
 | [Challenge a model](#4-challenge-a-model) | Hours | Yes | A new `runs/challenge-…/` folder and a table row |
-| [Calibrate a new challenger](#5-calibrate-a-new-challenger) | A day | Yes | A new `runs/calibration-…/` folder and a table row |
+| [Benchmark a model or calibrate a new challenger](#5-benchmark-a-model-or-calibrate-a-new-challenger) | Hours | Yes | A new `runs/calibration-…/` folder, a leaderboard row and a calibrations row |
 | [Sharpen a calibration](#6-sharpen-a-calibration) | Hours | Yes | More runs in an existing calibration folder |
 | [Add a runner for another provider](#7-add-a-runner) | Hours | Yes | `tools/run-<provider>.ps1` |
 | [Propose a new task family](#8-propose-a-new-task-family) | Days | No | `Families.cs`, `ladder.ps1`, `PROTOCOL.md` |
@@ -102,10 +107,13 @@ Give one line to a coding agent, as the [README](README.md) shows, or follow the
 challenger's `CHALLENGE.md` by hand. Then follow the run rules, the folder layout
 and the pull request checklist below.
 
-### 5. Calibrate a new challenger
+### 5. Benchmark a model or calibrate a new challenger
 
-Any model can become a challenger, and a model that wins a challenge is the natural
-next one. This is how the chain grows.
+One staircase calibration does both. It gives the model a row in the benchmark
+leaderboard (its `d50` and tokens per solved problem in each family), and it
+makes the model a challenger that others can try to go past. Any model can take
+it, and a model that wins a challenge is the natural next challenger. This is how
+the chain grows.
 
 1. Follow `PROTOCOL.md`, Stage 1: make a new secret seed, push `COMMITMENT.md`,
    start the staircase with `-Mode Staircase`, run it with the runner, then run
@@ -117,7 +125,10 @@ next one. This is how the chain grows.
 4. Copy `runs/calibration-claude-opus-5-5-high-8k/CHALLENGE.md` into the new
    folder. Replace the challenger name, effort and paths. Remove the status note
    when `frontier.json` is in place.
-5. Add a row to the Calibrations table in the README, with the frontier level and
+5. Add a row to the Benchmark leaderboard in the README: the `D50` and `Unit` of
+   each family from `frontier.json` (for example "sat 37 variables"), and the
+   tokens per solved problem.
+6. Add a row to the Calibrations table in the README, with the frontier level and
    tokens per solved problem of each family.
 
 If `Calibrate` warns that the 50% point is outside the visited levels, the
