@@ -1,0 +1,16 @@
+{
+  "Kind": "staircase",
+  "Families": [
+    "sat",
+    "mult",
+    "track",
+    "induct",
+    "deduce",
+    "code",
+    "plan"
+  ],
+  "Start": 3,
+  "Trials": 12,
+  "Budget": 8000,
+  "Run": "stair1"
+}
