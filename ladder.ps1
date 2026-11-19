@@ -645,7 +645,7 @@ switch ($Mode) {
                     foreach ($r in Import-Csv -LiteralPath (Join-Path $d 'results.csv')) {
                         $r | Add-Member -NotePropertyName Dir -NotePropertyValue $d -PassThru
                     } })
-            $front = foreach ($fam in $rows | Group-Object Family) {
+            $fams = foreach ($fam in $rows | Group-Object Family) {
                 $family = $fam.Name
                 $levels = @($fam.Group | Group-Object { [int]$_.Level } | Sort-Object { [int]$_.Name })
                 $L = [int[]]@($levels | ForEach-Object { [int]$_.Name })
@@ -656,7 +656,8 @@ switch ($Mode) {
                 $d50 = if ($L.Count -ge 2) { [LadderGen.Stats]::D50($D, $ok, $n, [ref]$censor) }
                 else { $censor = if ($ok[0] / $n[0] -ge 0.5) { 1 } else { -1 }; $D[0] }
                 if ($censor -ne 0) {
-                    Write-Warning "${family}: the 50% point is outside the levels that the staircase visited. Run more trials."
+                    Write-Warning ("${family}: the 50% point is outside the levels that the staircase " +
+                        'visited. The family stays out of the frontier. Run more trials.')
                 }
                 # The level whose difficulty is nearest to d50 on a log scale.
                 $level = 1..30 | Sort-Object {
@@ -674,7 +675,7 @@ switch ($Mode) {
                     }
                     $hi = Get-WilsonUpper $rate $pooled
                 }
-                else {
+                elseif ($censor -eq 0) {
                     Write-Warning "${family}: level $level was not visited. Its challenger rate is unknown (bound set to 100%)."
                 }
                 $tok = $null
@@ -694,13 +695,23 @@ switch ($Mode) {
                     TokensPerSolved = if ($tok -and $tok.Solved) { [math]::Round($tok.Sum / $tok.Solved) } else { $null }
                 }
             }
+            # A quiz at a level the staircase never reached cannot show a gain.
+            $front = @($fams | Where-Object { $_.D50Censor -eq 0 })
+            if (-not $front) { throw 'No family has a 50% point inside the visited levels.' }
             New-Item -ItemType Directory -Force $Dir | Out-Null
             $out = Join-Path $Dir 'frontier.json'
             [ordered]@{
                 Kind = 'staircase'; Budget = $bud[0]; Target = 0.5
-                Runs = @($dirs | ForEach-Object { Split-Path $_ -Leaf }); Frontier = @($front)
+                Runs = @($dirs | ForEach-Object { Split-Path $_ -Leaf }); Frontier = $front
+                Uncalibrated = @($fams | Where-Object { $_.D50Censor -ne 0 })
             } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $out
-            foreach ($f in $front) {
+            foreach ($f in $fams) {
+                if ($f.D50Censor -ne 0) {
+                    ('{0,-7} not calibrated: d50 {1} {2}  tokens per item {3}, per solved {4}') -f $f.Family,
+                    (Format-D50 $f.D50 $f.D50Censor), $f.Unit, (Format-Tokens $f.TokensPerItem),
+                    (Format-Tokens $f.TokensPerSolved)
+                    continue
+                }
                 $r = if ($null -ne $f.Rate) { ([double]$f.Rate).ToString('p0') } else { 'n/a' }
                 ('{0,-7} level {1,2} = {2,4} {3,-11} d50 {4,7}  fit {5,4} (95% upper {6:p0})  ' +
                     'tokens per item {7}, per solved {8}') -f $f.Family, $f.Level, $f.Difficulty, $f.Unit,
